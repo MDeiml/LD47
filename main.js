@@ -1,4 +1,4 @@
-import { init as initGraphics  } from "./render.js"
+import { init as initGraphics, update as updateGraphics } from "./render.js"
 
 //timekeeper
 var lastTick = null
@@ -44,7 +44,7 @@ function update(now)
 
     // don't render if there was no update
     if (shouldRender) {
-        //render();
+        updateGraphics();
     }
 
     if (window.running) {

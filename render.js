@@ -1,23 +1,28 @@
 import * as Shader from "./obj/Shader.js"
+import {mat4} from "./gl-matrix-min.js"
 
-
+//graphics context objects not exported - compartmentalization
 let gl = null
 let shaders = {}
+let sprites = []
+
+//transformation view
+let transform = mat4.create()
+let projectionMatrix = mat4.create()
+let pvMatrix = mat4.create()
+//render state
+let isGUI = true
+let lighting = 0
+//move to global state in some way
+let w = 0
+let h = 0
+
 //TODO add texture construction
 
-//TODO move to sprite as a static data object. transformation should handle the rest
-let squareBuffer = null
-let squareTexCoordBuffer = null
-
-//let defaultPositionAttribute = null
-//let defaultTexCoordAttribute = null
-
-
-export function init(c)
-{
+export function init(c) {
     let canvas = c;
-    let w = canvas.clientWidth;
-    let h = canvas.clientHeight;
+    w = canvas.clientWidth;
+    h = canvas.clientHeight;
     canvas.width = w;
     canvas.height = h;
     gl = canvas.getContext('webgl');
@@ -25,7 +30,6 @@ export function init(c)
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     initShaders();
-    initSquare();
 }
 
 function initShaders(name) {
@@ -40,41 +44,49 @@ function initShaders(name) {
     gl.enableVertexAttribArray(defaultPositionAttribute);
     gl.enableVertexAttribArray(defaultTexCoordAttribute);
 	
-	//wegen caching ueberfluessig
-	shaders["defaultShader"].getUniform('MVP')
-	shaders["defaultShader"].getUniform('M')
-	shaders["defaultShader"].getUniform('texture')
-	shaders["defaultShader"].getUniform('fireIntensity')
-	shaders["defaultShader"].getUniform('shadowTexture')
-	shaders["defaultShader"].getUniform('canvasSize')
-	shaders["defaultShader"].getUniform('special')
-	
-	
-	shaders["shadowShader"].bind()
-	shaders["shadowShader"].getUniform('VP')
-	shaders["shadowShader"].getUniform('M')
-	shaders["shadowShader"].getUniform('texture')
 }
 
-function initSquare() {
-    squareBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
-    const vertices = [ //ein 1 : 2 rechteck. eigentlich doch zeit fuer scale Matrizen
-        0.5, 0, 1,
-        -0.5, 0, 1,
-        0.5, 0, 0,
-        -0.5, 0, 0
-    ];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-    squareTexCoordBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, squareTexCoordBuffer);
-    const texCoords = [
-        1, 0,
-        0, 0,
-        1, 1,
-        0, 1
-    ];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
+export function update() {
+    gl.clear(gl.COLOR_BUFFER_BIT);
+	
+	drawShadowShader();
+	drawBaseShader();
+}
+
+function drawBaseShader() {
+	shaders["defaultShader"].bind()
+	
+	gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('M'), false, transform)
+	
+	let mvp = mat4.create();
+	mat4.mul(mvp, isGUI ? projectionMatrix : pvMatrix, transform);
+	gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('MVP'), false, mvp);
+	
+	gl.uniform1i(shaders["defaultShader"].getUniform('special'), lighting == 3 ? 1 : (lighting == 4 ? 2 : 0));
+	gl.uniform2f(shaders["defaultShader"].getUniform('canvasSize'), w, h);
+	
+	let intensity = 2.2; //change to animated way again
+	intensity = intensity * intensity;
+	if (lighting == 1) {
+		intensity = 4;
+	} else if (lighting == 2) {
+		intensity = -1;
+	}
+	gl.uniform1f(shaders["defaultShader"].getUniform('fireIntensity'), intensity);
+	
+	for (sprite of sprites)
+		sprite.draw(shaders["defaultShader"])
+}
+
+function drawShadowShader() {
+	shaders["shadowShader"].bind()
+	
+	gl.uniform1i(shaders["shadowShader"].getUniform('texture'), 0);
+	gl.uniformMatrix4fv(shaders["shadowShader"].getUniform('M'), false, transform)
+	gl.uniformMatrix4fv(shaders["shadowShader"].getUniform('VP'), false, pvMatrix);
+	
+	for (sprite of sprites)
+		sprite.updateShadow(shaders["shadowShader"])
 }
 
