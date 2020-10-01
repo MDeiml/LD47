@@ -19,7 +19,7 @@ function buildShader(gl, type, source) {
 	gl.compileShader(shader)
 	
 	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-		alert('Error when compiling shader "' + id + '": ' + gl.getShaderInfoLog(shader));
+		alert('Error when compiling shader : ' + gl.getShaderInfoLog(shader));
 	}
 	
 	return shader

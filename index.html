@@ -13,12 +13,12 @@
             varying mediump vec3 worldPos;
 
             uniform mat4 M;
-            uniform mat4 MVP;
+            uniform mat4 VP;
 
             void main(void) {
                 vTexCoord = texCoord;
                 worldPos = (M * vec4(position, 1.0)).xyz;
-                gl_Position = MVP * vec4(position, 1.0);
+                gl_Position = VP * vec4(worldPos, 1.0);
             }
         </script>
         <script id="shader-fs" type="x-shader/x-fragment">
@@ -31,7 +31,6 @@
             uniform sampler2D shadowTexture;
             uniform float fireIntensity;
             uniform int special;
-            uniform vec2 canvasSize;
 
             void main(void) {
                 vec4 color = texture2D(texture, vTexCoord);
@@ -41,7 +40,7 @@
                 } else {
                     float t = clamp(fireIntensity/dist, 0.0, 1.0);
                     if (worldPos.z <= 0.001) {
-                        t *= (1.0 - texture2D(shadowTexture, gl_FragCoord.xy / canvasSize).r);
+                        t *= (1.0 - texture2D(shadowTexture, gl_FragCoord.xy / vec2(2048, 2048)).r);
                     }
                     float gray = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
                     vec3 grayColor = gray * vec3(42.0/255.0, 51.0/255.0, 81.0/255.0);
