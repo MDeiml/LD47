@@ -1,0 +1,108 @@
+<!-- index.html --><!DOCTYPE html>
+<html>
+    <head>
+        <title>LD47</title>
+         <!-- Disables mobile touch delay-->
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <script type="module" src="./main.js"></script>
+        <script id="shader-vs" type="x-shader/x-vertex">
+            attribute vec3 position;
+            attribute vec2 texCoord;
+
+            varying mediump vec2 vTexCoord;
+            varying mediump vec3 worldPos;
+
+            uniform mat4 M;
+            uniform mat4 MVP;
+
+            void main(void) {
+                vTexCoord = texCoord;
+                worldPos = (M * vec4(position, 1.0)).xyz;
+                gl_Position = MVP * vec4(position, 1.0);
+            }
+        </script>
+        <script id="shader-fs" type="x-shader/x-fragment">
+            precision mediump float;
+
+            varying mediump vec2 vTexCoord;
+            varying mediump vec3 worldPos;
+
+            uniform sampler2D texture;
+            uniform sampler2D shadowTexture;
+            uniform float fireIntensity;
+            uniform int special;
+            uniform vec2 canvasSize;
+
+            void main(void) {
+                vec4 color = texture2D(texture, vTexCoord);
+                float dist = dot(worldPos, worldPos);
+                if (fireIntensity < 0.0) {
+                    gl_FragColor = color;
+                } else {
+                    float t = clamp(fireIntensity/dist, 0.0, 1.0);
+                    if (worldPos.z <= 0.001) {
+                        t *= (1.0 - texture2D(shadowTexture, gl_FragCoord.xy / canvasSize).r);
+                    }
+                    float gray = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
+                    vec3 grayColor = gray * vec3(42.0/255.0, 51.0/255.0, 81.0/255.0);
+                    color.rgb = (1.0 - t) * grayColor + t * color.rgb * vec3(235.0/255.0, 178.0/255.0, 145.0/255.0);
+                    if (special == 1) {
+                        color.g = clamp(color.g + 0.1 * color.a, 0.0, 1.0);
+                    } else if (special == 2) {
+                        color.b = clamp(color.b + 0.8 * color.a, 0.0, 1.0);
+                    }
+                    gl_FragColor = color;
+                }
+            }
+        </script>
+        <script id="shadow-vs" type="x-shader/x-vertex">
+            attribute vec3 position;
+            attribute vec2 texCoord;
+
+            varying mediump vec2 vTexCoord;
+
+            uniform mat4 M;
+            uniform mat4 VP;
+
+            void main(void) {
+                vTexCoord = texCoord;
+                vec3 pos = (M * vec4(position, 1.0)).xyz;
+                float oldY = pos.y;
+                pos.y += pos.z * pos.y / (2.5 - pos.z);
+                pos.x = pos.x / oldY * pos.y;
+                pos.z *= 0.1;
+                gl_Position = VP * vec4(pos, 1.0);
+            }
+        </script>
+        <script id="shadow-fs" type="x-shader/x-fragment">
+            precision mediump float;
+           
+            varying mediump vec2 vTexCoord;
+
+            uniform sampler2D texture;
+
+            void main(void) {
+                float alpha = texture2D(texture, vTexCoord).a;
+                gl_FragColor = vec4(alpha, 0, 0, alpha);
+            }
+        </script>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            body, html { height: 100% }
+            canvas {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+        <link rel="shortcut icon" href="https://raw.githubusercontent.com/MDeiml/LD46/master/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="https://raw.githubusercontent.com/MDeiml/LD46/master/favicon.ico" type="image/x-icon">
+    </head>
+
+    <body>
+        <canvas id="glCanvas" width="800" height="600"></canvas>
+    </body>
+</html>
