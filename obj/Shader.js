@@ -1,7 +1,3 @@
-
-//TODO could provide global object caching shaders since they are name unique. that would theoretically reduce/remove initialization code
-
-
 //move to util
 function readElements(id) {
 	const elem = document.getElementById(id);
@@ -30,56 +26,62 @@ function buildShader(gl, type, source) {
 }
 
 //load stage
-let Shader = function(context, nameID) {
-	self.name = nameID //assumed to be unique. otherwise shaders wouldn't be either
-	self.gl = context //store reference of gl context
+let Shader = function(gl, nameID) {
+	this.gl = gl
+	this.name = nameID //assumed to be unique. otherwise shaders wouldn't be either
 	
 	//generate shader units from code
-	self.vs = buildShader(self.gl, self.gl.VERTEX_SHADER, readElements(nameID.concat("-vs")))
-	self.fs = buildShader(self.gl, self.gl.FRAGMENT_SHADER, readElements(nameID.concat("-fs")))
+	this.vs = buildShader(this.gl, this.gl.VERTEX_SHADER, readElements(nameID.concat("-vs")))
+	this.fs = buildShader(this.gl, this.gl.FRAGMENT_SHADER, readElements(nameID.concat("-fs")))
 	
 	//build shader program
-	self.program = self.gl.createProgram();
-	self.gl.attachShader(self.program, self.vs);
-	self.gl.attachShader(self.program, self.fs);
-	self.gl.linkProgram(self.program);
+	this.program = this.gl.createProgram();
+	this.gl.attachShader(this.program, this.vs);
+	this.gl.attachShader(this.program, this.fs);
+	this.gl.linkProgram(this.program);
 	
-	self.attrib = {}
-	self.uniforms = {}
+    if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+        alert('Error when linking shaders');
+    }
+	
+	this.attrib = {}
+	this.uniforms = {}
 }
 
 Shader.currentPrgm = ""
 
 Shader.prototype.bind = function() {
-	self.gl.useProgram(self.program);
-	Shader.currentPrgm = self.name //store state
+	this.gl.useProgram(this.program);
+	Shader.currentPrgm = this.name //store state
 }
 
 Shader.prototype.get = function() {
-	return self.program
+	return this.program
 }
 
 Shader.prototype.getAttrib = function (name) {
-	if (!Shader.currentPrgm === self.name) { //in strict mode should throw a warning at least.
+	if (!Shader.currentPrgm === this.name) { //in strict mode should throw a warning at least.
 		console.warning("trying to aquire Uniform handle of shader that isn't bound.")
-		self.bind()
+		this.bind()
 	}
 	
-	if (!name in Object.keys(self.attrib))
-		self.attrib[name] = self.gl.getAttribLocation(self.program, name)
+	if (typeof(this.attrib[name]) === "undefined") {
+		this.attrib[name] = this.gl.getAttribLocation(this.program, name)
+	}
 	
-	return self.attrib[name]
+	return this.attrib[name]
 }
 
 Shader.prototype.getUniform = function(name) {
-	if (!Shader.currentPrgm === self.name) { //in strict mode should throw a warning at least.
+	if (!Shader.currentPrgm === this.name) { //in strict mode should throw a warning at least.
 		console.warning("trying to aquire Uniform handle of shader that isn't bound.")
-		self.bind()
+		this.bind()
 	}
 	
-	if (!name in Object.keys(self.uniforms))
-		self.uniforms[name] = self.gl.getUniformLocation(self.program, name)
-	return self.uniforms[name]
+	if (typeof(this.uniforms[name]) === "undefined")
+		this.uniforms[name] = this.gl.getUniformLocation(this.program, name)
+	
+	return this.uniforms[name]
 }
 
 export {Shader}

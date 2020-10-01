@@ -5,8 +5,7 @@ var lastTick = null
 var unprocessed = 0
 const FRAME_TIME = 60/1000
 
-function main()
-{
+function main() {
     initGraphics(document.getElementById('glCanvas'));
 
     window.running = true;
@@ -16,13 +15,10 @@ function main()
     window.addEventListener('fullscreenchange', resize);
 }
 
-function resize(event)
-{
-	
+function resize(event) {	
 }
 
-function update(now)
-{
+function update(now) {
     if (!lastTick) {
         lastTick = now;
     }

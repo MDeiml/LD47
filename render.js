@@ -1,4 +1,6 @@
 import * as Shader from "./obj/Shader.js"
+import * as Sprite from "./obj/Sprite.js"
+import { SPRITE_LIST } from "./registry.js"
 import {mat4} from "./gl-matrix-min.js"
 
 //graphics context objects not exported - compartmentalization
@@ -20,16 +22,22 @@ let h = 0
 //TODO add texture construction
 
 export function init(c) {
-    let canvas = c;
-    w = canvas.clientWidth;
-    h = canvas.clientHeight;
-    canvas.width = w;
-    canvas.height = h;
-    gl = canvas.getContext('webgl');
-    gl.clearColor(0, 0, 0, 1);
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-    initShaders();
+	let canvas = c;
+	w = canvas.clientWidth;
+	h = canvas.clientHeight;
+	canvas.width = w;
+	canvas.height = h;
+	gl = canvas.getContext('webgl');
+	gl.clearColor(0, 0, 0, 1);
+	gl.frontFace(gl.CCW);
+	gl.enable(gl.BLEND);
+	gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+	initShaders();
+	
+	for (let sprite of SPRITE_LIST)
+	{
+		sprites.push(new Sprite.Sprite(gl, sprite))
+	}
 }
 
 function initShaders(name) {
@@ -46,12 +54,13 @@ function initShaders(name) {
 	
 }
 
-
 export function update() {
     gl.clear(gl.COLOR_BUFFER_BIT);
 	
 	drawShadowShader();
 	drawBaseShader();
+	
+	gl.flush()
 }
 
 function drawBaseShader() {
@@ -65,28 +74,19 @@ function drawBaseShader() {
 	
 	gl.uniform1i(shaders["defaultShader"].getUniform('special'), lighting == 3 ? 1 : (lighting == 4 ? 2 : 0));
 	gl.uniform2f(shaders["defaultShader"].getUniform('canvasSize'), w, h);
+	gl.uniform1f(shaders["defaultShader"].getUniform('fireIntensity'), 0.82); //change to animated way again
 	
-	let intensity = 2.2; //change to animated way again
-	intensity = intensity * intensity;
-	if (lighting == 1) {
-		intensity = 4;
-	} else if (lighting == 2) {
-		intensity = -1;
-	}
-	gl.uniform1f(shaders["defaultShader"].getUniform('fireIntensity'), intensity);
-	
-	for (sprite of sprites)
+	for (let sprite of sprites)
 		sprite.draw(shaders["defaultShader"])
 }
 
 function drawShadowShader() {
 	shaders["shadowShader"].bind()
 	
-	gl.uniform1i(shaders["shadowShader"].getUniform('texture'), 0);
 	gl.uniformMatrix4fv(shaders["shadowShader"].getUniform('M'), false, transform)
 	gl.uniformMatrix4fv(shaders["shadowShader"].getUniform('VP'), false, pvMatrix);
 	
-	for (sprite of sprites)
+	for (let sprite of sprites)
 		sprite.updateShadow(shaders["shadowShader"])
 }
 
