@@ -1,6 +1,7 @@
 import {level, player} from "./state.js"
 import {keyDown} from "./input.js"
 import {vec2} from "./gl-matrix-min.js"
+import {GameObject} from "./obj/Sprite.js"
 
 const PLAYER_SPEED = 1;
 
@@ -36,6 +37,7 @@ export function update(delta) {
     player.setPosition(vec2.add(player.position, player.position, vel));
 
     for (let obj of level.objects) {
+        if (!(obj instanceof GameObject)) continue;
         let intersection = testIntersection(player, obj);
         if (intersection) {
             if (obj.type == "collidable") {
