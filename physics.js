@@ -17,3 +17,6 @@ export function testIntersection(a, b) {
         return vec2.fromValues(0, dir1[1] < dir2[1], dir1[1], -dir2[1]);
     }
 }
+
+export function update(delta) {
+}

@@ -8,7 +8,7 @@ let texList = {}
 export let Texture2D = function(gl, path, resolution) {
 	this.gl = gl;
 	this.name = path;
-	
+
 	if (!this.name in Object.keys(texList))
 	{
 		this.image = texList[this.name].image
@@ -27,7 +27,7 @@ export let Texture2D = function(gl, path, resolution) {
 		this.image.height = resolution[1];
 		this.image.onload = function () {
 			this.gl.pixelStorei(this.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-			
+
 			this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
 			this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, this.image);
 			this.gl.pixelStorei(this.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
@@ -36,11 +36,11 @@ export let Texture2D = function(gl, path, resolution) {
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR_MIPMAP_LINEAR);
-			
+
 			this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
 		}.bind(this);
 		this.image.src = path;
-		
+
 		texList[this.name] = this
 	}
 
@@ -191,7 +191,7 @@ let GameObject = function(gl, spritePath, position, size) {
     vec2.scale(halfSize, size, 0.5);
 
     let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, vec3.fromValues(position[0], quat.create(), position[1], 0), vec3.fromValues(size[0] / 2, size[1] / 2, 0));
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(size[0] / 2, size[1] / 2, 1));
     this.sprite = new Sprite(gl, spritePath, transform, null);
 }
 
