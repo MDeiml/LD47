@@ -1,4 +1,4 @@
-import {mat4, vec3} from "../gl-matrix-min.js"
+import {mat4, vec3, vec2, quat} from "../gl-matrix-min.js"
 
 const VERTEX_DIM = 3;
 const UV_DIM = 2;
@@ -33,9 +33,9 @@ export let Texture2D = function(gl, path, resolution) {
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
-			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR_MIPMAP_LINEAR);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
 
-			this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
+			// this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
 		}.bind(this);
 		this.image.src = path;
 
@@ -186,10 +186,10 @@ Sprite.prototype.draw = function(shader) {
 let GameObject = function(gl, spritePath, position, size) {
     this.position = position;
     this.halfSize = vec2.create();
-    vec2.scale(halfSize, size, 0.5);
+    vec2.scale(this.halfSize, size, 0.5);
 
     let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(size[0] / 2, size[1] / 2, 1));
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(this.halfSize[0], this.halfSize[1], 1));
     this.sprite = new Sprite(gl, spritePath, transform, null);
 }
 
@@ -197,7 +197,7 @@ GameObject.prototype.setPosition = function(position) {
     this.position = position;
     let transform = mat4.create();
     mat4.fromTranslation(transform, vec3.fromValues(position[0], position[1], 0), null);
-    this.setTransformation(transform);
+    this.sprite.setTransformation(transform);
 }
 
 GameObject.prototype.draw = function(shader) {

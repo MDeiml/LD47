@@ -1,3 +1,9 @@
+import {level, player} from "./state.js"
+import {keyDown} from "./input.js"
+import {vec2} from "./gl-matrix-min.js"
+
+const PLAYER_SPEED = 1;
+
 export function testIntersection(a, b) {
     let aMin = vec2.sub(vec2.create(), a.position, a.halfSize);
     let aMax = vec2.add(vec2.create(), a.position, a.halfSize);
@@ -19,4 +25,20 @@ export function testIntersection(a, b) {
 }
 
 export function update(delta) {
+    let vel = vec2.create();
+    if (keyDown("KeyA")) {
+        vel[0] -= 1;
+    }
+    if (keyDown("KeyD")) {
+        vel[0] += 1;
+    }
+    vec2.scale(vel, vel, PLAYER_SPEED * delta);
+    player.setPosition(vec2.add(player.position, player.position, vel));
+
+    for (let obj of level.objects) {
+        let intersection = testIntersection(player, obj);
+        if (intersection) {
+            player.setPosition(vec2.add(player.position, player.position, intersection));
+        }
+    }
 }
