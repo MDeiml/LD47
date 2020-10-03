@@ -49,6 +49,8 @@ export function init(c) {
     window.addEventListener('fullscreenchange', updateProjection);
 
     inventory.board = new Sprite.Sprite("assets/Inventar_Board.png", mat4.fromScaling(mat4.create(), vec3.fromValues(8, 8, 8)));
+    inventory.glowingPostit = new Sprite.Texture2D("assets/Glowing_sticky_Bitch.png");
+    inventory.postit = new Sprite.Texture2D("assets/dull_sticky_bitch.png");
 
 }
 
@@ -114,8 +116,14 @@ function drawGUI() {
         menu.sprite.draw(shaders["defaultShader"]);
     } else if (inventory.opened) {
         inventory.board.draw(shaders["defaultShader"]);
-        for (let item of inventory.objects) {
-            item.draw(shaders["defaultShader"]);
+        for (let i = 0; i < inventory.objects.length; i++) {
+            if (inventory.cursorPosition == i) {
+                inventory.postits[i].texture = inventory.glowingPostit;
+            } else {
+                inventory.postits[i].texture = inventory.postit;
+            }
+            inventory.postits[i].draw(shaders["defaultShader"]);
+            inventory.objects[i].draw(shaders["defaultShader"]);
         }
     }
 }

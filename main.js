@@ -74,7 +74,6 @@ function update(now) {
             updateInventory();
         } else {
             updatePhysics(FRAME_TIME / 1000);
-            console.log(player.position);
         }
 		updateView();
 
@@ -104,7 +103,7 @@ function updateInventory() {
     if (menuUp()) {
         inventory.cursorPosition -= INVENTORY_WIDTH;
     }
-    inventory.cursorPosition = (inventory.cursorPosition + INVENTORY_WIDTH * INVENTORY_HEIGHT) % (INVENTORY_WIDTH * INVENTORY_HEIGHT);
+    inventory.cursorPosition = (inventory.cursorPosition + inventory.objects.length) % inventory.objects.length;
     if (pickingUp()) {
         menu.sprite = new Sprite(inventory.objects[inventory.cursorPosition].texture.name, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
         menu.cooldown = -1;

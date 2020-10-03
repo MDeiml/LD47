@@ -37,6 +37,9 @@ export function pickUp(item) {
         for (let i = 0; i < 40; i++) {
             let transform = inventoryItemTransform(inventory.objects.length);
             inventory.objects.push(new Sprite(itemSprites[item.pickup], transform));
+            let m = mat4.create();
+            mat4.fromScaling(m, vec3.fromValues(0.5, 0.5, 1));
+            inventory.postits.push(new Sprite("assets/dull_sticky_bitch.png", mat4.mul(m, transform, m)));
         }
 	}
 	console.log(inventory);
