@@ -91,7 +91,7 @@
 			}
 		},
 		{
-			"type" : "deco",
+			"type" : "interactable",
 			"spriteName" : "bed0",
 			"pos" : {
 				"x" : 10,
