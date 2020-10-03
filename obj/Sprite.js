@@ -1,4 +1,5 @@
 import {mat4, vec3, vec2, quat} from "../gl-matrix-min.js"
+import {gl} from "../state.js"
 
 const VERTEX_DIM = 3;
 const UV_DIM = 2;
