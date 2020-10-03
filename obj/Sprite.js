@@ -46,17 +46,43 @@ export let Texture2D = function(path, frames) {
 	}
 
 }
-
 Texture2D.prototype.nextFrame = function() {
 	this.currFrame += 1;
 	this.currFrame = this.currFrame % this.frames;
 }
-
 Texture2D.prototype.bindTo = function(shader, position) {
 	gl.activeTexture(position);
 	gl.bindTexture(gl.TEXTURE_2D, this.tex);
 
 	gl.uniform2fv(shader.getUniform('frame_data'), vec2.fromValues(this.currFrame, this.frames));
+}
+
+export let GradientTexture2D = function(minCol, maxCol, steps) {
+	let coefs = {}
+	for(let key in cmin)
+		coefs[key]=(maxCol[key]-minCol[key])/steps
+	
+	valFunc = function(coefs, minCol, v) {
+		let col = {}
+		for(let key in cmin)
+			col[key]=coefs[key]*v + minCol[key]
+		
+		return col
+	}.bind(null, coefs, minCol)
+	
+	data = []
+	for (i = 0; i < steps; i++)
+	{
+		data.push(valFunc(i))
+	}
+	
+	this.texture = gl.createTexture();
+	gl.bindTexture(gl.TEXTURE_2D, texture);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, steps, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(data));
+}
+GradientTexture2D.prototype.bindTo = function(shader, position) {
+	gl.activeTexture(position);
+	gl.bindTexture(gl.TEXTURE_2D, this.tex);
 }
 
 export let DynamicTexture2D = function() {
