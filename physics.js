@@ -1,5 +1,5 @@
 import {level, player} from "./state.js"
-import {keyDown} from "./input.js"
+import {walkingLeft, walkingRight} from "./input.js"
 import {vec2} from "./gl-matrix-min.js"
 import {GameObject} from "./obj/Sprite.js"
 
@@ -27,10 +27,10 @@ export function testIntersection(a, b) {
 
 export function update(delta) {
     let vel = vec2.create();
-    if (keyDown("KeyA")) {
+    if (walkingLeft()) {
         vel[0] -= 1;
     }
-    if (keyDown("KeyD")) {
+    if (walkingRight()) {
         vel[0] += 1;
     }
     vec2.scale(vel, vel, PLAYER_SPEED * delta);
