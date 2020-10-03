@@ -82,6 +82,8 @@ export function initLevel(id, gl, rawData) {
 		}
 	}
 
+    level.objects.push(new GameObject(null, vec2.fromValues(0, -5), vec2.fromValues(10000, 5), "collidable"));
+
 
 	level.isInitialized = false
 }
