@@ -1,7 +1,8 @@
-import {Sprite, GameObject} from "obj/Sprite.js"
-import {level} from "state.js"
+import {Sprite, GameObject} from "./obj/Sprite.js"
+import {level} from "./state.js"
+import {mat4, vec2, vec3, quat} from "../gl-matrix-min.js"
 
-const X_SCALE = 0.25
+const X_SCALE = 1//0.25
 const Y_SCALE = 1
 
 const TYPE_ID_MAP = {
@@ -36,49 +37,53 @@ export function loadLevel(id, gl) {
 export function initLevel(id, gl, rawData) {
 	//freeze game state
 	
-	levelData = JSON.parse(rawData)
+	let levelData = JSON.parse(rawData)
 	
 	//verify ID
 	if (levelData["id"] !== id)
 		console.warning("Failed to verify level ID with internal ID. Some level designer must have fallen asleep.")
 	
-	newLevel = {}
-	
-	newLevel.objects = []
-	
 	//pedantic
-	objects = levelData["objects"].sort((a, b) => TYPE_ID_MAP[a["type"]] < TYPE_ID_MAP[b["type"]] ? -1 : 1)
+	let objects = levelData["objects"].sort((a, b) => TYPE_ID_MAP[a["type"]] < TYPE_ID_MAP[b["type"]] ? -1 : 1)
+	level["objects"] = []
 	
-	for (entry of objects)
+	for (let entry of levelData["hiddenRooms"])
 	{
 		let transformation = mat4.create()
-		let pos = vec3.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["x"] * Y_SCALE, 0)
-		let scale = vec3.fromValues(entry["size"]["x"] * X_SCALE, entry["size"]["x"] * Y_SCALE, 0)
+		let pos = vec3.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["y"] * Y_SCALE, 0)
+		let scale = vec3.fromValues(entry["size"]["width"] * X_SCALE * 0.5, entry["size"]["height"] * Y_SCALE * 0.5, 0)
 		mat4.fromRotationTranslationScale(transformation, quat.create(), pos, scale)
-		switch(entry)
+		level.objects.push(new Sprite(gl, "assets/" + entry["spriteName"] + ".png", transformation))
+	}
+	
+	for (let entry of objects)
+	{
+		let transformation = mat4.create()
+		let pos1 = vec2.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["y"] * Y_SCALE)
+		let size = vec2.fromValues(entry["size"]["width"] * X_SCALE, entry["size"]["height"] * Y_SCALE)
+		
+		console.log(pos1)
+		console.log(size)
+		
+		switch(entry["type"])
 		{
 		case "background":
 		case "foreground":
 		case "deco":
-			newLevel.objects.push(new Sprite(gl, "assets/" + entry["spriteName"] + ".png", transformation))
+			let pos = vec3.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["y"] * Y_SCALE, 0)
+			let scale = vec3.fromValues(entry["size"]["width"] * X_SCALE * 0.5, entry["size"]["height"] * Y_SCALE * 0.5, 0)
+			mat4.fromRotationTranslationScale(transformation, quat.create(), pos, scale)
+			level.objects.push(new Sprite(gl, "assets/" + entry["spriteName"] + ".png", transformation))
 			break;
 		case "collidable":
-			newLevel.objects.push(new Sprite(gl, "assets/" + entry["spriteName"] + ".png", pos, size))
+			level.objects.push(new GameObject(gl, "assets/" + entry["spriteName"] + ".png", pos1, size))
 			break;
 		case "interactable":
-			newLevel.objects.push(new Sprite(gl, "assets/" + entry["spriteName"] + ".png", pos, size))
+			level.objects.push(new GameObject(gl, "assets/" + entry["spriteName"] + ".png", pos1, size))
 			break;
 		}
 	}
 	
-	for (entry of levelData["hiddenRooms"])
-	{
-		let transformation = mat4.create()
-		let pos = vec3.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["x"] * Y_SCALE, 0)
-		let scale = vec3.fromValues(entry["size"]["x"] * X_SCALE, entry["size"]["x"] * Y_SCALE, 0)
-		mat4.fromRotationTranslationScale(transformation, quat.create(), pos, scale)
-		newLevel.objects.push(new Sprite(gl, "assets/" + entry["spriteName"] + ".png", transformation))
-	}
 	
-	level =- newLevel
+	level.isInitialized = false
 }

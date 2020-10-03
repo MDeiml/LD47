@@ -6,7 +6,7 @@ import {mat4} from "./gl-matrix-min.js"
 import {level} from "./state.js"
 
 //graphics context objects not exported - compartmentalization
-let gl = null;
+export let gl = null;
 let shaders = {};
 export let sprites = [];
 export let guiSprites = [];
@@ -91,7 +91,7 @@ export function update() {
 	}
 
 	drawGUI();
-	drawShadowShader();
+	//drawShadowShader();
 	drawBaseShader();
 
 	gl.flush();

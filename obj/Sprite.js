@@ -1,7 +1,9 @@
-import {mat4, vec3} from "../gl-matrix-min.js"
+import {mat4, vec2, vec3, quat} from "../gl-matrix-min.js"
 
 const VERTEX_DIM = 3;
 const UV_DIM = 2;
+
+let wireframe = true
 
 let texList = {};
 
@@ -33,9 +35,9 @@ export let Texture2D = function(gl, path, resolution) {
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
-			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR_MIPMAP_LINEAR);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
 
-			this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
+			//this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
 		}.bind(this);
 		this.image.src = path;
 
@@ -113,6 +115,9 @@ Mesh.prototype.bindToVAO = function(positionAttrib, uvAttrib) {
 }
 
 Mesh.prototype.draw = function() {
+	if (wireframe)
+	this.gl.drawArrays(this.gl.LINE_STRIP, 0, this.vertexCnt);
+	else
 	this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, this.vertexCnt);
 }
 
@@ -186,7 +191,7 @@ Sprite.prototype.draw = function(shader) {
 let GameObject = function(gl, spritePath, position, size) {
     this.position = position;
     this.halfSize = vec2.create();
-    vec2.scale(halfSize, size, 0.5);
+    vec2.scale(this.halfSize, size, 0.5);
 
     let transform = mat4.create();
     mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(size[0] / 2, size[1] / 2, 1));

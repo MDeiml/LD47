@@ -1,6 +1,8 @@
-import { init as initGraphics, update as updateGraphics, projection, sprites } from "./render.js"
+import { init as initGraphics, update as updateGraphics, projection, sprites, gl } from "./render.js"
 import {mat4, vec3} from "./gl-matrix-min.js"
 import {update as updatePhysics} from "./physics.js"
+import {level} from "./state.js"
+import {loadLevel} from "./level.js"
 
 //timekeeper
 var lastTick = null;
@@ -13,6 +15,8 @@ function main() {
 
     window.running = true;
     requestAnimationFrame(update);
+	
+	loadLevel(0, gl)
 }
 
 function update(now) {
@@ -35,7 +39,13 @@ function update(now) {
         shouldRender = true;
         updatePhysics(FRAME_TIME / 1000);
     }
-
+	
+	if (!level.isInitialized)
+	{
+		for (let entry of level.objects)
+			sprites.push(entry)
+	}
+	
     // don't render if there was no update
     if (shouldRender) {
         updateGraphics();

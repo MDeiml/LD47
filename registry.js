@@ -7,9 +7,8 @@ export const SHADER_LIST = [
 */
 
 export const SOUND_LIST = [
-	"assets/test.ogg"
+	//"assets/test.ogg"
 ]
 
 export const SPRITE_LIST = [
-	"assets/drawing.svg"
 ]
