@@ -196,7 +196,7 @@ let GameObject = function(gl, spritePath, position, size) {
 GameObject.prototype.setPosition = function(position) {
     this.position = position;
     let transform = mat4.create();
-    mat4.fromTranslation(transform, vec3.fromValues(position[0], position[1], 0), null);
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(this.halfSize[0], this.halfSize[1], 1));
     this.sprite.setTransformation(transform);
 }
 

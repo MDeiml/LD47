@@ -18,9 +18,9 @@ export function testIntersection(a, b) {
     if (distMin[0] <= 0 || distMin[1] <= 0) return null;
 
     if (distMin[0] < distMin[1]) {
-        return vec2.fromValues(dir1[0] < dir2[0], dir1[0], -dir2[0], 0);
+        return vec2.fromValues(dir1[0] < dir2[0] ? dir1[0] : -dir2[0], 0);
     } else {
-        return vec2.fromValues(0, dir1[1] < dir2[1], dir1[1], -dir2[1]);
+        return vec2.fromValues(0, dir1[1] < dir2[1] ? dir1[1] : -dir2[1]);
     }
 }
 
@@ -38,7 +38,7 @@ export function update(delta) {
     for (let obj of level.objects) {
         let intersection = testIntersection(player, obj);
         if (intersection) {
-            player.setPosition(vec2.add(player.position, player.position, intersection));
+            player.setPosition(vec2.sub(player.position, player.position, intersection));
         }
     }
 }

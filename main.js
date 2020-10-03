@@ -2,7 +2,7 @@ import { init as initGraphics, update as updateGraphics, projection, sprites } f
 import {mat4, vec3, vec2} from "./gl-matrix-min.js"
 import {update as updatePhysics} from "./physics.js"
 import { init as initInput, update as updateInput} from "./input.js"
-import {gl, player, setPlayer} from "./state.js"
+import {gl, player, level, setPlayer} from "./state.js"
 import {GameObject} from "./obj/Sprite.js";
 
 //timekeeper
@@ -17,6 +17,7 @@ function main() {
 
     // TODO: Change this
     setPlayer(new GameObject(gl, "./Jabba.webp", vec2.fromValues(0, 0), vec2.fromValues(1, 1)));
+    level.objects.push(new GameObject(gl, "./Jabba.webp", vec2.fromValues(4, 0), vec2.fromValues(2, 2)));
 
     window.running = true;
     requestAnimationFrame(update);
