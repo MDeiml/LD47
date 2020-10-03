@@ -180,9 +180,10 @@ Sprite.prototype.draw = function(shader) {
 
 }
 
-let GameObject = function(spritePath, position, size) {
+let GameObject = function(spritePath, position, size, type) {
     this.position = position;
     this.halfSize = vec2.create();
+    this.type = type;
     vec2.scale(this.halfSize, size, 0.5);
 
     let transform = mat4.create();

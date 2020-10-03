@@ -38,7 +38,11 @@ export function update(delta) {
     for (let obj of level.objects) {
         let intersection = testIntersection(player, obj);
         if (intersection) {
-            player.setPosition(vec2.sub(player.position, player.position, intersection));
+            if (obj.type == "collidable") {
+                player.setPosition(vec2.sub(player.position, player.position, intersection));
+            } else if (obj.type == "interactable") {
+                // TODO: Interaction
+            }
         }
     }
 }
