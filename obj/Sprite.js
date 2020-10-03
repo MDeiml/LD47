@@ -1,21 +1,21 @@
-import {mat4, vec3} from "../gl-matrix-min.js"
+import {mat4, vec3, vec2, quat} from "../gl-matrix-min.js"
+import {gl} from "../state.js"
 
 const VERTEX_DIM = 3;
 const UV_DIM = 2;
 
 let texList = {};
 
-export let Texture2D = function(gl, path, resolution) {
-	this.gl = gl;
+export let Texture2D = function(path, resolution) {
 	this.name = path;
 
 	if (!this.name in Object.keys(texList)) {
 		this.image = texList[this.name].image;
 		this.tex = texList[this.name].tex;
 	} else {
-		this.tex = this.gl.createTexture();
-		this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
-		//this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]));
+		this.tex = gl.createTexture();
+		gl.bindTexture(gl.TEXTURE_2D, this.tex);
+		//gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]));
 
 		this.image = new Image();
 		if (!resolution) {
@@ -24,18 +24,18 @@ export let Texture2D = function(gl, path, resolution) {
 		this.image.width = resolution[0];
 		this.image.height = resolution[1];
 		this.image.onload = function () {
-			this.gl.pixelStorei(this.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+			gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
 
-			this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
-			this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, this.image);
-			this.gl.pixelStorei(this.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+			gl.bindTexture(gl.TEXTURE_2D, this.tex);
+			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.image);
+			gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
 
-			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
-			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
-			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
-			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR_MIPMAP_LINEAR);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 
-			this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
+			// gl.generateMipmap(gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
 		}.bind(this);
 		this.image.src = path;
 
@@ -45,47 +45,45 @@ export let Texture2D = function(gl, path, resolution) {
 }
 
 Texture2D.prototype.bindTo = function(position) {
-	this.gl.activeTexture(position);
-	this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
+	gl.activeTexture(position);
+	gl.bindTexture(gl.TEXTURE_2D, this.tex);
 }
 
-export let DynamicTexture2D = function(gl) {
-	this.gl = gl;
+export let DynamicTexture2D = function() {
 	if (typeof(DynamicTexture2D.framebuffer) === "undefined")
-		DynamicTexture2D.framebuffer = this.gl.createFramebuffer();
+		DynamicTexture2D.framebuffer = gl.createFramebuffer();
 
-	this.tex = this.gl.createTexture();
-	this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
+	this.tex = gl.createTexture();
+	gl.bindTexture(gl.TEXTURE_2D, this.tex);
 
 	//based on canvas this is optimal resolution but a nonstatic value forces reconstruction on resize :/
-	this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 2048, 2048/*this.gl.canvas.width, this.gl.canvas.height*/, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 2048, 2048/*gl.canvas.width, gl.canvas.height*/, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
 
-	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
-	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
-	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
-	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
-	this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, DynamicTexture2D.framebuffer);
-	this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, this.tex, 0);
-	this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
+	gl.bindFramebuffer(gl.FRAMEBUFFER, DynamicTexture2D.framebuffer);
+	gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.tex, 0);
+	gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 }
 
 DynamicTexture2D.prototype.bindFramebuffer = function() {
-	this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, DynamicTexture2D.framebuffer);
+	gl.bindFramebuffer(gl.FRAMEBUFFER, DynamicTexture2D.framebuffer);
 
-	this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+	gl.clear(gl.COLOR_BUFFER_BIT);
 }
 DynamicTexture2D.prototype.unbindFramebuffer = function() {
-	this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
+	gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 }
 DynamicTexture2D.prototype.bindTo = function(position) {
-	this.gl.activeTexture(position);
-	this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
+	gl.activeTexture(position);
+	gl.bindTexture(gl.TEXTURE_2D, this.tex);
 }
 
 
-let Mesh = function(gl, vertices, uv) {
-	this.gl = gl;
+let Mesh = function(vertices, uv) {
 	this.vertexCnt = Math.floor(vertices.length / VERTEX_DIM);
 	this.uvCnt = Math.floor(uv.length / UV_DIM);
 
@@ -95,34 +93,33 @@ let Mesh = function(gl, vertices, uv) {
 	if (this.vertexCnt - this.uvCnt !== 0)
 		alert("Count of UV and Vertex Coordinates don't match.");
 
-	this.squareBuffer = this.gl.createBuffer();
-	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.squareBuffer);
-	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(vertices), this.gl.STATIC_DRAW);
+	this.squareBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.squareBuffer);
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-	this.squareTexCoordBuffer = this.gl.createBuffer();
-	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.squareTexCoordBuffer);
-	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(uv), this.gl.STATIC_DRAW);
+	this.squareTexCoordBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.squareTexCoordBuffer);
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
 }
 
 Mesh.prototype.bindToVAO = function(positionAttrib, uvAttrib) {
-	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.squareBuffer);
-	this.gl.vertexAttribPointer(positionAttrib, VERTEX_DIM, this.gl.FLOAT, false, 0, 0);
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.squareBuffer);
+	gl.vertexAttribPointer(positionAttrib, VERTEX_DIM, gl.FLOAT, false, 0, 0);
 
-	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.squareTexCoordBuffer);
-	this.gl.vertexAttribPointer(uvAttrib, UV_DIM, this.gl.FLOAT, false, 0, 0);
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.squareTexCoordBuffer);
+	gl.vertexAttribPointer(uvAttrib, UV_DIM, gl.FLOAT, false, 0, 0);
 }
 
 Mesh.prototype.draw = function() {
-	this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, this.vertexCnt);
+	gl.drawArrays(gl.TRIANGLE_STRIP, 0, this.vertexCnt);
 }
 
-let Sprite = function(gl, spritePath, transformation, parent) {
-	this.gl = gl;
+let Sprite = function(spritePath, transformation, parent) {
 	if (typeof(Sprite.MESH) === "undefined")
-		Sprite.MESH = new Mesh(gl, [1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0] , [ 1, 0, 0, 0, 1, 1, 0, 1]); //screen square
+		Sprite.MESH = new Mesh([1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0] , [ 1, 0, 0, 0, 1, 1, 0, 1]); //screen square
 
-	this.texture = new Texture2D(gl, spritePath);
-	this.shadow = new DynamicTexture2D(gl);
+	this.texture = new Texture2D(spritePath);
+	this.shadow = new DynamicTexture2D();
 	this.transform = typeof(transformation) === "undefined" ? mat4.create() : mat4.clone(transformation);
 	this.m = mat4.create();
 	this.parent = typeof(parent) === "undefined" ? null : parent;
@@ -132,9 +129,9 @@ let Sprite = function(gl, spritePath, transformation, parent) {
 Sprite.prototype.updateShadow = function(shader) {
 	this.shadow.bindFramebuffer();
 
-	this.texture.bindTo(this.gl.TEXTURE0);
-	this.gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); //write model transformation
-	this.gl.uniform1i(shader.getUniform('texture'), 0);
+	this.texture.bindTo(gl.TEXTURE0);
+	gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); //write model transformation
+	gl.uniform1i(shader.getUniform('texture'), 0);
 
 	Sprite.MESH.bindToVAO(shader.getAttrib('position'), shader.getAttrib('texCoord'));
 	Sprite.MESH.draw();
@@ -172,32 +169,32 @@ Sprite.prototype.draw = function(shader) {
 	if (!this.visibility) //should this also be inheriting?
 		return;
 
-	this.texture.bindTo(this.gl.TEXTURE0);
-	this.shadow.bindTo(this.gl.TEXTURE1);
+	this.texture.bindTo(gl.TEXTURE0);
+	this.shadow.bindTo(gl.TEXTURE1);
 
-	this.gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); //write model transformation
-	this.gl.uniform1i(shader.getUniform('texture'), 0);
-	this.gl.uniform1i(shader.getUniform('shadowTexture'), 1);
+	gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); //write model transformation
+	gl.uniform1i(shader.getUniform('texture'), 0);
+	gl.uniform1i(shader.getUniform('shadowTexture'), 1);
 	Sprite.MESH.bindToVAO(shader.getAttrib('position'), shader.getAttrib('texCoord'));
 	Sprite.MESH.draw();
 
 }
 
-let GameObject = function(gl, spritePath, position, size) {
+let GameObject = function(spritePath, position, size) {
     this.position = position;
     this.halfSize = vec2.create();
-    vec2.scale(halfSize, size, 0.5);
+    vec2.scale(this.halfSize, size, 0.5);
 
     let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(size[0] / 2, size[1] / 2, 1));
-    this.sprite = new Sprite(gl, spritePath, transform, null);
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(this.halfSize[0], this.halfSize[1], 1));
+    this.sprite = new Sprite(spritePath, transform, null);
 }
 
 GameObject.prototype.setPosition = function(position) {
     this.position = position;
     let transform = mat4.create();
-    mat4.fromTranslation(transform, vec3.fromValues(position[0], position[1], 0), null);
-    this.setTransformation(transform);
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(this.halfSize[0], this.halfSize[1], 1));
+    this.sprite.setTransformation(transform);
 }
 
 GameObject.prototype.draw = function(shader) {

@@ -34,24 +34,7 @@
 
             void main(void) {
                 vec4 color = texture2D(texture, vTexCoord);
-                float dist = dot(worldPos, worldPos);
-                if (fireIntensity < 0.0) {
-                    gl_FragColor = color;
-                } else {
-                    float t = clamp(fireIntensity/dist, 0.0, 1.0);
-                    if (worldPos.z <= 0.001) {
-                        t *= (1.0 - texture2D(shadowTexture, gl_FragCoord.xy / vec2(2048, 2048)).r);
-                    }
-                    float gray = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
-                    vec3 grayColor = gray * vec3(42.0/255.0, 51.0/255.0, 81.0/255.0);
-                    color.rgb = (1.0 - t) * grayColor + t * color.rgb * vec3(235.0/255.0, 178.0/255.0, 145.0/255.0);
-                    if (special == 1) {
-                        color.g = clamp(color.g + 0.1 * color.a, 0.0, 1.0);
-                    } else if (special == 2) {
-                        color.b = clamp(color.b + 0.8 * color.a, 0.0, 1.0);
-                    }
-                    gl_FragColor = color;
-                }
+                gl_FragColor = color;
             }
         </script>
         <script id="shadow-vs" type="x-shader/x-vertex">
