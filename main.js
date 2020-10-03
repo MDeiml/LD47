@@ -4,6 +4,7 @@ import {update as updatePhysics} from "./physics.js"
 import { init as initInput, update as updateInput} from "./input.js"
 import {gl, player, level, setPlayer} from "./state.js"
 import {GameObject} from "./obj/Sprite.js";
+import {loadLevel} from "./level.js"
 
 //timekeeper
 var lastTick = null;
@@ -21,6 +22,8 @@ function main() {
 
     window.running = true;
     requestAnimationFrame(update);
+	
+	loadLevel(0, gl)
 }
 
 function update(now) {
@@ -44,7 +47,13 @@ function update(now) {
         updateInput();
         updatePhysics(FRAME_TIME / 1000);
     }
-
+	
+	if (!level.isInitialized)
+	{
+		for (let entry of level.objects)
+			sprites.push(entry)
+	}
+	
     // don't render if there was no update
     if (shouldRender) {
         updateGraphics();

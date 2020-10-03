@@ -8,7 +8,7 @@ export let Projection = function(aspectRatio)
 Projection.prototype.updateAspect = function(aspectRatio) {
 	this.mat = mat4.create();
 	mat4.ortho(this.mat, -aspectRatio, aspectRatio, -1, 1, -1, 1);
-	mat4.scale(this.mat, this.mat, vec3.fromValues(0.2, 0.2, 0.2));
+	mat4.scale(this.mat, this.mat, vec3.fromValues(0.02, 0.02, 0.02));
 	mat4.mul(this.mat, this.mat,
 		mat4.fromValues(1, 0, 0, 0,
 						0, 1, 0, 0,
@@ -63,7 +63,7 @@ View.prototype.get = function() {
 	return this.mat;
 }
 
-export let View2D = new View(vec3.fromValues(0, 0, 0), vec3.fromValues(0, 0, -1));
+export let View2D = new View(vec3.fromValues(0, 0, 0), vec3.fromValues(0, 0, 1));
 //View2D.prototype.translate = function(x, y) {
 //	View.translate.apply(this, x, y, 0)
 //}

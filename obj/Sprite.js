@@ -4,6 +4,8 @@ import {gl} from "../state.js"
 const VERTEX_DIM = 3;
 const UV_DIM = 2;
 
+let wireframe = true
+
 let texList = {};
 
 export let Texture2D = function(path, resolution) {
@@ -30,12 +32,12 @@ export let Texture2D = function(path, resolution) {
 			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.image);
 			gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
 
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
 
-			// gl.generateMipmap(gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
+			//this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
 		}.bind(this);
 		this.image.src = path;
 
@@ -111,7 +113,10 @@ Mesh.prototype.bindToVAO = function(positionAttrib, uvAttrib) {
 }
 
 Mesh.prototype.draw = function() {
-	gl.drawArrays(gl.TRIANGLE_STRIP, 0, this.vertexCnt);
+	if (wireframe)
+	this.gl.drawArrays(this.gl.LINE_STRIP, 0, this.vertexCnt);
+	else
+	this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, this.vertexCnt);
 }
 
 let Sprite = function(spritePath, transformation, parent) {
