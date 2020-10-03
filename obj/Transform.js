@@ -20,19 +20,19 @@ Projection.prototype.get = function() {
 }
 
 export let View = function(pos, dir) {
-	
+
 	this.pos = vec3.clone(pos);
-	
+
 	//compute coordinate system from direction vector
 	this.dir = vec3.create();
 	this.up = vec3.create();
 	this.right = vec3.create();
 	vec3.normalize(this.dir, dir);
-	vec3.cross(this.up, this.dir, vec3.fromValues(1, 0, 0));
-	vec3.cross(this.right, this.up, this.right);
-	
+	vec3.cross(this.up, this.dir, vec3.fromValues(-1, 0, 0));
+	vec3.cross(this.right, this.dir, this.up);
+
 	this.mat = mat4.create();
-	mat4.lookAt(this.mat, this.pos, this.dir, this.up);
+	mat4.lookAt(this.mat, this.pos, vec3.add(vec3.create(), this.pos, this.dir), this.up);
 	this.dirty = false;
 }
 

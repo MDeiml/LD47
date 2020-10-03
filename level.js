@@ -62,8 +62,6 @@ export function initLevel(id, gl, rawData) {
 		let pos1 = vec2.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["y"] * Y_SCALE)
 		let size = vec2.fromValues(entry["size"]["width"] * X_SCALE, entry["size"]["height"] * Y_SCALE)
 
-		console.log(pos1)
-		console.log(size)
 
 		switch(entry["type"])
 		{
