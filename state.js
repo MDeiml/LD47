@@ -15,6 +15,7 @@ export function pickUp(item) {
 	}
 }
 
+// Currently not needed
 export function layDown(item) {
 	index = inventory.objects.indexOf(item);
 	if (index > -1) {
