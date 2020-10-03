@@ -116,10 +116,10 @@ Mesh.prototype.draw = function() {
 
 let Sprite = function(spritePath, transformation, parent) {
 	if (typeof(Sprite.MESH) === "undefined")
-		Sprite.MESH = new Mesh(gl, [1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0] , [ 1, 0, 0, 0, 1, 1, 0, 1]); //screen square
+		Sprite.MESH = new Mesh([1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0] , [ 1, 0, 0, 0, 1, 1, 0, 1]); //screen square
 
-	this.texture = new Texture2D(gl, spritePath);
-	this.shadow = new DynamicTexture2D(gl);
+	this.texture = new Texture2D(spritePath);
+	this.shadow = new DynamicTexture2D();
 	this.transform = typeof(transformation) === "undefined" ? mat4.create() : mat4.clone(transformation);
 	this.m = mat4.create();
 	this.parent = typeof(parent) === "undefined" ? null : parent;
@@ -187,7 +187,7 @@ let GameObject = function(spritePath, position, size) {
 
     let transform = mat4.create();
     mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(this.halfSize[0], this.halfSize[1], 1));
-    this.sprite = new Sprite(gl, spritePath, transform, null);
+    this.sprite = new Sprite(spritePath, transform, null);
 }
 
 GameObject.prototype.setPosition = function(position) {
