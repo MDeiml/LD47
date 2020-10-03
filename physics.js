@@ -1,5 +1,5 @@
 import {level, player} from "./state.js"
-import {walkingLeft, walkingRight} from "./input.js"
+import {walkingLeft, walkingRight, pickingUp} from "./input.js"
 import {vec2} from "./gl-matrix-min.js"
 import {GameObject} from "./obj/Sprite.js"
 
@@ -50,7 +50,10 @@ export function update(delta) {
                     player.velocity[1] = 0;
                 }
             } else if (obj.type == "interactable") {
-                // TODO: Interaction
+				// TODO: Interaction
+				if (pickingUp()) {
+					
+				}
             }
         }
     }

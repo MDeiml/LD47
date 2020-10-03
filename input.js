@@ -25,3 +25,7 @@ export function walkingLeft() {
 export function walkingRight() {
 	return keyDown("KeyD") || keyDown("ArrowRight");
 }
+
+export function pickingUp() {
+	return keyDown("KeyE");
+}
