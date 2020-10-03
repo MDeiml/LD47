@@ -16,6 +16,8 @@ function main() {
     initGraphics(document.getElementById('glCanvas'));
     initInput();
 
+	loadLevel(0, gl)
+
     // TODO: Change this
     setPlayer(new GameObject("./assets/walk_circle.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), true);
     player.velocity = vec2.fromValues(0, 0);
@@ -24,8 +26,6 @@ function main() {
 
     window.running = true;
     requestAnimationFrame(update);
-
-	loadLevel(0, gl)
 }
 
 function updatePlayerAnimation() {
@@ -74,6 +74,7 @@ function update(now) {
             updateInventory();
         } else {
             updatePhysics(FRAME_TIME / 1000);
+            console.log(player.position);
         }
 		updateView();
 

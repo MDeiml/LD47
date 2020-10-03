@@ -2,7 +2,7 @@ import * as Shader from "./obj/Shader.js"
 import * as Sprite from "./obj/Sprite.js"
 import {Projection, View} from "./obj/Transform.js"
 import { SPRITE_LIST } from "./registry.js"
-import {mat4, vec2} from "./gl-matrix-min.js"
+import {mat4, vec2, vec3} from "./gl-matrix-min.js"
 import {level, player, gl, setGl, menu, inventory} from "./state.js"
 
 let shaders = {};
@@ -47,6 +47,8 @@ export function init(c) {
     window.addEventListener('resize', updateProjection);
     window.addEventListener('orientationchange', updateProjection);
     window.addEventListener('fullscreenchange', updateProjection);
+
+    inventory.board = new Sprite.Sprite("assets/Inventar_Board.png", mat4.fromScaling(mat4.create(), vec3.fromValues(8, 8, 8)));
 
 }
 
@@ -111,6 +113,7 @@ function drawGUI() {
     if (menu.sprite != null) {
         menu.sprite.draw(shaders["defaultShader"]);
     } else if (inventory.opened) {
+        inventory.board.draw(shaders["defaultShader"]);
         for (let item of inventory.objects) {
             item.draw(shaders["defaultShader"]);
         }

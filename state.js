@@ -22,6 +22,7 @@ export let inventory = {
     opened: false,
     cursorPosition: 0,
 	objects: [],
+    postits: []
 };
 
 // TODO: Find a better place for this
@@ -35,7 +36,6 @@ export function pickUp(item) {
 		level.objects.splice(index, 1);
         for (let i = 0; i < 40; i++) {
             let transform = inventoryItemTransform(inventory.objects.length);
-            // inventory.objects.push(new Sprite(itemSprites[item.pickup], transform));
             inventory.objects.push(new Sprite(itemSprites[item.pickup], transform));
         }
 	}
