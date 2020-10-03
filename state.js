@@ -1,8 +1,17 @@
 
+export let gl = null;
 export let player = null;
 export let level = {
     objects: [],
 };
+
+export function setGl(context) {
+    gl = context;
+}
+
+export function setPlayer(obj) {
+    player = obj;
+}
 export let inventory = {
 	objects: [],
 };
@@ -15,6 +24,7 @@ export function pickUp(item) {
 	}
 }
 
+// Currently not needed
 export function layDown(item) {
 	index = inventory.objects.indexOf(item);
 	if (index > -1) {
