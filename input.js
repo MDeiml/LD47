@@ -1,5 +1,6 @@
-let currentKeys = [];
-let nextKeys = [];
+let lastKeys = {};
+let currentKeys = {};
+let nextKeys = {};
 
 export function init() {
     document.addEventListener("keydown", function(event) {
@@ -11,17 +12,26 @@ export function init() {
 }
 
 export function update() {
+    lastKeys = Object.assign({}, currentKeys);
     currentKeys = Object.assign({}, nextKeys);
 }
 
-function keyDown(code) {
+function key(code) {
     return code in currentKeys;
 }
 
+function keyDown(code) {
+    return code in currentKeys && !(code in lastKeys);
+}
+
 export function walkingLeft() {
-	return keyDown("KeyA") || keyDown("ArrowLeft");
+	return key("KeyA") || key("ArrowLeft");
 }
 
 export function walkingRight() {
-	return keyDown("KeyD") || keyDown("ArrowRight");
+	return key("KeyD") || key("ArrowRight");
+}
+
+export function jumping() {
+    return keyDown("Space");
 }
