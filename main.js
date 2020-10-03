@@ -19,7 +19,7 @@ function main() {
     // TODO: Change this
     setPlayer(new GameObject("./Jabba.webp", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player"));
     player.velocity = vec2.fromValues(0, 0);
-    level.objects.push(new GameObject("./Jabba.webp", vec2.fromValues(4, 0), vec2.fromValues(2, 2), "collidable"));
+    player.onGround = false;
 
     window.running = true;
     requestAnimationFrame(update);
