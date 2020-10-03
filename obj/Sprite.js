@@ -43,6 +43,7 @@ export let Texture2D = function(gl, path, resolution) {
 		
 		texList[this.name] = this
 	}
+
 }
 
 Texture2D.prototype.bindTo = function(position) {
@@ -54,10 +55,10 @@ export let DynamicTexture2D = function(gl) {
 	this.gl = gl;
 	if (typeof(DynamicTexture2D.framebuffer) === "undefined")
 		DynamicTexture2D.framebuffer = this.gl.createFramebuffer();
-	
+
 	this.tex = this.gl.createTexture();
 	this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
-	
+
 	//based on canvas this is optimal resolution but a nonstatic value forces reconstruction on resize :/
 	this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 2048, 2048/*this.gl.canvas.width, this.gl.canvas.height*/, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
 
@@ -65,7 +66,7 @@ export let DynamicTexture2D = function(gl) {
 	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
 	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
 	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
-	
+
 	this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, DynamicTexture2D.framebuffer);
 	this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, this.tex, 0);
 	this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
@@ -73,7 +74,7 @@ export let DynamicTexture2D = function(gl) {
 
 DynamicTexture2D.prototype.bindFramebuffer = function() {
 	this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, DynamicTexture2D.framebuffer);
-	
+
 	this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 }
 DynamicTexture2D.prototype.unbindFramebuffer = function() {
@@ -89,13 +90,13 @@ let Mesh = function(gl, vertices, uv) {
 	this.gl = gl;
 	this.vertexCnt = Math.floor(vertices.length / VERTEX_DIM);
 	this.uvCnt = Math.floor(uv.length / UV_DIM);
-	
+
 	//checking integrity of dataset
 	if (vertices.length % VERTEX_DIM !== 0 || uv.length % UV_DIM !== 0)
 		alert("Invalid mesh dataset. not able to divide array into vectors.");
 	if (this.vertexCnt - this.uvCnt !== 0)
 		alert("Count of UV and Vertex Coordinates don't match.");
-	
+
 	this.squareBuffer = this.gl.createBuffer();
 	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.squareBuffer);
 	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(vertices), this.gl.STATIC_DRAW);
@@ -121,7 +122,7 @@ let Sprite = function(gl, spritePath, transformation, parent) {
 	this.gl = gl;
 	if (typeof(Sprite.MESH) === "undefined")
 		Sprite.MESH = new Mesh(gl, [1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0] , [ 1, 0, 0, 0, 1, 1, 0, 1]); //screen square
-	
+
 	this.texture = new Texture2D(gl, spritePath);
 	this.shadow = new DynamicTexture2D(gl);
 	this.transform = typeof(transformation) === "undefined" ? mat4.create() : mat4.clone(transformation);
@@ -132,14 +133,14 @@ let Sprite = function(gl, spritePath, transformation, parent) {
 
 Sprite.prototype.updateShadow = function(shader) {
 	this.shadow.bindFramebuffer();
-	
+
 	this.texture.bindTo(this.gl.TEXTURE0);
 	this.gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); //write model transformation
 	this.gl.uniform1i(shader.getUniform('texture'), 0);
-	
+
 	Sprite.MESH.bindToVAO(shader.getAttrib('position'), shader.getAttrib('texCoord'));
 	Sprite.MESH.draw();
-	
+
 	this.shadow.unbindFramebuffer();
 }
 
@@ -172,16 +173,37 @@ Sprite.prototype.draw = function(shader) {
 	*/
 	if (!this.visibility) //should this also be inheriting?
 		return;
-	
+
 	this.texture.bindTo(this.gl.TEXTURE0);
 	this.shadow.bindTo(this.gl.TEXTURE1);
-	
+
 	this.gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); //write model transformation
 	this.gl.uniform1i(shader.getUniform('texture'), 0);
 	this.gl.uniform1i(shader.getUniform('shadowTexture'), 1);
 	Sprite.MESH.bindToVAO(shader.getAttrib('position'), shader.getAttrib('texCoord'));
 	Sprite.MESH.draw();
-	
+
 }
 
-export {Sprite}
+let GameObject = function(gl, spritePath, position, size) {
+    this.position = position;
+    this.halfSize = vec2.create();
+    vec2.scale(halfSize, size, 0.5);
+
+    let transform = mat4.create();
+    mat4.fromRotationTranslationScale(transform, vec3.fromValues(position[0], quat.create(), position[1], 0), vec3.fromValues(size[0] / 2, size[1] / 2, 0));
+    this.sprite = new Sprite(gl, spritePath, transform, null);
+}
+
+GameObject.prototype.setPosition(position) {
+    this.position = position;
+    let transform = mat4.create();
+    mat4.fromTranslation(transform, vec3.fromValues(position[0], position[1], 0), null);
+    this.setTransformation(transform);
+}
+
+GameObject.prototype.draw = function(shader) {
+    this.sprite.draw(shader);
+}
+
+export {Sprite, GameObject}
