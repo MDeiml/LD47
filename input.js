@@ -38,6 +38,22 @@ export function walkingRight() {
 	return key("KeyD") || key("ArrowRight");
 }
 
+export function menuLeft() {
+	return keyDown("KeyA") || keyDown("ArrowLeft");
+}
+
+export function menuRight() {
+	return keyDown("KeyD") || keyDown("ArrowRight");
+}
+
+export function menuUp() {
+	return keyDown("KeyW") || keyDown("ArrowUp");
+}
+
+export function menuDown() {
+	return keyDown("KeyS") || keyDown("ArrowDown");
+}
+
 export function jumping() {
     return keyDown("Space") || keyDown("ArrowUp");
 }

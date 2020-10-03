@@ -33,15 +33,18 @@ export function pickUp(item) {
 	let index = level.objects.indexOf(item);
 	if (index > -1) {
 		level.objects.splice(index, 1);
-        let transform = inventoryItemTransform(inventory.objects.length);
-        inventory.objects.push(new Sprite(itemSprites[item.pickup], transform));
+        for (let i = 0; i < 40; i++) {
+            let transform = inventoryItemTransform(inventory.objects.length);
+            // inventory.objects.push(new Sprite(itemSprites[item.pickup], transform));
+            inventory.objects.push(new Sprite(itemSprites[item.pickup], transform));
+        }
 	}
 	console.log(inventory);
 }
 
 const INVENTORY_SIZE = 6;
-const INVENTORY_HEIGHT = 5;
-const INVENTORY_WIDTH = 9;
+export const INVENTORY_HEIGHT = 5;
+export const INVENTORY_WIDTH = 9;
 const INVENTORY_SCALE = INVENTORY_SIZE / INVENTORY_HEIGHT;
 
 function inventoryItemTransform(index) {
