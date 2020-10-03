@@ -54,7 +54,7 @@
 			"type" : "collidable",
 			"spriteName" : "bed0",
 			"pos" : {
-				"x": 10,
+				"x": 30,
 				"y" : 0
 			},
 			"size" : {

@@ -76,10 +76,10 @@ export function initLevel(id, gl, rawData) {
 			level.objects.push(new Sprite("assets/" + entry["spriteName"] + ".png", transformation))
 			break;
 		case "collidable":
-			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size))
+			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "collidable"))
 			break;
 		case "interactable":
-			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size))
+			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "interactable"))
 			break;
 		}
 	}

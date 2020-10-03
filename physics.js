@@ -3,7 +3,7 @@ import {keyDown} from "./input.js"
 import {vec2} from "./gl-matrix-min.js"
 import {GameObject} from "./obj/Sprite.js"
 
-const PLAYER_SPEED = 1;
+const PLAYER_SPEED = 5;
 
 export function testIntersection(a, b) {
     let aMin = vec2.sub(vec2.create(), a.position, a.halfSize);
