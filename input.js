@@ -14,6 +14,14 @@ export function update() {
     currentKeys = Object.assign({}, nextKeys);
 }
 
-export function keyDown(code) {
+function keyDown(code) {
     return code in currentKeys;
+}
+
+export function walkingLeft() {
+	return keyDown("KeyA") || keyDown("ArrowLeft");
+}
+
+export function walkingRight() {
+	return keyDown("KeyD") || keyDown("ArrowRight");
 }
