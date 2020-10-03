@@ -3,6 +3,18 @@
 	
 	"objects" : [
 		{
+			"type" : "collidable",
+			"spriteName" : "bed0",
+			"pos" : {
+				"x": -12.5,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 0,
+				"height" : 5
+			}
+		},
+		{
 			"type" : "background",
 			"spriteName" : "proto_background",
 			"pos" : {
@@ -87,10 +99,10 @@
 			}
 		},
 		{
-			"type" : "collidable",
+			"type" : "deco",
 			"spriteName" : "bed0",
 			"pos" : {
-				"x": 10,
+				"x": 30,
 				"y" : 0
 			},
 			"size" : {
@@ -108,6 +120,18 @@
 			},
 			"size" : {
 				"width" : 5,
+				"height" : 5
+			}
+		},
+		{
+			"type" : "collidable",
+			"spriteName" : "bed0",
+			"pos" : {
+				"x": 137.5,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 0,
 				"height" : 5
 			}
 		}
