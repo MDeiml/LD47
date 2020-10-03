@@ -1,9 +1,10 @@
 import {level, player} from "./state.js"
-import {walkingLeft, walkingRight} from "./input.js"
+import {walkingLeft, walkingRight, jumping, pickingUp} from "./input.js"
 import {vec2} from "./gl-matrix-min.js"
 import {GameObject} from "./obj/Sprite.js"
 
-const PLAYER_SPEED = 5;
+const PLAYER_SPEED = 25/10;
+const JUMP_SPEED = 10;
 
 export function testIntersection(a, b) {
     let aMin = vec2.sub(vec2.create(), a.position, a.halfSize);
@@ -33,10 +34,15 @@ export function update(delta) {
     if (walkingRight()) {
         velx += PLAYER_SPEED;
     }
+    if (player.onGround && jumping()) {
+        player.velocity[1] = JUMP_SPEED;
+    }
+
     player.velocity[0] = velx;
     player.velocity[1] -= 10 * delta;
     let positionDelta = vec2.scale(vec2.create(), player.velocity, delta);
     player.setPosition(vec2.add(player.position, player.position, positionDelta));
+    player.onGround = false;
 
     for (let obj of level.objects) {
         if (!(obj instanceof GameObject)) continue;
@@ -48,9 +54,13 @@ export function update(delta) {
                     player.velocity[0] = 0;
                 } else {
                     player.velocity[1] = 0;
+                    if (intersection[1] < 0) player.onGround = true;
                 }
             } else if (obj.type == "interactable") {
-                // TODO: Interaction
+				// TODO: Interaction
+				if (pickingUp()) {
+					
+				}
             }
         }
     }

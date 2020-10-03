@@ -11,6 +11,7 @@ export let guiSprites = [];
 
 export let projection = null;
 let camera = null;
+let cameraLeftFixed = true;
 let updateViewMat = false;
 let pvMatrix = mat4.create();
 //render state
@@ -64,9 +65,20 @@ function initShaders(name) {
 
 }
 
-export function updateView(pos, dir) {
+export function updateView() {
+	if (player.position[0] < 0) {
+		if (!cameraLeftFixed) {
+			cameraLeftFixed = true;
+			updateViewIntern(0, 0);
+		}
+	} else {
+		updateViewIntern(vec2.fromValues(player.position[0], 0));
+	}
+}
+
+function updateViewIntern(pos) {
 	updateViewMat = true;
-	camera.set(pos, dir);
+	camera.setPos(pos);
 }
 function updateProjection() {
     let w = gl.canvas.clientWidth;
