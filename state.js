@@ -8,6 +8,7 @@ export let level = {
 };
 export let menu = {
     sprite: null,
+	backgroundContainer: null,
     cooldown: 0
 };
 
