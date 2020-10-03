@@ -14,9 +14,10 @@
 
 			uniform mat4 M;
 			uniform mat4 VP;
+			uniform vec2 frame_data;
 
 			void main(void) {
-				vTexCoord = texCoord;
+				vTexCoord = vec2((texCoord.x * (1.0/frame_data.y)) + (frame_data.x/frame_data.y), texCoord.y);
 				worldPos = (M * vec4(position, 1.0)).xyz;
 				gl_Position = VP * vec4(worldPos, 1.0);
 			}
