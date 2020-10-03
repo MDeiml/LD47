@@ -1,9 +1,9 @@
 import { init as initGraphics, update as updateGraphics, projection, updateView } from "./render.js"
 import {mat4, vec3, vec2} from "./gl-matrix-min.js"
 import {update as updatePhysics} from "./physics.js"
-import { init as initInput, update as updateInput, toggleInventory, menuUp, menuDown, menuLeft, menuRight} from "./input.js"
+import { init as initInput, update as updateInput, toggleInventory, menuUp, menuDown, menuLeft, menuRight, pickingUp} from "./input.js"
 import {gl, player, level, menu, setPlayer, inventory, INVENTORY_HEIGHT, INVENTORY_WIDTH} from "./state.js"
-import {GameObject} from "./obj/Sprite.js";
+import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 
 //timekeeper
@@ -60,9 +60,15 @@ function update(now) {
             inventory.cursorPosition = 0;
         }
         if (menu.sprite != null) {
-            menu.cooldown -= FRAME_TIME / 1000;
-            if (menu.cooldown < 0) {
-                menu.sprite = null;
+            if (menu.cooldown == -1) {
+                if (pickingUp()) {
+                    menu.sprite = null;
+                }
+            } else {
+                menu.cooldown -= FRAME_TIME / 1000;
+                if (menu.cooldown < 0) {
+                    menu.sprite = null;
+                }
             }
         } else if (inventory.opened) {
             updateInventory();
@@ -98,6 +104,10 @@ function updateInventory() {
         inventory.cursorPosition -= INVENTORY_WIDTH;
     }
     inventory.cursorPosition = (inventory.cursorPosition + INVENTORY_WIDTH * INVENTORY_HEIGHT) % (INVENTORY_WIDTH * INVENTORY_HEIGHT);
+    if (pickingUp()) {
+        menu.sprite = new Sprite(inventory.objects[inventory.cursorPosition].texture.name, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
+        menu.cooldown = -1;
+    }
 }
 
 main();

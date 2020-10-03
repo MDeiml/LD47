@@ -110,9 +110,7 @@ function drawGUI() {
 
     if (menu.sprite != null) {
         menu.sprite.draw(shaders["defaultShader"]);
-    }
-
-    if (inventory.opened) {
+    } else if (inventory.opened) {
         for (let item of inventory.objects) {
             item.draw(shaders["defaultShader"]);
         }
