@@ -3,6 +3,7 @@ import * as Sprite from "./obj/Sprite.js"
 import {Projection, View, View2D} from "./obj/Transform.js"
 import { SPRITE_LIST } from "./registry.js"
 import {mat4} from "./gl-matrix-min.js"
+import {level} from "./state.js"
 
 //graphics context objects not exported - compartmentalization
 let gl = null;

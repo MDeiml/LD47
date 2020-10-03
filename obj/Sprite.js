@@ -195,7 +195,7 @@ let GameObject = function(gl, spritePath, position, size) {
     this.sprite = new Sprite(gl, spritePath, transform, null);
 }
 
-GameObject.prototype.setPosition(position) {
+GameObject.prototype.setPosition = function(position) {
     this.position = position;
     let transform = mat4.create();
     mat4.fromTranslation(transform, vec3.fromValues(position[0], position[1], 0), null);

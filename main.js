@@ -1,5 +1,5 @@
 import { init as initGraphics, update as updateGraphics, projection, sprites } from "./render.js"
-import {mat4, vec3} from "../gl-matrix-min.js"
+import {mat4, vec3} from "./gl-matrix-min.js"
 import {update as updatePhysics} from "./physics.js"
 
 //timekeeper
