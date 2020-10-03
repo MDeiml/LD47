@@ -17,10 +17,10 @@ function main() {
     initInput();
 
     // TODO: Change this
-    setPlayer(new GameObject("./assets/walk_circle.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player"));
+    setPlayer(new GameObject("./assets/walk_circle.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), true);
     player.velocity = vec2.fromValues(0, 0);
     player.onGround = false;
-	player.sprite.texture.frames = 4
+	player.sprite.texture.frames = 4;
 
     window.running = true;
     requestAnimationFrame(update);
@@ -28,13 +28,11 @@ function main() {
 	loadLevel(0, gl)
 }
 
-function updatePlayerAnimation()
-{
-	frameCntr += 1
-	if ((frameCntr % 15) === 0)
-	{
-		frameCntr = 0
-		player.sprite.texture.nextFrame()
+function updatePlayerAnimation() {
+	frameCntr += 1;
+	if ((frameCntr % 15) === 0) {
+		frameCntr = 0;
+		player.sprite.texture.nextFrame();
 	}
 }
 
@@ -48,7 +46,7 @@ function update(now) {
 
     if (unprocessed >= 1000) {
         // this means game has probably stopped running (e.g. computer was turned off)
-		//TODO force game state into pause
+		// TODO force game state into pause
         unprocessed = 0;
     }
 

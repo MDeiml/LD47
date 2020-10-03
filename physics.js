@@ -4,7 +4,7 @@ import {vec2, mat4, vec3} from "./gl-matrix-min.js"
 import {GameObject, Sprite} from "./obj/Sprite.js"
 
 const PLAYER_SPEED = 25/10;
-const JUMP_SPEED = 10;
+const JUMP_SPEED = 6.75;
 
 export function testIntersection(a, b) {
     let aMin = vec2.sub(vec2.create(), a.position, a.halfSize);
@@ -29,10 +29,12 @@ export function testIntersection(a, b) {
 export function update(delta) {
     let velx = 0;
     if (walkingLeft()) {
-        velx -= PLAYER_SPEED;
+		velx -= PLAYER_SPEED;
+		player.facingRight = false;
     }
     if (walkingRight()) {
         velx += PLAYER_SPEED;
+		player.facingRight = true;
     }
     if (player.onGround && jumping()) {
         player.velocity[1] = JUMP_SPEED;
