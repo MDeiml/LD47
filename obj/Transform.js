@@ -8,12 +8,13 @@ export let Projection = function(aspectRatio)
 Projection.prototype.updateAspect = function(aspectRatio) {
 	this.mat = mat4.create();
 	mat4.ortho(this.mat, -aspectRatio, aspectRatio, -1, 1, -1, 1);
-	mat4.scale(this.mat, this.mat, vec3.fromValues(0.02, 0.02, 0.02));
+	let zoom = 0.15;
+	mat4.scale(this.mat, this.mat, vec3.fromValues(zoom, zoom, zoom));
 	mat4.mul(this.mat, this.mat,
 		mat4.fromValues(1, 0, 0, 0,
 						0, 1, 0, 0,
 						0, 1, 1, 0,
-						0, 0, 0, 1)); //what is this matrix multiplication????
+						0, 0, 0, 1)); // what is this matrix multiplication????
 }
 Projection.prototype.get = function() {
 	return this.mat;
