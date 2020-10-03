@@ -1,3 +1,6 @@
+import {level, player} from "./state.js"
+import {keyDown} from "./input.js"
+
 export function testIntersection(a, b) {
     let aMin = vec2.sub(vec2.create(), a.position, a.halfSize);
     let aMax = vec2.add(vec2.create(), a.position, a.halfSize);
@@ -19,4 +22,14 @@ export function testIntersection(a, b) {
 }
 
 export function update(delta) {
+    for (let obj of level.objects) {
+        let intersection = testIntersection(player, obj);
+        if (intersection) {
+            player.setPosition(vec2.add(vec2.create(), player.position, intersection));
+        }
+    }
+
+    if (keyDown("KeyA")) {
+        // go left
+    }
 }
