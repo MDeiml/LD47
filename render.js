@@ -54,7 +54,6 @@ export function init(c) {
 function initShaders(name) {
 
 	shaders["defaultShader"] = new Shader.Shader(gl, "shader")
-	shaders["shadowShader"] = new Shader.Shader(gl, "shadow")
 
 	shaders["defaultShader"].bind();
     let defaultPositionAttribute = gl.getAttribLocation(shaders["defaultShader"].get(), 'position');
@@ -90,7 +89,6 @@ export function update() {
 	}
 
 	drawGUI();
-	//drawShadowShader();
 	drawBaseShader();
 
 	gl.flush();
@@ -101,9 +99,7 @@ function drawGUI() {
 	gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('VP'), false, projection.get());
 
 	//TODO remove down the line with GUI shader
-	gl.uniform1i(shaders["defaultShader"].getUniform('special'), lighting == 3 ? 1 : (lighting == 4 ? 2 : 0));
-	gl.uniform1f(shaders["defaultShader"].getUniform('fireIntensity'), 0.82); //change to animated way again
-
+	
 	for (let sprite of guiSprites)
 		sprite.draw(shaders["defaultShader"]);
 }
@@ -113,21 +109,8 @@ function drawBaseShader() {
 
 	gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('VP'), false, pvMatrix);
 
-	gl.uniform1i(shaders["defaultShader"].getUniform('special'), lighting == 3 ? 1 : (lighting == 4 ? 2 : 0));
-	gl.uniform1f(shaders["defaultShader"].getUniform('fireIntensity'), 0.82); //change to animated way again
-
 	for (let sprite of level.objects)
 		sprite.draw(shaders["defaultShader"]);
 
     player.draw(shaders["defaultShader"]);
 }
-
-function drawShadowShader() {
-	shaders["shadowShader"].bind();
-
-	gl.uniformMatrix4fv(shaders["shadowShader"].getUniform('VP'), false, pvMatrix);
-
-	for (let sprite of sprites)
-		sprite.updateShadow(shaders["shadowShader"]);
-}
-
