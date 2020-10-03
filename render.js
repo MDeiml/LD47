@@ -3,10 +3,9 @@ import * as Sprite from "./obj/Sprite.js"
 import {Projection, View, View2D} from "./obj/Transform.js"
 import { SPRITE_LIST } from "./registry.js"
 import {mat4} from "./gl-matrix-min.js"
-import {level} from "./state.js"
+import {level, gl, setGl} from "./state.js"
 
 //graphics context objects not exported - compartmentalization
-let gl = null;
 let shaders = {};
 export let sprites = [];
 export let guiSprites = [];
@@ -29,7 +28,7 @@ export function init(c) {
 	h = canvas.clientHeight;
 	canvas.width = w;
 	canvas.height = h;
-	gl = canvas.getContext('webgl');
+    setGl(canvas.getContext("webgl"));
 	gl.clearColor(0, 0, 0, 1);
 	gl.frontFace(gl.CCW);
 	gl.enable(gl.BLEND);
@@ -50,6 +49,7 @@ export function init(c) {
     window.addEventListener('resize', updateProjection);
     window.addEventListener('orientationchange', updateProjection);
     window.addEventListener('fullscreenchange', updateProjection);
+
 }
 
 function initShaders(name) {
