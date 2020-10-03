@@ -3,36 +3,46 @@ import {mat4, vec3} from "../gl-matrix-min.js"
 const VERTEX_DIM = 3;
 const UV_DIM = 2;
 
+let texList = {}
 
 export let Texture2D = function(gl, path, resolution) {
 	this.gl = gl;
 	this.name = path;
 	
-	this.tex = this.gl.createTexture();
-	this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
-	//this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]));
-
-	this.image = new Image();
-	if (!resolution) {
-		resolution = [512, 512];
+	if (!this.name in Object.keys(texList))
+	{
+		this.image = texList[this.name].image
+		this.tex = texList[this.name].tex
 	}
-	this.image.width = resolution[0];
-	this.image.height = resolution[1];
-	this.image.onload = function () {
-		this.gl.pixelStorei(this.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-		
+	else{
+		this.tex = this.gl.createTexture();
 		this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
-		this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, this.image);
-		this.gl.pixelStorei(this.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+		//this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]));
 
-		this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
-		this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
-		this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
-		this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR_MIPMAP_LINEAR);
+		this.image = new Image();
+		if (!resolution) {
+			resolution = [512, 512];
+		}
+		this.image.width = resolution[0];
+		this.image.height = resolution[1];
+		this.image.onload = function () {
+			this.gl.pixelStorei(this.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+			
+			this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
+			this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, this.image);
+			this.gl.pixelStorei(this.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR_MIPMAP_LINEAR);
+			
+			this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
+		}.bind(this);
+		this.image.src = path;
 		
-		this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
-	}.bind(this);
-	this.image.src = path;
+		texList[this.name] = this
+	}
 }
 
 Texture2D.prototype.bindTo = function(position) {
