@@ -20,6 +20,11 @@ export let inventory = {
 	objects: [],
 };
 
+// TODO: Find a better place for this
+export let itemSprites = {
+    0: "assets/Ring_poliert_Blickdicht.png"
+};
+
 export function pickUp(item) {
 	let index = level.objects.indexOf(item);
 	if (index > -1) {

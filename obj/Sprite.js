@@ -16,7 +16,7 @@ export let Texture2D = function(path, frames) {
 	else
 		this.frames = frames
 	this.currFrame = 0
-	
+
 	if (!this.name in Object.keys(texList)) {
 		this.image = texList[this.name].image;
 		this.tex = texList[this.name].tex;
@@ -37,17 +37,14 @@ export let Texture2D = function(path, frames) {
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-			
+
 			//gl.generateMipmap(gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
 		}.bind(this);
 		this.image.src = path;
 
 		texList[this.name] = this;
 	}
-	
-	console.log(this.frames)
-	console.log(this.currFrame)
-	
+
 }
 
 Texture2D.prototype.nextFrame = function() {
@@ -58,7 +55,7 @@ Texture2D.prototype.nextFrame = function() {
 Texture2D.prototype.bindTo = function(shader, position) {
 	gl.activeTexture(position);
 	gl.bindTexture(gl.TEXTURE_2D, this.tex);
-	
+
 	gl.uniform2fv(shader.getUniform('frame_data'), vec2.fromValues(this.currFrame, this.frames));
 }
 
@@ -133,7 +130,7 @@ Mesh.prototype.draw = function() {
 let Sprite = function(spritePath, transformation, parent) {
 	if (typeof(Sprite.MESH) === "undefined")
 		Sprite.MESH = new Mesh([1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0] , [ 1, 0, 0, 0, 1, 1, 0, 1]); //screen square
-	
+
 	this.texture = new Texture2D(spritePath);
 	this.transform = typeof(transformation) === "undefined" ? mat4.create() : mat4.clone(transformation);
 	this.m = mat4.create();
@@ -159,9 +156,9 @@ Sprite.prototype.setVisibility = function(isVisible) {
 Sprite.prototype.draw = function(shader) {
 	if (!this.visibility) //should this also be inheriting?
 		return;
-	
+
 	this.texture.bindTo(shader, gl.TEXTURE0);
-	
+
 	gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); //write model transformation
 	gl.uniform1i(shader.getUniform('texture'), 0);
 	Sprite.MESH.bindToVAO(shader.getAttrib('position'), shader.getAttrib('texCoord'));
@@ -176,7 +173,7 @@ let GameObject = function(spritePath, position, size, type) {
 
     let transform = mat4.create();
     mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(this.halfSize[0], this.halfSize[1], 1));
-	
+
 	if (spritePath === null)
 		this.sprite = null
 	else

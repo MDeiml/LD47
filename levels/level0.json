@@ -92,6 +92,7 @@
 		},
 		{
 			"type" : "interactable",
+			"pickup" : 0,
 			"spriteName" : "bed0",
 			"pos" : {
 				"x" : 10,
