@@ -33,7 +33,7 @@ export function walkingRight() {
 }
 
 export function jumping() {
-    return keyDown("Space");
+    return keyDown("Space") || keyDown("ArrowUp");
 }
 
 export function pickingUp() {
