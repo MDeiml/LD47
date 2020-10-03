@@ -18,11 +18,12 @@ function main() {
 
     // TODO: Change this
     setPlayer(new GameObject("./Jabba.webp", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player"));
+    player.velocity = vec2.fromValues(0, 0);
     level.objects.push(new GameObject("./Jabba.webp", vec2.fromValues(4, 0), vec2.fromValues(2, 2), "collidable"));
 
     window.running = true;
     requestAnimationFrame(update);
-	
+
 	loadLevel(0, gl)
 }
 
@@ -47,13 +48,13 @@ function update(now) {
         updateInput();
         updatePhysics(FRAME_TIME / 1000);
     }
-	
+
 	if (!level.isInitialized)
 	{
 		for (let entry of level.objects)
 			sprites.push(entry)
 	}
-	
+
     // don't render if there was no update
     if (shouldRender) {
         updateGraphics();

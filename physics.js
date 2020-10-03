@@ -26,15 +26,17 @@ export function testIntersection(a, b) {
 }
 
 export function update(delta) {
-    let vel = vec2.create();
+    let velx = 0;
     if (walkingLeft()) {
-        vel[0] -= 1;
+        velx -= PLAYER_SPEED;
     }
     if (walkingRight()) {
-        vel[0] += 1;
+        velx += PLAYER_SPEED;
     }
-    vec2.scale(vel, vel, PLAYER_SPEED * delta);
-    player.setPosition(vec2.add(player.position, player.position, vel));
+    player.velocity[0] = velx;
+    player.velocity[1] -= 10 * delta;
+    let positionDelta = vec2.scale(vec2.create(), player.velocity, delta);
+    player.setPosition(vec2.add(player.position, player.position, positionDelta));
 
     for (let obj of level.objects) {
         if (!(obj instanceof GameObject)) continue;
@@ -42,6 +44,11 @@ export function update(delta) {
         if (intersection) {
             if (obj.type == "collidable") {
                 player.setPosition(vec2.sub(player.position, player.position, intersection));
+                if (intersection[0] != 0) {
+                    player.velocity[0] = 0;
+                } else {
+                    player.velocity[1] = 0;
+                }
             } else if (obj.type == "interactable") {
                 // TODO: Interaction
             }
