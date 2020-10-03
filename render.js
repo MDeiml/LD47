@@ -1,8 +1,8 @@
 import * as Shader from "./obj/Shader.js"
 import * as Sprite from "./obj/Sprite.js"
-import {Projection, View, View2D} from "./obj/Transform.js"
+import {Projection, View} from "./obj/Transform.js"
 import { SPRITE_LIST } from "./registry.js"
-import {mat4} from "./gl-matrix-min.js"
+import {mat4, vec2} from "./gl-matrix-min.js"
 import {level, player, gl, setGl} from "./state.js"
 
 let shaders = {};
@@ -34,7 +34,7 @@ export function init(c) {
 	gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 	initShaders();
 
-	camera = View2D;
+	camera = new View(vec2.fromValues(0, 0));
 	projection = new Projection(w/h);
 	updateViewMat = true;
 
@@ -99,7 +99,7 @@ function drawGUI() {
 	gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('VP'), false, projection.get());
 
 	//TODO remove down the line with GUI shader
-	
+
 	for (let sprite of guiSprites)
 		sprite.draw(shaders["defaultShader"]);
 }
