@@ -5,9 +5,15 @@ let nextKeys = {};
 export function init() {
     document.addEventListener("keydown", function(event) {
         nextKeys[event.code] = true;
+        if (event.code == "Tab") {
+            event.preventDefault();
+        }
     });
     document.addEventListener("keyup", function(event) {
         delete nextKeys[event.code];
+        if (event.code == "Tab") {
+            event.preventDefault();
+        }
     });
 }
 
@@ -38,4 +44,8 @@ export function jumping() {
 
 export function pickingUp() {
 	return keyDown("KeyE");
+}
+
+export function toggleInventory() {
+    return keyDown("Tab");
 }

@@ -3,7 +3,7 @@ import * as Sprite from "./obj/Sprite.js"
 import {Projection, View} from "./obj/Transform.js"
 import { SPRITE_LIST } from "./registry.js"
 import {mat4, vec2} from "./gl-matrix-min.js"
-import {level, player, gl, setGl, menu} from "./state.js"
+import {level, player, gl, setGl, menu, inventory} from "./state.js"
 
 let shaders = {};
 
@@ -110,6 +110,12 @@ function drawGUI() {
 
     if (menu.sprite != null) {
         menu.sprite.draw(shaders["defaultShader"]);
+    }
+
+    if (inventory.opened) {
+        for (let item of inventory.objects) {
+            item.draw(shaders["defaultShader"]);
+        }
     }
 }
 
