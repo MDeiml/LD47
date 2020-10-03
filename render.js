@@ -3,11 +3,9 @@ import * as Sprite from "./obj/Sprite.js"
 import {Projection, View} from "./obj/Transform.js"
 import { SPRITE_LIST } from "./registry.js"
 import {mat4, vec2} from "./gl-matrix-min.js"
-import {level, player, gl, setGl} from "./state.js"
+import {level, player, gl, setGl, menu} from "./state.js"
 
 let shaders = {};
-export let sprites = [];
-export let guiSprites = [];
 
 export let projection = null;
 let camera = null;
@@ -100,8 +98,8 @@ export function update() {
 		updateViewMat = false;
 	}
 
-	drawGUI();
 	drawBaseShader();
+    drawGUI();
 
 	gl.flush();
 }
@@ -110,10 +108,9 @@ function drawGUI() {
 
 	gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('VP'), false, projection.get());
 
-	//TODO remove down the line with GUI shader
-
-	for (let sprite of guiSprites)
-		sprite.draw(shaders["defaultShader"]);
+    if (menu.sprite != null) {
+        menu.sprite.draw(shaders["defaultShader"]);
+    }
 }
 
 function drawBaseShader() {

@@ -4,6 +4,10 @@ export let player = null;
 export let level = {
     objects: [],
 };
+export let menu = {
+    sprite: null,
+    cooldown: 0
+};
 
 export function setGl(context) {
     gl = context;

@@ -1,5 +1,5 @@
-import {Sprite, GameObject} from "./obj/Sprite.js"
-import {level} from "./state.js"
+import {Sprite, GameObject, Texture2D} from "./obj/Sprite.js"
+import {level, menu} from "./state.js"
 import {mat4, vec2, vec3, quat} from "./gl-matrix-min.js"
 
 const X_SCALE = 1//0.25
@@ -42,6 +42,12 @@ export function initLevel(id, gl, rawData) {
 	//verify ID
 	if (levelData["id"] !== id)
 		console.warning("Failed to verify level ID with internal ID. Some level designer must have fallen asleep.")
+
+    // intro
+    if (levelData["intro"]) {
+        menu.sprite = new Sprite("assets/" + levelData["intro"]["spriteName"] + ".png", mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
+        menu.cooldown = levelData["intro"]["duration"];
+    }
 
 	//pedantic
 	let objects = levelData["objects"].sort((a, b) => TYPE_ID_MAP[a["type"]] < TYPE_ID_MAP[b["type"]] ? -1 : 1)

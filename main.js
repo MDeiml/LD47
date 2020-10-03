@@ -1,8 +1,8 @@
-import { init as initGraphics, update as updateGraphics, projection, sprites, updateView } from "./render.js"
+import { init as initGraphics, update as updateGraphics, projection, updateView } from "./render.js"
 import {mat4, vec3, vec2} from "./gl-matrix-min.js"
 import {update as updatePhysics} from "./physics.js"
 import { init as initInput, update as updateInput} from "./input.js"
-import {gl, player, level, setPlayer} from "./state.js"
+import {gl, player, level, menu, setPlayer} from "./state.js"
 import {GameObject} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 
@@ -46,15 +46,16 @@ function update(now) {
         unprocessed -= FRAME_TIME;
         shouldRender = true;
         updateInput();
-		updatePhysics(FRAME_TIME / 1000);
+        if (menu.sprite == null) {
+            updatePhysics(FRAME_TIME / 1000);
+        } else {
+            menu.cooldown -= FRAME_TIME / 1000;
+            if (menu.cooldown < 0) {
+                menu.sprite = null;
+            }
+        }
 		updateView();
     }
-
-	if (!level.isInitialized)
-	{
-		for (let entry of level.objects)
-			sprites.push(entry)
-	}
 
     // don't render if there was no update
     if (shouldRender) {

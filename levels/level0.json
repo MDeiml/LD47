@@ -1,5 +1,9 @@
 {
 	"id" : 0,
+    "intro": {
+        "spriteName": "find_yourself",
+        "duration": 3
+    },
 	
 	"objects" : [
 		{
