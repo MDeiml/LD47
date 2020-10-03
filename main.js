@@ -1,4 +1,4 @@
-import { init as initGraphics, update as updateGraphics, projection, sprites } from "./render.js"
+import { init as initGraphics, update as updateGraphics, projection, sprites, updateView } from "./render.js"
 import {mat4, vec3, vec2} from "./gl-matrix-min.js"
 import {update as updatePhysics} from "./physics.js"
 import { init as initInput, update as updateInput} from "./input.js"
@@ -45,7 +45,8 @@ function update(now) {
         unprocessed -= FRAME_TIME;
         shouldRender = true;
         updateInput();
-        updatePhysics(FRAME_TIME / 1000);
+		updatePhysics(FRAME_TIME / 1000);
+		updateView();
     }
 	
 	if (!level.isInitialized)
