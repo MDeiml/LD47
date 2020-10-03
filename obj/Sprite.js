@@ -3,18 +3,16 @@ import {mat4, vec3} from "../gl-matrix-min.js"
 const VERTEX_DIM = 3;
 const UV_DIM = 2;
 
-let texList = {}
+let texList = {};
 
 export let Texture2D = function(gl, path, resolution) {
 	this.gl = gl;
 	this.name = path;
 
-	if (!this.name in Object.keys(texList))
-	{
-		this.image = texList[this.name].image
-		this.tex = texList[this.name].tex
-	}
-	else{
+	if (!this.name in Object.keys(texList)) {
+		this.image = texList[this.name].image;
+		this.tex = texList[this.name].tex;
+	} else {
 		this.tex = this.gl.createTexture();
 		this.gl.bindTexture(this.gl.TEXTURE_2D, this.tex);
 		//this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]));
@@ -41,7 +39,7 @@ export let Texture2D = function(gl, path, resolution) {
 		}.bind(this);
 		this.image.src = path;
 
-		texList[this.name] = this
+		texList[this.name] = this;
 	}
 
 }
