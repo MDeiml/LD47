@@ -1,8 +1,8 @@
 import { init as initGraphics, update as updateGraphics, projection, updateView } from "./render.js"
 import {mat4, vec3, vec2} from "./gl-matrix-min.js"
 import {update as updatePhysics} from "./physics.js"
-import { init as initInput, update as updateInput, toggleInventory} from "./input.js"
-import {gl, player, level, menu, setPlayer, inventory} from "./state.js"
+import { init as initInput, update as updateInput, toggleInventory, menuUp, menuDown, menuLeft, menuRight} from "./input.js"
+import {gl, player, level, menu, setPlayer, inventory, INVENTORY_HEIGHT, INVENTORY_WIDTH} from "./state.js"
 import {GameObject} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 
@@ -85,6 +85,19 @@ function update(now) {
 }
 
 function updateInventory() {
+    if (menuRight()) {
+        inventory.cursorPosition += 1;
+    }
+    if (menuLeft()) {
+        inventory.cursorPosition -= 1;
+    }
+    if (menuDown()) {
+        inventory.cursorPosition += INVENTORY_WIDTH;
+    }
+    if (menuUp()) {
+        inventory.cursorPosition -= INVENTORY_WIDTH;
+    }
+    inventory.cursorPosition = (inventory.cursorPosition + INVENTORY_WIDTH * INVENTORY_HEIGHT) % (INVENTORY_WIDTH * INVENTORY_HEIGHT);
 }
 
 main();
