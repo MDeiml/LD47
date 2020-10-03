@@ -124,24 +124,10 @@ let Sprite = function(spritePath, transformation, parent) {
 		Sprite.MESH = new Mesh([1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0] , [ 1, 0, 0, 0, 1, 1, 0, 1]); //screen square
 
 	this.texture = new Texture2D(spritePath);
-	this.shadow = new DynamicTexture2D();
 	this.transform = typeof(transformation) === "undefined" ? mat4.create() : mat4.clone(transformation);
 	this.m = mat4.create();
 	this.parent = typeof(parent) === "undefined" ? null : parent;
 	this.visibility = true;
-}
-
-Sprite.prototype.updateShadow = function(shader) {
-	this.shadow.bindFramebuffer();
-
-	this.texture.bindTo(gl.TEXTURE0);
-	gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); //write model transformation
-	gl.uniform1i(shader.getUniform('texture'), 0);
-
-	Sprite.MESH.bindToVAO(shader.getAttrib('position'), shader.getAttrib('texCoord'));
-	Sprite.MESH.draw();
-
-	this.shadow.unbindFramebuffer();
 }
 
 Sprite.prototype.getTransformation = function() {
@@ -175,11 +161,9 @@ Sprite.prototype.draw = function(shader) {
 		return;
 
 	this.texture.bindTo(gl.TEXTURE0);
-	this.shadow.bindTo(gl.TEXTURE1);
-
+	
 	gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); //write model transformation
 	gl.uniform1i(shader.getUniform('texture'), 0);
-	gl.uniform1i(shader.getUniform('shadowTexture'), 1);
 	Sprite.MESH.bindToVAO(shader.getAttrib('position'), shader.getAttrib('texCoord'));
 	Sprite.MESH.draw();
 
