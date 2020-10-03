@@ -16,7 +16,7 @@ function main() {
     initInput();
 
     // TODO: Change this
-    setPlayer(new GameObject(gl, "test", vec2.fromValues(0, 0), vec2.fromValues(1, 1)));
+    setPlayer(new GameObject(gl, "./Jabba.webp", vec2.fromValues(0, 0), vec2.fromValues(1, 1)));
 
     window.running = true;
     requestAnimationFrame(update);

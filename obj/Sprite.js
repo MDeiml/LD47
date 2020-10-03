@@ -33,9 +33,9 @@ export let Texture2D = function(gl, path, resolution) {
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
 			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
-			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR_MIPMAP_LINEAR);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
 
-			this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
+			// this.gl.generateMipmap(this.gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
 		}.bind(this);
 		this.image.src = path;
 

@@ -3,7 +3,7 @@ import * as Sprite from "./obj/Sprite.js"
 import {Projection, View, View2D} from "./obj/Transform.js"
 import { SPRITE_LIST } from "./registry.js"
 import {mat4} from "./gl-matrix-min.js"
-import {level, gl, setGl} from "./state.js"
+import {level, player, gl, setGl} from "./state.js"
 
 //graphics context objects not exported - compartmentalization
 let shaders = {};
@@ -119,6 +119,8 @@ function drawBaseShader() {
 
 	for (let sprite of level.objects)
 		sprite.draw(shaders["defaultShader"]);
+
+    player.draw(shaders["defaultShader"]);
 }
 
 function drawShadowShader() {
