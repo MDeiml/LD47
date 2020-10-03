@@ -1,7 +1,6 @@
 import * as Shader from "./obj/Shader.js"
 import * as Sprite from "./obj/Sprite.js"
 import {Projection, View} from "./obj/Transform.js"
-import { SPRITE_LIST } from "./registry.js"
 import {mat4, vec2} from "./gl-matrix-min.js"
 import {level, player, gl, setGl, menu, inventory} from "./state.js"
 
@@ -17,8 +16,6 @@ let lighting = 0;
 //move to global state in some way
 let w = 0;
 let h = 0;
-
-//TODO add texture construction
 
 export function init(c) {
 	let canvas = c;
@@ -36,14 +33,11 @@ export function init(c) {
 	camera = new View(vec2.fromValues(0, 0));
 	projection = new Projection(w/h);
 	updateViewMat = true;
-
-
-	for (let sprite of SPRITE_LIST)
-	{
-		sprites.push(new Sprite.Sprite(gl, sprite));
-	}
-
-
+	
+	menu.backgroundContainer = new Sprite.Sprite(null, mat4.fromValues(1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1), null)
+	menu.backgroundContainer.texture = new Sprite.DynamicTexture2D() //hackery but static, don't judge me
+	
+	
     window.addEventListener('resize', updateProjection);
     window.addEventListener('orientationchange', updateProjection);
     window.addEventListener('fullscreenchange', updateProjection);
@@ -52,7 +46,8 @@ export function init(c) {
 
 function initShaders(name) {
 
-	shaders["defaultShader"] = new Shader.Shader(gl, "shader")
+	shaders["defaultShader"] = new Shader.Shader("shader")
+	shaders["blurShader"] = new Shader.Shader("blur")
 
 	shaders["defaultShader"].bind();
     let defaultPositionAttribute = gl.getAttribLocation(shaders["defaultShader"].get(), 'position');
@@ -98,7 +93,15 @@ export function update() {
 		updateViewMat = false;
 	}
 
+	if (inventory.opened || menu.sprite !== null)
+		menu.backgroundContainer.texture.bindFramebuffer()
+	else
+		menu.backgroundContainer.setVisibility(false)
 	drawBaseShader();
+	if (inventory.opened || menu.sprite !== null) {
+		menu.backgroundContainer.texture.unbindFramebuffer()
+		menu.backgroundContainer.setVisibility(true)
+	}
     drawGUI();
 
 	gl.flush();
@@ -106,9 +109,14 @@ export function update() {
 
 function drawGUI() {
 
+	shaders["blurShader"].bind();
+	gl.uniformMatrix4fv(shaders["blurShader"].getUniform('VP'), false, mat4.create());
+	menu.backgroundContainer.draw(shaders["blurShader"]);
+	shaders["defaultShader"].bind();
+
 	gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('VP'), false, projection.get());
 
-    if (menu.sprite != null) {
+    if (menu.sprite !== null) {
         menu.sprite.draw(shaders["defaultShader"]);
     }
 

@@ -1,3 +1,5 @@
+import {gl} from "../state.js"
+
 //move to util
 function readElements(id) {
 	const elem = document.getElementById(id);
@@ -13,7 +15,7 @@ function readElements(id) {
 	return source
 }
 
-function buildShader(gl, type, source) {
+function buildShader(type, source) {
 	let shader = gl.createShader(type) //allocate shader
 	gl.shaderSource(shader, source)
 	gl.compileShader(shader)
@@ -26,19 +28,18 @@ function buildShader(gl, type, source) {
 }
 
 //load stage
-let Shader = function(gl, nameID) {
-	this.gl = gl
+let Shader = function(nameID) {
 	this.name = nameID //assumed to be unique. otherwise shaders wouldn't be either
 	
 	//generate shader units from code
-	this.vs = buildShader(this.gl, this.gl.VERTEX_SHADER, readElements(nameID.concat("-vs")))
-	this.fs = buildShader(this.gl, this.gl.FRAGMENT_SHADER, readElements(nameID.concat("-fs")))
+	this.vs = buildShader(gl.VERTEX_SHADER, readElements(nameID.concat("-vs")))
+	this.fs = buildShader(gl.FRAGMENT_SHADER, readElements(nameID.concat("-fs")))
 	
 	//build shader program
-	this.program = this.gl.createProgram();
-	this.gl.attachShader(this.program, this.vs);
-	this.gl.attachShader(this.program, this.fs);
-	this.gl.linkProgram(this.program);
+	this.program = gl.createProgram();
+	gl.attachShader(this.program, this.vs);
+	gl.attachShader(this.program, this.fs);
+	gl.linkProgram(this.program);
 	
     if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
         alert('Error when linking shaders');
@@ -51,7 +52,7 @@ let Shader = function(gl, nameID) {
 Shader.currentPrgm = ""
 
 Shader.prototype.bind = function() {
-	this.gl.useProgram(this.program);
+	gl.useProgram(this.program);
 	Shader.currentPrgm = this.name //store state
 }
 
@@ -66,7 +67,7 @@ Shader.prototype.getAttrib = function (name) {
 	}
 	
 	if (typeof(this.attrib[name]) === "undefined") {
-		this.attrib[name] = this.gl.getAttribLocation(this.program, name)
+		this.attrib[name] = gl.getAttribLocation(this.program, name)
 	}
 	
 	return this.attrib[name]
@@ -79,7 +80,7 @@ Shader.prototype.getUniform = function(name) {
 	}
 	
 	if (typeof(this.uniforms[name]) === "undefined")
-		this.uniforms[name] = this.gl.getUniformLocation(this.program, name)
+		this.uniforms[name] = gl.getUniformLocation(this.program, name)
 	
 	return this.uniforms[name]
 }

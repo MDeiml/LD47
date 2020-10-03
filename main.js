@@ -59,7 +59,7 @@ function update(now) {
             inventory.opened = !inventory.opened;
             inventory.cursorPosition = 0;
         }
-        if (menu.sprite != null) {
+        if (menu.sprite !== null) {
             menu.cooldown -= FRAME_TIME / 1000;
             if (menu.cooldown < 0) {
                 menu.sprite = null;
@@ -68,10 +68,9 @@ function update(now) {
             updateInventory();
         } else {
             updatePhysics(FRAME_TIME / 1000);
+			updateView();
+			updatePlayerAnimation();
         }
-		updateView();
-
-		updatePlayerAnimation();
     }
 
     // don't render if there was no update

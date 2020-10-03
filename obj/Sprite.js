@@ -93,7 +93,7 @@ export let DynamicTexture2D = function() {
 	gl.bindTexture(gl.TEXTURE_2D, this.tex);
 
 	//based on canvas this is optimal resolution but a nonstatic value forces reconstruction on resize :/
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 2048, 2048/*gl.canvas.width, gl.canvas.height*/, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.canvas.width, gl.canvas.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
 
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
@@ -104,7 +104,6 @@ export let DynamicTexture2D = function() {
 	gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.tex, 0);
 	gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 }
-
 DynamicTexture2D.prototype.bindFramebuffer = function() {
 	gl.bindFramebuffer(gl.FRAMEBUFFER, DynamicTexture2D.framebuffer);
 
@@ -113,9 +112,11 @@ DynamicTexture2D.prototype.bindFramebuffer = function() {
 DynamicTexture2D.prototype.unbindFramebuffer = function() {
 	gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 }
-DynamicTexture2D.prototype.bindTo = function(position) {
+DynamicTexture2D.prototype.bindTo = function(shader, position) {
 	gl.activeTexture(position);
 	gl.bindTexture(gl.TEXTURE_2D, this.tex);
+	gl.uniform2fv(shader.getUniform('frame_data'), vec2.fromValues(0,1));
+	gl.uniform2fv(shader.getUniform('texRes'), vec2.fromValues(gl.canvas.width, gl.canvas.height));
 }
 
 
@@ -137,7 +138,6 @@ let Mesh = function(vertices, uv) {
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.squareTexCoordBuffer);
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
 }
-
 Mesh.prototype.bindToVAO = function(positionAttrib, uvAttrib) {
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.squareBuffer);
 	gl.vertexAttribPointer(positionAttrib, VERTEX_DIM, gl.FLOAT, false, 0, 0);
@@ -145,7 +145,6 @@ Mesh.prototype.bindToVAO = function(positionAttrib, uvAttrib) {
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.squareTexCoordBuffer);
 	gl.vertexAttribPointer(uvAttrib, UV_DIM, gl.FLOAT, false, 0, 0);
 }
-
 Mesh.prototype.draw = function() {
 	if (wireframe)
         gl.drawArrays(gl.LINE_STRIP, 0, this.vertexCnt);
@@ -157,13 +156,17 @@ let Sprite = function(spritePath, transformation, parent) {
 	if (typeof(Sprite.MESH) === "undefined")
 		Sprite.MESH = new Mesh([1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0] , [ 1, 0, 0, 0, 1, 1, 0, 1]); //screen square
 
-	this.texture = new Texture2D(spritePath);
+	if (spritePath === null) {
+		this.texture = null
+	}
+	else {
+		this.texture = new Texture2D(spritePath);
+	}
 	this.transform = typeof(transformation) === "undefined" ? mat4.create() : mat4.clone(transformation);
 	this.m = mat4.create();
 	this.parent = typeof(parent) === "undefined" ? null : parent;
 	this.visibility = true;
 }
-
 Sprite.prototype.getTransformation = function() {
 	if (this.parent !== null)
 		mat4.mult(this.m, this.transform, this.parent.getTransformation());
@@ -174,13 +177,11 @@ Sprite.prototype.getTransformation = function() {
 Sprite.prototype.setTransformation = function(transformation) {
 	mat4.copy(this.transform, transformation);
 }
-
 Sprite.prototype.setVisibility = function(isVisible) {
 	this.visibility = isVisible;
 }
-
 Sprite.prototype.draw = function(shader) {
-	if (!this.visibility) //should this also be inheriting?
+	if (!this.visibility || this.texture === null) //should this also be inheriting?
 		return;
 
 	this.texture.bindTo(shader, gl.TEXTURE0);
@@ -209,7 +210,6 @@ let GameObject = function(spritePath, position, size, type, scale = vec2.fromVal
 		this.sprite = new Sprite(spritePath, transform, null);
 	}
 }
-
 GameObject.prototype.setPosition = function(position) {
     this.position = position;
     let transform = mat4.create();
@@ -217,7 +217,6 @@ GameObject.prototype.setPosition = function(position) {
 	if (this.sprite !== null)
 		this.sprite.setTransformation(transform);
 }
-
 GameObject.prototype.draw = function(shader) {
     if (this.sprite !== null)
 		this.sprite.draw(shader);
