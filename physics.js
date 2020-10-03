@@ -1,7 +1,7 @@
-import {level, player, pickUp} from "./state.js"
+import {level, player, pickUp, menu, itemSprites} from "./state.js"
 import {walkingLeft, walkingRight, jumping, pickingUp} from "./input.js"
-import {vec2} from "./gl-matrix-min.js"
-import {GameObject} from "./obj/Sprite.js"
+import {vec2, mat4, vec3} from "./gl-matrix-min.js"
+import {GameObject, Sprite} from "./obj/Sprite.js"
 
 const PLAYER_SPEED = 25/10;
 const JUMP_SPEED = 10;
@@ -57,8 +57,9 @@ export function update(delta) {
                     if (intersection[1] < 0) player.onGround = true;
                 }
             } else if (obj.type == "interactable") {
-				// TODO: Interaction
 				if (pickingUp()) {
+                    menu.sprite = new Sprite(itemSprites[obj.pickup], mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
+                    menu.cooldown = 3;
 					pickUp(obj);
 				}
             }

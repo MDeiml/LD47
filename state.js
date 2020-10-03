@@ -4,6 +4,10 @@ export let player = null;
 export let level = {
     objects: [],
 };
+export let menu = {
+    sprite: null,
+    cooldown: 0
+};
 
 export function setGl(context) {
     gl = context;
@@ -14,6 +18,11 @@ export function setPlayer(obj) {
 }
 export let inventory = {
 	objects: [],
+};
+
+// TODO: Find a better place for this
+export let itemSprites = {
+    0: "assets/Ring_poliert_Blickdicht.png"
 };
 
 export function pickUp(item) {
