@@ -14,3 +14,11 @@ export function pickUp(item) {
 		inventory.objects.push(item);
 	}
 }
+
+export function layDown(item) {
+	index = inventory.objects.indexOf(item);
+	if (index > -1) {
+		inventory.objects.splice(index, 1);
+		level.objects.push(item);
+	}
+}
