@@ -159,31 +159,35 @@ Sprite.prototype.draw = function(shader) {
 
 	this.texture.bindTo(shader, gl.TEXTURE0);
 
-	gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); //write model transformation
+	gl.uniformMatrix4fv(shader.getUniform('M'), false, this.getTransformation()); // write model transformation
 	gl.uniform1i(shader.getUniform('texture'), 0);
 	Sprite.MESH.bindToVAO(shader.getAttrib('position'), shader.getAttrib('texCoord'));
 	Sprite.MESH.draw();
 }
 
-let GameObject = function(spritePath, position, size, type) {
+let GameObject = function(spritePath, position, size, type, scale = vec2.fromValues(1, 1), offset = vec2.fromValues(0, 0), facingRight = true) {
     this.position = position;
     this.halfSize = vec2.create();
     this.type = type;
+	this.scale = scale;
+	this.offset = offset;
+	this.facingRight = facingRight;
     vec2.scale(this.halfSize, size, 0.5);
 
     let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(this.halfSize[0], this.halfSize[1], 1));
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(this.position[0] + this.offset[0], this.position[1] + this.offset[1], 0), vec3.fromValues(this.halfSize[0] * (this.facingRight ? 1 : -1) * this.scale[0], this.halfSize[1] * this.scale[1], 1));
 
-	if (spritePath === null)
-		this.sprite = null
-	else
+	if (spritePath === null) {
+		this.sprite = null;
+	} else {
 		this.sprite = new Sprite(spritePath, transform, null);
+	}
 }
 
 GameObject.prototype.setPosition = function(position) {
     this.position = position;
     let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(this.halfSize[0], this.halfSize[1], 1));
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(this.position[0] + this.offset[0], this.position[1] + this.offset[1], 0), vec3.fromValues(this.halfSize[0] * (this.facingRight ? 1 : -1) * this.scale[0], this.halfSize[1] * this.scale[1], 1));
 	if (this.sprite !== null)
 		this.sprite.setTransformation(transform);
 }
