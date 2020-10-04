@@ -61,6 +61,7 @@ Texture2D.prototype.bindTo = function(shader, position) {
 	gl.bindTexture(gl.TEXTURE_2D, this.tex);
 
 	gl.uniform2fv(shader.getUniform('frame_data'), vec2.fromValues(this.currFrame, this.frames));
+	gl.uniform2fv(shader.getUniform('texRes'), vec2.fromValues(this.image.width, this.image.height));
 }
 
 export let GradientTexture2D = function(minCol, maxCol, steps) {
@@ -156,7 +157,7 @@ Mesh.prototype.draw = function() {
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, this.vertexCnt);
 }
 
-let Sprite = function(spritePath, transformation, parent) {
+let Sprite = function(spritePath, transformation, type, parent) {
 	if (typeof(Sprite.MESH) === "undefined")
 		Sprite.MESH = new Mesh([1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0] , [ 1, 0, 0, 0, 1, 1, 0, 1]); //screen square
 
@@ -167,6 +168,7 @@ let Sprite = function(spritePath, transformation, parent) {
 		this.texture = new Texture2D(spritePath);
 	}
 	this.transform = typeof(transformation) === "undefined" ? mat4.create() : mat4.clone(transformation);
+	this.type = type
 	this.m = mat4.create();
 	this.parent = typeof(parent) === "undefined" ? null : parent;
 }
@@ -210,7 +212,7 @@ let GameObject = function(spritePath, position, size, type, scale = vec2.fromVal
 	if (spritePath === null) {
 		this.sprite = null;
 	} else {
-		this.sprite = new Sprite(spritePath, this.calculateTransform(), null);
+		this.sprite = new Sprite(spritePath, this.calculateTransform(), type, null);
 	}
 }
 

@@ -7,12 +7,13 @@ const Y_SCALE = 1
 
 const TYPE_ID_MAP = {
 	background : 0,
-	door : 1,
-	deco : 2,
-	collidable : 3,
-	xcollidable : 4,
-	interactable : 5,
-	foreground : 6
+	collision_mask : 1,
+	door : 2,
+	deco : 3,
+	collidable : 4,
+	xcollidable : 5,
+	interactable : 6,
+	foreground : 7
 }
 
 //move to util
@@ -86,13 +87,14 @@ export function initLevel(id, rawData) {
 		switch(entry["type"])
 		{
 		case "background":
+		case "collision_mask":
 		case "foreground":
 		case "deco":
             let transformation = mat4.create()
 			let pos = vec3.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["y"] * Y_SCALE, 0)
 			scale = vec3.fromValues(entry["size"]["width"] * X_SCALE * 0.5, entry["size"]["height"] * Y_SCALE * 0.5, 0)
 			mat4.fromRotationTranslationScale(transformation, quat.create(), pos, scale)
-			level.objects.push(new Sprite(spriteName, transformation))
+			level.objects.push(new Sprite(spriteName, transformation, entry["type"]))
 			break;
 		case "collidable":
 		case "xcollidable":
@@ -111,7 +113,6 @@ export function initLevel(id, rawData) {
 		}
         level.exit = vec2.fromValues(levelData["exit"]["x"], levelData["exit"]["y"]);
 	}
-
 
 	level.objects.push(new GameObject(null, vec2.fromValues(0, -5), vec2.fromValues(10000, 5), "collidable")); //the fuck
 
