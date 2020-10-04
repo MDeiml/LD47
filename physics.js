@@ -1,7 +1,7 @@
 import {level, player, pickUp, menu, itemSprites} from "./state.js"
 import {walkingLeft, walkingRight, jumping, pickingUp, holdingJump} from "./input.js"
 import {vec2, mat4, vec3} from "./gl-matrix-min.js"
-import {GameObject, Sprite} from "./obj/Sprite.js"
+import {GameObject, Sprite, Orientation} from "./obj/Sprite.js"
 
 const PLAYER_SPEED = 25/10;
 const JUMP_SPEED = 13; // 6.75
@@ -31,11 +31,11 @@ export function update(delta) {
     let velx = 0;
     if (walkingLeft()) {
 		velx -= PLAYER_SPEED;
-		player.facingRight = false;
+		player.orientation = Orientation.MIRRORED;
     }
     if (walkingRight()) {
         velx += PLAYER_SPEED;
-		player.facingRight = true;
+		player.orientation = Orientation.DEFAULT;
     }
     if (player.onGround && jumping()) {
         player.velocity[1] = JUMP_SPEED;

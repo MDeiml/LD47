@@ -65,10 +65,12 @@ export function initLevel(id, gl, rawData) {
 
 	for (let entry of objects)
 	{
-		let transformation = mat4.create()
 		let pos1 = vec2.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["y"] * Y_SCALE)
 		let size = vec2.fromValues(entry["size"]["width"] * X_SCALE, entry["size"]["height"] * Y_SCALE)
-	
+        let offset = vec2.fromValues(0, 0);
+        let scale = vec2.fromValues(1, 1);
+        let orientation = entry["orientation"];
+
 		let obj = null;
 
 		switch(entry["type"])
@@ -76,19 +78,20 @@ export function initLevel(id, gl, rawData) {
 		case "background":
 		case "foreground":
 		case "deco":
+            let transformation = mat4.create()
 			let pos = vec3.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["y"] * Y_SCALE, 0)
-			let scale = vec3.fromValues(entry["size"]["width"] * X_SCALE * 0.5, entry["size"]["height"] * Y_SCALE * 0.5, 0)
+			scale = vec3.fromValues(entry["size"]["width"] * X_SCALE * 0.5, entry["size"]["height"] * Y_SCALE * 0.5, 0)
 			mat4.fromRotationTranslationScale(transformation, quat.create(), pos, scale)
 			level.objects.push(new Sprite("assets/" + entry["spriteName"] + ".png", transformation))
 			break;
 		case "collidable":
-			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "collidable"))
+			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "collidable", scale, offset, orientation))
 			break;
 		case "xcollidable":
-			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "xcollidable"))
+			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "xcollidable", scale, offset, orientation))
 			break;
 		case "interactable":
-            obj = new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "interactable");
+            obj = new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "interactable", scale, offset, orientation);
             obj.pickup = entry["pickup"];
 			level.objects.push(obj)
 			break;
