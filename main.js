@@ -17,12 +17,12 @@ let framePos = 0
 function main() {
     initGraphics(document.getElementById('glCanvas'));
     initInput();
-	
+
     initResource(function() {
         loadLevel(0, gl)
 
         // TODO: Change this
-        setPlayer(new GameObject("./assets/walk_circle.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), true);
+        setPlayer(new GameObject("./assets/walk_circle_halved.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), 0);
         player.velocity = vec2.fromValues(0, 0);
         player.onGround = false;
         player.sprite.texture.frames = 5;
@@ -35,7 +35,7 @@ function main() {
 function playerFrameStepCnt(ticks) {
 	const SPEED_DIFFERENCE = 0.25
 	const PERIOD_INTERVAL = 15
-	
+
 	return SPEED_DIFFERENCE * Math.cos(Math.PI / PERIOD_INTERVAL * ticks) + 1 - SPEED_DIFFERENCE
 }
 
