@@ -1,10 +1,11 @@
-import {level, player, menu} from "./state.js"
+import {level, player, menu, inventory} from "./state.js"
 import {getItemSprite, pickUp} from "./item.js"
 import {walkingLeft, walkingRight, jumping, pickingUp, holdingJump} from "./input.js"
 import {vec2, mat4, vec3} from "./gl-matrix-min.js"
 import {GameObject, Sprite, Orientation} from "./obj/Sprite.js"
+import {loadLevel} from "./level.js"
 
-const PLAYER_SPEED = 25/10;
+const PLAYER_SPEED = 2.5;
 const JUMP_SPEED = 13; // 6.75
 const GRAVITATION = 38; // 10
 
@@ -105,5 +106,11 @@ export function update(delta) {
 				}
             }
         }
+    }
+
+    let exitDir = vec2.sub(vec2.create(), level.exit, player.position);
+    if (Math.abs(exitDir[0]) < player.halfSize[0] && Math.abs(exitDir[1]) < player.halfSize[1]) {
+        inventory.opened = true;
+        inventory.level_end = true;
     }
 }

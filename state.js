@@ -21,6 +21,7 @@ export function setPlayer(obj) {
 }
 export let inventory = {
     opened: false,
+    level_end: false,
     cursorPosition: 0,
 	objects: [],
     postits: []

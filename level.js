@@ -1,5 +1,5 @@
 import {Sprite, GameObject, Texture2D} from "./obj/Sprite.js"
-import {level, menu} from "./state.js"
+import {level, menu, setPlayer, player} from "./state.js"
 import {mat4, vec2, vec3, quat} from "./gl-matrix-min.js"
 
 const X_SCALE = 1//0.25
@@ -31,11 +31,11 @@ function readJSON(file, callback) {
 	rawFile.send(null);
 }
 
-export function loadLevel(id, gl) {
-	readJSON("levels/level" + id + ".json", initLevel.bind(null, id, gl))
+export function loadLevel(id) {
+	readJSON("levels/level" + id + ".json", initLevel.bind(null, id))
 }
 
-export function initLevel(id, gl, rawData) {
+export function initLevel(id, rawData) {
 	//freeze game state
 
 	let levelData = JSON.parse(rawData)
@@ -49,6 +49,8 @@ export function initLevel(id, gl, rawData) {
         menu.sprite = new Sprite("assets/" + levelData["intro"]["spriteName"] + ".png", mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
         menu.cooldown = levelData["intro"]["duration"];
     }
+
+    level.id = id;
 
 	//pedantic
 	let objects = levelData["objects"].sort((a, b) => TYPE_ID_MAP[a["type"]] < TYPE_ID_MAP[b["type"]] ? -1 : 1)
@@ -102,7 +104,14 @@ export function initLevel(id, gl, rawData) {
 			level.objects.push(obj)
 			break;
 		}
+        level.exit = vec2.fromValues(levelData["exit"]["x"], levelData["exit"]["y"]);
 	}
 
 	level.isInitialized = false
+
+    // TODO: Change this
+    setPlayer(new GameObject("./assets/walk_circle_halved.png", vec2.fromValues(0, 0), vec2.fromValues(1, 2.5), "player", vec2.fromValues(3.5, 3.5 / 2.5), vec2.fromValues(0, 0.2)), 0);
+    player.velocity = vec2.fromValues(0, 0);
+    player.onGround = false;
+    player.sprite.texture.frames = 5;
 }

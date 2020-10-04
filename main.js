@@ -19,13 +19,7 @@ function main() {
     initInput();
 
     initResource(function() {
-        loadLevel(2, gl)
-
-        // TODO: Change this
-        setPlayer(new GameObject("./assets/walk_circle_halved.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), 0);
-        player.velocity = vec2.fromValues(0, 0);
-        player.onGround = false;
-        player.sprite.texture.frames = 5;
+        loadLevel(2)
 
         window.running = true;
         requestAnimationFrame(update);
@@ -75,7 +69,7 @@ function update(now) {
         unprocessed -= FRAME_TIME;
         shouldRender = true;
         updateInput();
-        if (toggleInventory()) {
+        if (!inventory.level_end && toggleInventory()) {
             inventory.opened = !inventory.opened;
             inventory.cursorPosition = 0;
         }
@@ -124,8 +118,16 @@ function updateInventory() {
     }
     inventory.cursorPosition = (inventory.cursorPosition + inventory.objects.length) % inventory.objects.length;
     if (pickingUp()) {
-        menu.sprite = new Sprite(inventory.objects[inventory.cursorPosition].texture.name, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
-        menu.cooldown = -1;
+        if (inventory.level_end) {
+            // TODO: remove items
+            // TODO: load NEXT level
+            // loadLevel(level.id + 1);
+            loadLevel(level.id);
+            inventory.opened = false;
+        } else {
+            menu.sprite = new Sprite(inventory.objects[inventory.cursorPosition].texture.name, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
+            menu.cooldown = -1;
+        }
     }
 }
 
