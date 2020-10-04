@@ -65,20 +65,21 @@
 				return texture2D(texture, vec2( vTexCoord.x + (x * 2.0)/texRes.x, vTexCoord.y + (y * 2.0)/texRes.y));
 			}
 			
+			uniform float gaussian[225];
+			
 			void main(void) {
-				vec4 color = 0.00000067 * (getTexFromOffset(-3.0, -3.0) + getTexFromOffset(3.0, -3.0) + getTexFromOffset(-3.0, 3.0) + getTexFromOffset(3.0, 3.0));
-				color += 0.00002292 * (getTexFromOffset(-2.0, -3.0) + getTexFromOffset(2.0, -3.0) + getTexFromOffset(-2.0, 3.0) + getTexFromOffset(2.0, 3.0) + getTexFromOffset(-3.0, -2.0) + getTexFromOffset(3.0, -2.0) + getTexFromOffset(-3.0, 2.0) + getTexFromOffset(3.0, 2.0));
-				color += 0.00019117 * (getTexFromOffset(-1.0, -3.0) + getTexFromOffset(1.0, -3.0) + getTexFromOffset(-1.0, 3.0) + getTexFromOffset(1.0, 3.0) + getTexFromOffset(-3.0, -1.0) + getTexFromOffset(3.0, -1.0) + getTexFromOffset(-3.0, 1.0) + getTexFromOffset(3.0, 1.0));
-				color += 0.00038771 * (getTexFromOffset( 0.0, -3.0) + getTexFromOffset(3.0, 0.0) + getTexFromOffset(-3.0, 0.0) + getTexFromOffset(0.0, 3.0));
 				
-				color += 0.00078633 * (getTexFromOffset(-2.0, -2.0) + getTexFromOffset(2.0, -2.0) + getTexFromOffset(-2.0, 2.0) + getTexFromOffset(2.0, 2.0));
-				color += 0.00655965 * (getTexFromOffset(-1.0, -2.0) + getTexFromOffset(1.0, -2.0) + getTexFromOffset(-1.0, 2.0) + getTexFromOffset(1.0, 2.0) + getTexFromOffset(-2.0, -1.0) + getTexFromOffset(2.0, -1.0) + getTexFromOffset(-2.0, 1.0) + getTexFromOffset(2.0, 1.0));
-				color += 0.01330373 * (getTexFromOffset( 0.0, -2.0) + getTexFromOffset(2.0, 0.0) + getTexFromOffset(-2.0, 0.0) + getTexFromOffset(0.0, 2.0));
+				vec4 color = vec4(0, 0, 0, 0);
 				
-				color += 0.05472157 * (getTexFromOffset(-1.0, -1.0) + getTexFromOffset(1.0, -1.0) + getTexFromOffset(-1.0, 1.0) + getTexFromOffset(1.0, 1.0));
-				color += 0.11098164 * (getTexFromOffset(-1.0, 0.0) + getTexFromOffset(1.0, 0.0) + getTexFromOffset(0.0, 1.0) + getTexFromOffset(0.0, -1.0));
-				
-				color += 0.22508352 * (getTexFromOffset(0.0, 0.0));
+				for (int i = -8; i <= 8; i++)
+				{
+					for (int j = -8; j <= 8; j++)
+					{
+						float i1 = float(i);
+						float j1 = float(j);
+						color += getTexFromOffset(i1, j1) * gaussian[(i + 8) * 15 + j + 8];
+					}
+				}
 				
 				gl_FragColor = color;
 			}

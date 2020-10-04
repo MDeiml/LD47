@@ -9,8 +9,9 @@ const TYPE_ID_MAP = {
 	background : 0,
 	deco : 1,
 	collidable : 2,
-	interactable : 3,
-	foreground : 4
+	xcollidable : 3,
+	interactable : 4,
+	foreground : 5
 }
 
 //move to util
@@ -67,7 +68,8 @@ export function initLevel(id, gl, rawData) {
 		let transformation = mat4.create()
 		let pos1 = vec2.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["y"] * Y_SCALE)
 		let size = vec2.fromValues(entry["size"]["width"] * X_SCALE, entry["size"]["height"] * Y_SCALE)
-
+	
+		let obj = null;
 
 		switch(entry["type"])
 		{
@@ -82,8 +84,11 @@ export function initLevel(id, gl, rawData) {
 		case "collidable":
 			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "collidable"))
 			break;
+		case "xcollidable":
+			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "xcollidable"))
+			break;
 		case "interactable":
-            let obj = new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "interactable");
+            obj = new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "interactable");
             obj.pickup = entry["pickup"];
 			level.objects.push(obj)
 			break;

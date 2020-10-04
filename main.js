@@ -29,10 +29,14 @@ function main() {
 }
 
 function updatePlayerAnimation() {
-	frameCntr += 1;
+	if (player.onGround)
+		frameCntr += 1;
 	if ((frameCntr % 15) === 0) {
 		frameCntr = 0;
-		player.sprite.texture.nextFrame();
+		if (vec2.length(player.velocity) > 0)
+			player.sprite.texture.nextFrame();
+		else
+			player.sprite.texture.setFrame(3)
 	}
 }
 

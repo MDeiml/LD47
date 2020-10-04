@@ -50,6 +50,10 @@ Texture2D.prototype.nextFrame = function() {
 	this.currFrame += 1;
 	this.currFrame = this.currFrame % this.frames;
 }
+Texture2D.prototype.setFrame = function(frame) {
+	this.currFrame = frame;
+	this.currFrame = this.currFrame % this.frames;
+}
 Texture2D.prototype.bindTo = function(shader, position) {
 	gl.activeTexture(position);
 	gl.bindTexture(gl.TEXTURE_2D, this.tex);
@@ -201,12 +205,12 @@ let GameObject = function(spritePath, position, size, type, scale = vec2.fromVal
 	this.facingRight = facingRight;
     vec2.scale(this.halfSize, size, 0.5);
 
-    let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(this.position[0] + this.offset[0], this.position[1] + this.offset[1], 0), vec3.fromValues(this.halfSize[0] * (this.facingRight ? 1 : -1) * this.scale[0], this.halfSize[1] * this.scale[1], 1));
-
 	if (spritePath === null) {
 		this.sprite = null;
 	} else {
+		let transform = mat4.create();
+		mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(this.position[0] + this.offset[0], this.position[1] + this.offset[1], 0), vec3.fromValues(this.halfSize[0] * (this.facingRight ? 1 : -1) * this.scale[0], this.halfSize[1] * this.scale[1], 1));
+
 		this.sprite = new Sprite(spritePath, transform, null);
 	}
 }

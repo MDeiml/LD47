@@ -51,7 +51,7 @@ export function update(delta) {
         if (!(obj instanceof GameObject)) continue;
         let intersection = testIntersection(player, obj);
         if (intersection) {
-            if (obj.type == "collidable") {
+            if (obj.type === "collidable") {
                 player.setPosition(vec2.sub(player.position, player.position, intersection));
                 if (intersection[0] != 0) {
                     player.velocity[0] = 0;
@@ -59,7 +59,14 @@ export function update(delta) {
                     player.velocity[1] = 0;
                     if (intersection[1] < 0) player.onGround = true;
                 }
-            } else if (obj.type == "interactable") {
+			}
+            if (obj.type === "xcollidable") {
+                if (intersection[0] == 0) {
+					player.setPosition(vec2.sub(player.position, player.position, intersection));
+                    player.velocity[1] = 0;
+                    if (intersection[1] < 0) player.onGround = true;
+                }
+            } else if (obj.type === "interactable") {
 				if (pickingUp()) {
                     menu.sprite = new Sprite(itemSprites[obj.pickup], mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
                     menu.cooldown = -1;

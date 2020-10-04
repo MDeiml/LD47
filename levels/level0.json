@@ -104,6 +104,18 @@
 			}
 		},
 		{
+			"type" : "xcollidable",
+			"spriteName" : "bed0",
+			"pos" : {
+				"x" : 5,
+				"y" : -1.5
+			},
+			"size" : {
+				"width" : 5,
+				"height" : 2
+			}
+		},
+		{
 			"type" : "deco",
 			"spriteName" : "bed0",
 			"pos" : {
