@@ -34,9 +34,18 @@ export function testIntersection(a, b) {
 
     let distMin = vec2.min(vec2.create(), dir1, dir2);
 
-    if (distMin[0] <= 0 || distMin[1] <= 0) return null;
+    let weirdSize = (b.halfSize[0] + b.halfSize[1]) * Math.sqrt(2) / 2;
+    let distX1 = a.position[0] + a.halfSize[0] - (b.position[0] - weirdSize);
+    let distX2 = b.position[0] + weirdSize - (a.position[0] - a.halfSize[0]);
+    let distX = Math.min(distX1, distX2);
+
+    if (distMin[0] <= 0 || distMin[1] <= 0 || (b.orientation == Orientation.ROTATED_45 && distX <= 0)) return null;
 
     let res = null;
+
+    if (b.orientation == Orientation.ROTATED_45 && distX < distMin[0] && distX < distMin[1]) {
+        return vec2.fromValues(distX1 < distX2 ? distX1 : -distX2, 0);
+    }
 
     if (distMin[0] < distMin[1]) {
         res = vec2.fromValues(dir1[0] < dir2[0] ? dir1[0] : -dir2[0], 0);
@@ -81,7 +90,7 @@ export function update(delta) {
         if (intersection) {
             if (obj.type === "collidable") {
                 player.position[1] -= intersection[1];
-                if (obj.orientation != Orientation.ROTATED_45) {
+                if (intersection[1] == 0 || obj.orientation != Orientation.ROTATED_45) {
                     player.position[0] -= intersection[0];
                 }
                 if (intersection[0] != 0) {
