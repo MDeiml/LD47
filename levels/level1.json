@@ -68,7 +68,7 @@
 		},
 		{
 			"type" : "background",
-			"spriteName" : "proto_background",
+			"spriteName" : "Lvl1_teil1",
 			"pos" : {
 				"x" : 0,
 				"y" : 0
