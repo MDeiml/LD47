@@ -24,7 +24,19 @@
         },
 		{
 			"type" : "background",
-			"spriteName" : "Lvl1_teil1",
+			"spriteName" : "Level_1_Teil1_Background",
+			"pos" : {
+				"x" : 0,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 5
+			}
+		},
+		{
+			"type" : "collision_mask",
+			"spriteName" : "Level_1_Teil1_Colli",
 			"pos" : {
 				"x" : 0,
 				"y" : 0
@@ -109,7 +121,7 @@
         },
 		{
 			"type" : "background",
-			"spriteName" : "Level_1_Teil2",
+			"spriteName" : "Level_1_Teil2_Background",
 			"pos" : {
 				"x" : 25.5,
 				"y" : 0
@@ -121,7 +133,7 @@
 		},
 		{
 			"type" : "collision_mask",
-			"spriteName" : "Level_1_Teil2_Collipng",
+			"spriteName" : "Level_1_Teil2_Colli",
 			"pos" : {
 				"x" : 25.5,
 				"y" : 0
@@ -217,7 +229,19 @@
         },
 		{
 			"type" : "background",
-			"spriteName" : "Lvl1_Teil3",
+			"spriteName" : "Level_1_Teil3_Background",
+			"pos" : {
+				"x" : 51,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 5
+			}
+		},
+		{
+			"type" : "collision_mask",
+			"spriteName" : "Level_1_Teil3_Colli",
 			"pos" : {
 				"x" : 51,
 				"y" : 0
