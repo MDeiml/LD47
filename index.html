@@ -139,26 +139,11 @@
 			}
 			
 			void main(void) {
-				vec4 color = vec4(0.0, 0.0, 0.0, 0.0);
-				
-				//color += getTexFromOffset(-3.0, 3.0) + getTexFromOffset(3.0, 3.0) + getTexFromOffset(3.0, -3.0) + getTexFromOffset(-3.0, -3.0);
-				//color += 6.0 * (getTexFromOffset(-2.0, 3.0) + getTexFromOffset(2.0, 3.0) + getTexFromOffset(2.0, -3.0) + getTexFromOffset(-2.0, -3.0) + getTexFromOffset(-3.0, 2.0) + getTexFromOffset(3.0, 2.0) + getTexFromOffset(3.0, -2.0) + getTexFromOffset(-3.0, -2.0));
-				//color += 15.0 * (getTexFromOffset(-1.0, 3.0) + getTexFromOffset(1.0, 3.0) + getTexFromOffset(1.0, -3.0) + getTexFromOffset(-1.0, -3.0) + getTexFromOffset(-3.0, 1.0) + getTexFromOffset(3.0, 1.0) + getTexFromOffset(3.0, -1.0) + getTexFromOffset(-3.0, -1.0));
-				//color += 20.0 * (getTexFromOffset(-3.0, 0.0) + getTexFromOffset(3.0, 0.0) + getTexFromOffset(0.0, -3.0) + getTexFromOffset(0.0, 3.0));
-				//4096
-				
-				//color += 1.0 * (getTexFromOffset(-2.0, 2.0) + getTexFromOffset(2.0, 2.0) + getTexFromOffset(2.0, -2.0) + getTexFromOffset(-2.0, -2.0));
-				//color += 4.0 * (getTexFromOffset(-1.0, 2.0) + getTexFromOffset(1.0, 2.0) + getTexFromOffset(1.0, -2.0) + getTexFromOffset(-1.0, -2.0) + getTexFromOffset(-2.0, 1.0) + getTexFromOffset(2.0, 1.0) + getTexFromOffset(2.0, -1.0) + getTexFromOffset(-2.0, -1.0));
-				//color += 7.0 * (getTexFromOffset(-2.0, 0.0) + getTexFromOffset(2.0, 0.0) + getTexFromOffset(0.0, -2.0) + getTexFromOffset(0.0, 2.0));
-				//273
-				
-				color += 1.0 * (getTexFromOffset(-1.0, 0.0) + getTexFromOffset(1.0, 0.0) + getTexFromOffset(0.0, -1.0) + getTexFromOffset(0.0, 1.0));
-				color += 1.0 * (getTexFromOffset(-1.0, 1.0) + getTexFromOffset(1.0, 1.0) + getTexFromOffset(1.0, -1.0) + getTexFromOffset(-1.0, -1.0));
-				color += 8.0 * getTexFromOffset(0.0, 0.0);
-
-				
-				color /= 16.0;
-				gl_FragColor = vec4(color.xyz, 1.0);
+				vec3 gamma = vec3(1.0/2.2);
+				vec3 color = 0.4 * vec3(51.0 / 255.0, 63.0 / 255.0, 80.0 / 255.0) + 0.6 * texture2D(texture, vTexCoord).xyz;
+				//color = clamp(pow(color, gamma), 0.0, 1.0);
+				//gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+				gl_FragColor = vec4(color, 1.0);
 			}
 		</script>
 		<style>
