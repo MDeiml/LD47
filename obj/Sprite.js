@@ -8,7 +8,7 @@ let wireframe = false;
 
 let texList = {};
 
-export let Texture2D = function(path, frames) {
+export let Texture2D = function(path, frames, callback) {
 	this.name = path;
 
 	if (!frames)
@@ -17,9 +17,10 @@ export let Texture2D = function(path, frames) {
 		this.frames = frames
 	this.currFrame = 0
 
-	if (!this.name in Object.keys(texList)) {
+	if (this.name in texList) {
 		this.image = texList[this.name].image;
 		this.tex = texList[this.name].tex;
+        if (callback) callback();
 	} else {
 		this.tex = gl.createTexture();
 		gl.bindTexture(gl.TEXTURE_2D, this.tex);
@@ -39,6 +40,7 @@ export let Texture2D = function(path, frames) {
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 
 			//gl.generateMipmap(gl.TEXTURE_2D); //should be done after setting clamping/filtering so that it can't encounter power of 2 issues
+            if (callback) callback();
 		}.bind(this);
 		this.image.src = path;
 
@@ -65,21 +67,21 @@ export let GradientTexture2D = function(minCol, maxCol, steps) {
 	let coefs = {}
 	for(let key in cmin)
 		coefs[key]=(maxCol[key]-minCol[key])/steps
-	
+
 	valFunc = function(coefs, minCol, v) {
 		let col = {}
 		for(let key in cmin)
 			col[key]=coefs[key]*v + minCol[key]
-		
+
 		return col
 	}.bind(null, coefs, minCol)
-	
+
 	data = []
 	for (i = 0; i < steps; i++)
 	{
 		data.push(valFunc(i))
 	}
-	
+
 	this.texture = gl.createTexture();
 	gl.bindTexture(gl.TEXTURE_2D, texture);
 	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, steps, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(data));

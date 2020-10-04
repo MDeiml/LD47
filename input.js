@@ -58,6 +58,10 @@ export function jumping() {
     return keyDown("Space") || keyDown("ArrowUp");
 }
 
+export function holdingJump() {
+    return key("Space") || key("ArrowUp");
+}
+
 export function pickingUp() {
 	return keyDown("KeyE");
 }

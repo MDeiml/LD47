@@ -1,12 +1,12 @@
 import {level, player, menu} from "./state.js"
 import {getItemSprite, pickUp} from "./item.js"
-import {walkingLeft, walkingRight, jumping, pickingUp} from "./input.js"
+import {walkingLeft, walkingRight, jumping, pickingUp, holdingJump} from "./input.js"
 import {vec2, mat4, vec3} from "./gl-matrix-min.js"
 import {GameObject, Sprite} from "./obj/Sprite.js"
 
 const PLAYER_SPEED = 25/10;
 const JUMP_SPEED = 13; // 6.75
-const JUMP_HEIGHT = 38; // 10
+const GRAVITATION = 38; // 10
 
 export function testIntersection(a, b) {
     let aMin = vec2.sub(vec2.create(), a.position, a.halfSize);
@@ -41,9 +41,13 @@ export function update(delta) {
     if (player.onGround && jumping()) {
         player.velocity[1] = JUMP_SPEED;
     }
+    if (!holdingJump()) {
+        player.velocity[1] = Math.min(0, player.velocity[1]);
+    }
 
+    if (player.velocity[1] >= 0) player.maxY = player.position[1] - player.halfSize[1];
     player.velocity[0] = velx;
-    player.velocity[1] -= JUMP_HEIGHT * delta;
+    player.velocity[1] -= GRAVITATION * delta;
     let positionDelta = vec2.scale(vec2.create(), player.velocity, delta);
     player.setPosition(vec2.add(player.position, player.position, positionDelta));
     player.onGround = false;
@@ -62,10 +66,10 @@ export function update(delta) {
                 }
 			}
             if (obj.type === "xcollidable") {
-                if (intersection[0] == 0) {
+                if (intersection[0] == 0 && intersection[1] < 0 && player.velocity[1] < 0 && player.maxY >= obj.position[1] + obj.halfSize[1] - 0.0001) {
 					player.setPosition(vec2.sub(player.position, player.position, intersection));
                     player.velocity[1] = 0;
-                    if (intersection[1] < 0) player.onGround = true;
+                    player.onGround = true;
                 }
             } else if (obj.type === "interactable") {
 				if (pickingUp()) {

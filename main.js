@@ -5,7 +5,7 @@ import { init as initInput, update as updateInput, toggleInventory, menuUp, menu
 import {gl, player, level, menu, setPlayer, inventory, INVENTORY_HEIGHT, INVENTORY_WIDTH} from "./state.js"
 import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
-import {initTextures} from "./item.js"
+import {init as initResource} from "./resource.js"
 
 //timekeeper
 var lastTick = null;
@@ -17,17 +17,25 @@ function main() {
     initGraphics(document.getElementById('glCanvas'));
     initInput();
 	initTextures()
+    initResource(function() {
+        loadLevel(0, gl)
 
-	loadLevel(2, gl)
+        // TODO: Change this
+        setPlayer(new GameObject("./assets/walk_circle.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), true);
+        player.velocity = vec2.fromValues(0, 0);
+        player.onGround = false;
+        player.sprite.texture.frames = 4;
 
-    // TODO: Change this
-    setPlayer(new GameObject("./assets/walk_circle.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), true);
-    player.velocity = vec2.fromValues(0, 0);
-    player.onGround = false;
-	player.sprite.texture.frames = 4;
+        window.running = true;
+        requestAnimationFrame(update);
+    });
+}
 
-    window.running = true;
-    requestAnimationFrame(update);
+function playerFrameStepCnt(ticks) {
+	const SPEED_DIFFERENCE = 0.25
+	const PERIOD_INTERVAL = 15
+	
+	return SPEED_DIFFERENCE * Math.cos(Math.PI / PERIOD_INTERVAL * ticks) + 1 - SPEED_DIFFERENCE
 }
 
 function updatePlayerAnimation() {
