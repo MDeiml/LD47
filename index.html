@@ -42,14 +42,7 @@
 
 			uniform sampler2D texture;
 			
-			struct LightType { //9 floats
-				vec3 color;
-				vec2 pos;
-				vec2 dir;
-				float cutoff;
-				float intensity;
-			};
-			uniform LightType lights[20];
+			uniform float lights[180];
 			uniform float lightCount;
 			
 			void main(void) {
@@ -64,21 +57,35 @@
 					if (i >= int(lightCount))
 						break;
 					
-					vec2 ray = lights[i].pos - worldPos.xy;
+					vec3 color = vec3(lights[i * 9], lights[i * 9 + 1], lights[i * 9 + 2]);
+					vec2 pos = vec2(lights[i * 9 + 3], lights[i * 9 + 4]);
+					vec2 dir = vec2(lights[i * 9 + 5], lights[i * 9 + 6]);
+					float cutoff = lights[i * 9 + 7];
+					float intensity = lights[i * 9 + 8];
+					
+					
+					
+					vec2 ray = pos - worldPos.xy;
 					float distanceToLight = length(ray);
 					ray = normalize(ray);
 					
-					if (dot(ray, lights[i].dir) < lights[i].cutoff)
+					
+					float angle = dot(ray, dir);
+					
+					if (angle < cutoff)
+					{
+						resCol += texCol.xyz * 0.05;
 						continue;
+					}
 					
 					float attenuation = 1.0 / (1.0 + pow(distanceToLight, 2.0));
 					
 					//linear color (color before gamma correction)
-					vec3 linearColor = texCol.xyz * lights[i].color * (attenuation*lights[i].intensity + 0.1);
+					vec3 linearColor = texCol.xyz * color * (attenuation*intensity + 0.1) * ((angle - cutoff)/(1.0-cutoff));
 					
 					//final color (after gamma correction)
-					//resCol += clamp(pow(linearColor, gamma), 0.0, 1.0);
-					resCol += texCol.xyz;// * (attenuation*lights[0].color.x + 0.1);
+					resCol += clamp(pow(linearColor, gamma), 0.0, 1.0);
+					//resCol += texCol.xyz * (attenuation*color.x + 0.1);
 				}
 				
 				gl_FragColor = vec4(resCol, texCol.w);

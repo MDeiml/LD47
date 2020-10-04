@@ -111,32 +111,32 @@ export function initLevel(id, rawData) {
 	level.objects.push(new GameObject(null, vec2.fromValues(0, -5), vec2.fromValues(10000, 5), "collidable")); //the fuck
 
 	let cntr = 0
-	for (let entry of levelData["lights"]) 
-	{
-		let color = [0, 0, 0]
-		let pos = [0, 0]
-		let dir = [0, 0]
-		let cutoff = 0
-		let intensity = 0
-		
-		color[0] = entry["color"]["r"]
-		color[1] = entry["color"]["g"]
-		color[2] = entry["color"]["b"]
-		
-		pos[0] = entry["pos"]["x"]
-		pos[1] = entry["pos"]["y"]
-		
-		//currently expected to be normalized
-		dir[0] = entry["dir"]["x"]
-		dir[1] = entry["dir"]["y"]
-		
-		cutoff = entry["cutoff"]
-		intensity = entry["intensity"]
-		
-		level.updateLight(cntr, color, pos, dir, cutoff, intensity)
-		cntr += 1;
-		
-	}
+	if (typeof levelData["lights"] !== "undefined")
+		for (let entry of levelData["lights"]) 
+		{
+			let color = [0, 0, 0]
+			let pos = [0, 0]
+			let dir = [0, 0]
+			let cutoff = 0
+			let intensity = 0
+			
+			color[0] = entry["color"]["r"]
+			color[1] = entry["color"]["g"]
+			color[2] = entry["color"]["b"]
+			
+			pos[0] = entry["pos"]["x"]
+			pos[1] = entry["pos"]["y"]
+			
+			//currently expected to be normalized
+			dir[0] = entry["dir"]["x"]
+			dir[1] = entry["dir"]["y"]
+			
+			cutoff = entry["cutoff"]
+			intensity = entry["intensity"]
+			
+			level.updateLight(cntr, color, pos, dir, cutoff, intensity)
+			cntr += 1;
+		}
 	
 	for (let i = cntr; i < 20; i++)
 	{
@@ -144,7 +144,6 @@ export function initLevel(id, rawData) {
 	}
 	
 	level.lightCnt = cntr;
-	console.log(level.lights)
 	
 	level.isInitialized = false
 
