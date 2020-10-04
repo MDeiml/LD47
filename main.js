@@ -19,7 +19,7 @@ function main() {
     initInput();
 
     initResource(function() {
-        loadLevel(1)
+        loadLevel(2)
 
         window.running = true;
         requestAnimationFrame(update);
