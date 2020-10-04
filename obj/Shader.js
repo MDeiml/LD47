@@ -28,12 +28,12 @@ function buildShader(type, source) {
 }
 
 //load stage
-let Shader = function(nameID) {
-	this.name = nameID //assumed to be unique. otherwise shaders wouldn't be either
+let Shader = function(vertex_id, fragment_id) {
+	this.name = vertex_id + "-" + fragment_id //assumed to be unique. otherwise shaders wouldn't be either
 	
 	//generate shader units from code
-	this.vs = buildShader(gl.VERTEX_SHADER, readElements(nameID.concat("-vs")))
-	this.fs = buildShader(gl.FRAGMENT_SHADER, readElements(nameID.concat("-fs")))
+	this.vs = buildShader(gl.VERTEX_SHADER, readElements(vertex_id.concat("-vs")))
+	this.fs = buildShader(gl.FRAGMENT_SHADER, readElements(fragment_id.concat("-fs")))
 	
 	//build shader program
 	this.program = gl.createProgram();

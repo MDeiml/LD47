@@ -50,8 +50,8 @@ export function init(c) {
 
 function initShaders(name) {
 
-	shaders["defaultShader"] = new Shader.Shader("shader")
-	shaders["blurShader"] = new Shader.Shader("blur")
+	shaders["defaultShader"] = new Shader.Shader("shader", "shader")
+	shaders["blurShader"] = new Shader.Shader("shader", "blur")
 
 	shaders["defaultShader"].bind();
     let defaultPositionAttribute = gl.getAttribLocation(shaders["defaultShader"].get(), 'position');
