@@ -105,6 +105,17 @@
         },
         {
             "type": "collidable",
+            "pos": {
+                "x": 12.75,
+                "y": 1.65
+            },
+            "size": {
+                "width": 0.5,
+                "height": 1.7
+            }
+        },
+        {
+            "type": "collidable",
             "spriteName": "Floor_Texture",
             "pos": {
                 "x": 25.75,
@@ -213,6 +224,17 @@
         },
         {
             "type": "collidable",
+            "pos": {
+                "x": 38.25,
+                "y": 1.65
+            },
+            "size": {
+                "width": 0.5,
+                "height": 1.7
+            }
+        },
+        {
+            "type": "collidable",
             "spriteName": "Floor_Texture",
             "pos": {
                 "x": 51.25,
@@ -305,6 +327,17 @@
             "size": {
                 "width": 0.5,
                 "height": 3.3
+            }
+        },
+        {
+            "type": "collidable",
+            "pos": {
+                "x": 63.75,
+                "y": 1.65
+            },
+            "size": {
+                "width": 0.5,
+                "height": 1.7
             }
         }
 	],
