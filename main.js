@@ -19,7 +19,7 @@ function main() {
     initInput();
 
     initResource(function() {
-        loadLevel(0, gl)
+        loadLevel(2, gl)
 
         // TODO: Change this
         setPlayer(new GameObject("./assets/walk_circle_halved.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), 0);

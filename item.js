@@ -29,12 +29,10 @@ export function pickUp(item) {
 	let index = level.objects.indexOf(item);
 	if (index > -1) {
 		level.objects.splice(index, 1);
-        for (let i = 0; i < 40; i++) {
-            let transform = inventoryItemTransform(inventory.objects.length);
-            inventory.objects.push(getItemSprite(item.pickup));
-            let m = mat4.create();
-            mat4.fromScaling(m, vec3.fromValues(0.5, 0.5, 1));
-            inventory.postits.push(new Sprite("assets/dull_sticky_bitch.png", mat4.mul(m, transform, m)));
-        }
+        let transform = inventoryItemTransform(inventory.objects.length);
+        inventory.objects.push(getItemSprite(item.pickup, transform));
+        let m = mat4.create();
+        mat4.fromScaling(m, vec3.fromValues(0.5, 0.5, 1));
+        inventory.postits.push(new Sprite("assets/dull_sticky_bitch.png", mat4.mul(m, transform, m)));
 	}
 }
