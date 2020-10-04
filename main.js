@@ -16,7 +16,7 @@ let frameCntr = 0
 function main() {
     initGraphics(document.getElementById('glCanvas'));
     initInput();
-	initTextures()
+	
     initResource(function() {
         loadLevel(0, gl)
 

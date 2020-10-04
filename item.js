@@ -1,4 +1,4 @@
-import {Sprite, Texture2D} from "./obj/Sprite.js"
+import {Sprite} from "./obj/Sprite.js"
 import {gl, inventory, level, inventoryItemTransform} from "./state.js"
 import { mat4, vec3 } from "./gl-matrix-min.js"
 
@@ -17,11 +17,6 @@ let ITEM_SPRITE_FRAMES = {
 	2 : 2,
 	3 : 1,
 	4 : 1
-}
-
-export function initTextures() {
-	for (let entry of Object.keys(ITEM_SPRITES))
-		new Texture2D(ITEM_SPRITES[entry], ITEM_SPRITE_FRAMES[entry])
 }
 
 export function getItemSprite(id, transformation, parent) {
