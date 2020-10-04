@@ -132,6 +132,18 @@
 			}
 		},
         {
+            "type": "deco",
+			"spriteName" : "Lvl1/drawing_behing_clock",
+			"pos" : {
+				"x" : 28.8,
+				"y" : 1.4
+			},
+			"size" : {
+				"width" : 0.5,
+				"height" : 0.5
+			}
+        },
+        {
             "type": "collidable",
             "pos": {
                 "x": 21.4,
@@ -278,7 +290,8 @@
         "y": -2
     },
     "start": {
-        "x": -10,
+        "x1": -10,
+        "x": 25,
         "y": -1.25
     },
 	
