@@ -5,6 +5,7 @@ import { init as initInput, update as updateInput, toggleInventory, menuUp, menu
 import {gl, player, level, menu, setPlayer, inventory, INVENTORY_HEIGHT, INVENTORY_WIDTH} from "./state.js"
 import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
+import {initTextures} from "./item.js"
 
 //timekeeper
 var lastTick = null;
@@ -15,8 +16,9 @@ let frameCntr = 0
 function main() {
     initGraphics(document.getElementById('glCanvas'));
     initInput();
+	initTextures()
 
-	loadLevel(0, gl)
+	loadLevel(2, gl)
 
     // TODO: Change this
     setPlayer(new GameObject("./assets/walk_circle.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), true);
