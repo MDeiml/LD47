@@ -22,50 +22,6 @@
                 "y": 0.4
             }
         },
-        {
-            "type": "collidable",
-            "spriteName": "Floor_Texture",
-            "pos": {
-                "x": 25,
-                "y": -3
-            },
-            "size": {
-                "width": 25,
-                "height": 1
-            },
-            "offset": {
-                "x": 0,
-                "y": 0.4
-            }
-        },
-        {
-            "type": "collidable",
-            "spriteName": "Floor_Texture",
-            "pos": {
-                "x": 50,
-                "y": -3
-            },
-            "size": {
-                "width": 25,
-                "height": 1
-            },
-            "offset": {
-                "x": 0,
-                "y": 0.4
-            }
-        },
-		{
-			"type" : "collidable",
-			"spriteName" : "bed0",
-			"pos" : {
-				"x": -12.5,
-				"y" : 0
-			},
-			"size" : {
-				"width" : 0,
-				"height" : 5
-			}
-		},
 		{
 			"type" : "background",
 			"spriteName" : "Lvl1_teil1",
@@ -78,112 +34,60 @@
 				"height" : 5
 			}
 		},
-		{
-			"type" : "background",
-			"spriteName" : "proto_background",
-			"pos" : {
-				"x" : 25,
-				"y" : 0
-			},
-			"size" : {
-				"width" : 25,
-				"height" : 5
-			}
-		},
-		{
-			"type" : "background",
-			"spriteName" : "proto_background",
-			"pos" : {
-				"x" : 50,
-				"y" : 0
-			},
-			"size" : {
-				"width" : 25,
-				"height" : 5
-			}
-		},
-		{
-			"type" : "interactable",
-			"pickup" : 0,
-			"spriteName" : "Schrank",
-			"pos" : {
-				"x" : 10,
-				"y" : -0.52
-			},
-			"size" : {
-				"width" : 5,
-				"height" : 4
-			}
-		},
-		{
-			"type" : "interactable",
-			"spriteName" : "Schrank",
-			"pickup" : 1,
-			"pos" : {
-				"x" : 23,
-				"y" : -0.52
-			},
-			"size" : {
-				"width" : 5,
-				"height" : 4
-			}
-		},
-		{
-			"type" : "interactable",
-			"spriteName" : "Schrank",
-			"pickup" : 2,
-			"pos" : {
-				"x" : 35,
-				"y" : -0.52
-			},
-			"size" : {
-				"width" : 5,
-				"height" : 4
-			}
-		},
-		{
-			"type" : "interactable",
-			"spriteName" : "Schrank",
-			"pickup" : 3,
-			"pos" : {
-				"x" : 48,
-				"y" : -0.52
-			},
-			"size" : {
-				"width" : 5,
-				"height" : 4
-			}
-		},
-		{
-			"type" : "interactable",
-			"spriteName" : "Schrank",
-			"pickup" : 4,
-			"pos" : {
-				"x" : 52,
-				"y" : -0.52
-			},
-			"size" : {
-				"width" : 5,
-				"height" : 4
-			}
-		},
-		{
-			"type" : "collidable",
-			"spriteName" : "bed0",
-			"pos" : {
-				"x": 137.5,
-				"y" : 0
-			},
-			"size" : {
-				"width" : 0,
-				"height" : 5
-			}
-		}
+        {
+            "type": "collidable",
+            "pos": {
+                "x": -4.8,
+                "y": -1.6
+            },
+            "size": {
+                "width": 3.9,
+                "height": 1.8
+            }
+        },
+        {
+            "type": "collidable",
+            "spriteName": null,
+            "pos": {
+                "x": -1.7,
+                "y": -0.75
+            },
+            "size": {
+                "width": 2.2,
+                "height": 3.5
+            }
+        },
+        {
+            "type": "collidable",
+            "pos": {
+                "x": 5.1,
+                "y": -1.6
+            },
+            "size": {
+                "width": 1.3,
+                "height": 1.8
+            }
+        },
+        {
+            "type": "collidable",
+            "pos": {
+                "x": 7.8,
+                "y": -1.6
+            },
+            "size": {
+                "width": 1.3,
+                "height": 1.8
+            }
+        }
 	],
 
     "exit": {
         "x": 62.5, 
         "y": -2
+    },
+    "start": {
+        "x": -10,
+        "y": -1.25
     },
 	
 	"hiddenRooms" : []

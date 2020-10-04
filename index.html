@@ -86,7 +86,7 @@
 					resCol += clamp(pow(linearColor, gamma), 0.0, 1.0);
 					//resCol += texCol.xyz * (attenuation*color.x + 0.1);
 				}
-                resCol += texCol.xyz * 0.05;
+                resCol += texCol.xyz * 1.0;
 				
 				gl_FragColor = vec4(resCol, texCol.w);
 			}
