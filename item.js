@@ -4,19 +4,34 @@ import { mat4, vec3, quat } from "./gl-matrix-min.js"
 
 
 let ITEM_SPRITES = {
-    0: "assets/lv2/Ring_poliert_Blickdicht.png",
-    1: "assets/lv2/Diary_entry.png",
-    2: "assets/lv2/mailbox_lv2.png",
-    3: "assets/lv2/Photos_von_freunden.png",
-	4: "assets/lv2/sticky_note.png"
+	10 : "assets/lvl1/kids-drawing.png",
+	11 : "assets/lvl1/love-letter.png",
+	12 : "assets/lvl1/love-you.png",
+	13 : "assets/lvl1/Pocket-Watch.png",
+	14 : "assets/lvl1/home-sweet-home.png",
+	
+	//level 2 items
+	20 : "assets/lvl2/Ring_poliert_Blickdicht.png",
+	21 : "assets/lvl2/Diary_entry.png",
+	22 : "assets/lvl2/mailbox_lv2.png",
+	23 : "assets/lvl2/Photos_von_freunden.png",
+	24 : "assets/lvl2/sticky_note.png",
+	
+	30 : "assets/lvl3/Medical_Record.png"
 };
 
 let ITEM_SPRITE_FRAMES = {
-	0 : 1,
-	1 : 1,
-	2 : 2,
-	3 : 1,
-	4 : 1
+	10 : 1,
+	11 : 1,
+	12 : 1,
+	13 : 1,
+	14 : 1,
+	10 : 1,
+	21 : 1,
+	22 : 2,
+	23 : 1,
+	23 : 1,
+	30 : 1
 }
 
 
