@@ -31,6 +31,13 @@ function main() {
     });
 }
 
+function playerFrameStepCnt(ticks) {
+	const SPEED_DIFFERENCE = 0.25
+	const PERIOD_INTERVAL = 15
+	
+	return SPEED_DIFFERENCE * Math.cos(Math.PI / PERIOD_INTERVAL * ticks) + 1 - SPEED_DIFFERENCE
+}
+
 function updatePlayerAnimation() {
 	if (player.onGround)
 		frameCntr += 1;
