@@ -68,11 +68,6 @@ function itemFadeAnim(sprite, name, tgtPos, tgtScale, frames) {
 
 export function getItemSprite(id, transformation, parent, animate) {
 	let sprite = new Sprite(ITEM_SPRITES[id], transformation, parent)
-	let updateFunc = itemFadeAnim.bind(new Object(), sprite, "fade_anim_"+id, vec3.fromValues(10, -10, 0), vec3.fromValues(0, 0, 0), 40)
-	updateFunc()
-	if(animate)
-		updateRegistry.registerUpdate("fade_anim_"+id, updateFunc);
-
 	sprite.texture.frames = ITEM_SPRITE_FRAMES[id]
 	return sprite
 }

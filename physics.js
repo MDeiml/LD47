@@ -108,7 +108,7 @@ export function update(delta) {
                 }
             } else if (obj.type === "interactable") {
 				if (pickingUp()) {
-                    menu.sprite = getItemSprite(obj.pickup, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)), null, true);
+                    menu.setSprite(getItemSprite(obj.pickup, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)), null, true));
                     menu.cooldown = -1;
 					pickUp(obj);
 				}
