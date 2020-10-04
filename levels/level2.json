@@ -6,6 +6,54 @@
     },
 	
 	"objects" : [
+        {
+            "type": "collidable",
+            "spriteName": "Floor_Texture",
+            "pos": {
+                "x": 0,
+                "y": -3
+            },
+            "size": {
+                "width": 25,
+                "height": 1
+            },
+            "offset": {
+                "x": 0,
+                "y": 0.4
+            }
+        },
+        {
+            "type": "collidable",
+            "spriteName": "Floor_Texture",
+            "pos": {
+                "x": 25,
+                "y": -3
+            },
+            "size": {
+                "width": 25,
+                "height": 1
+            },
+            "offset": {
+                "x": 0,
+                "y": 0.4
+            }
+        },
+        {
+            "type": "collidable",
+            "spriteName": "Floor_Texture",
+            "pos": {
+                "x": 50,
+                "y": -3
+            },
+            "size": {
+                "width": 25,
+                "height": 1
+            },
+            "offset": {
+                "x": 0,
+                "y": 0.4
+            }
+        },
 		{
 			"type" : "collidable",
 			"spriteName" : "bed0",
@@ -47,42 +95,6 @@
 			"spriteName" : "proto_background",
 			"pos" : {
 				"x" : 50,
-				"y" : 0
-			},
-			"size" : {
-				"width" : 25,
-				"height" : 5
-			}
-		},
-		{
-			"type" : "background",
-			"spriteName" : "proto_background",
-			"pos" : {
-				"x" : 75,
-				"y" : 0
-			},
-			"size" : {
-				"width" : 25,
-				"height" : 5
-			}
-		},
-		{
-			"type" : "background",
-			"spriteName" : "proto_background",
-			"pos" : {
-				"x" : 100,
-				"y" : 0
-			},
-			"size" : {
-				"width" : 25,
-				"height" : 5
-			}
-		},
-		{
-			"type" : "background",
-			"spriteName" : "proto_background",
-			"pos" : {
-				"x" : 125,
 				"y" : 0
 			},
 			"size" : {
@@ -168,6 +180,11 @@
 			}
 		}
 	],
+
+    "exit": {
+        "x": 62.5, 
+        "y": -2
+    },
 	
 	"hiddenRooms" : []
 }

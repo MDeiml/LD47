@@ -1,10 +1,11 @@
-import {level, player, menu} from "./state.js"
+import {level, player, menu, inventory} from "./state.js"
 import {getItemSprite, pickUp} from "./item.js"
 import {walkingLeft, walkingRight, jumping, pickingUp, holdingJump} from "./input.js"
 import {vec2, mat4, vec3} from "./gl-matrix-min.js"
 import {GameObject, Sprite, Orientation} from "./obj/Sprite.js"
+import {loadLevel} from "./level.js"
 
-const PLAYER_SPEED = 25/10;
+const PLAYER_SPEED = 2.5;
 const JUMP_SPEED = 13; // 6.75
 const GRAVITATION = 38; // 10
 
@@ -14,6 +15,20 @@ export function testIntersection(a, b) {
     let bMin = vec2.sub(vec2.create(), b.position, b.halfSize);
     let bMax = vec2.add(vec2.create(), b.position, b.halfSize);
 
+    if (b.orientation == Orientation.ROTATED_45) {
+        // vec2.rotate(aMin, aMin, a.position, Math.PI/4);
+        // vec2.rotate(aMax, aMax, a.position, Math.PI/4);
+        vec2.sub(aMin, a.position, vec2.fromValues(0, a.halfSize[1]));
+        vec2.add(aMax, a.position, vec2.fromValues(0, a.halfSize[1]));
+        vec2.rotate(bMin, bMin, b.position, Math.PI/4);
+        vec2.rotate(bMax, bMax, b.position, Math.PI/4);
+
+        vec2.rotate(aMin, aMin, vec2.create(), -Math.PI/4);
+        vec2.rotate(aMax, aMax, vec2.create(), -Math.PI/4);
+        vec2.rotate(bMin, bMin, vec2.create(), -Math.PI/4);
+        vec2.rotate(bMax, bMax, vec2.create(), -Math.PI/4);
+    }
+
     let dir1 = vec2.sub(vec2.create(), aMax, bMin);
     let dir2 = vec2.sub(vec2.create(), bMax, aMin);
 
@@ -21,11 +36,19 @@ export function testIntersection(a, b) {
 
     if (distMin[0] <= 0 || distMin[1] <= 0) return null;
 
+    let res = null;
+
     if (distMin[0] < distMin[1]) {
-        return vec2.fromValues(dir1[0] < dir2[0] ? dir1[0] : -dir2[0], 0);
+        res = vec2.fromValues(dir1[0] < dir2[0] ? dir1[0] : -dir2[0], 0);
     } else {
-        return vec2.fromValues(0, dir1[1] < dir2[1] ? dir1[1] : -dir2[1]);
+        res = vec2.fromValues(0, dir1[1] < dir2[1] ? dir1[1] : -dir2[1]);
     }
+
+    if (b.orientation == Orientation.ROTATED_45) {
+        vec2.rotate(res, res, vec2.create(), Math.PI/4);
+    }
+
+    return res;
 }
 
 export function update(delta) {
@@ -57,10 +80,14 @@ export function update(delta) {
         let intersection = testIntersection(player, obj);
         if (intersection) {
             if (obj.type === "collidable") {
-                player.setPosition(vec2.sub(player.position, player.position, intersection));
+                player.position[1] -= intersection[1];
+                if (obj.orientation != Orientation.ROTATED_45) {
+                    player.position[0] -= intersection[0];
+                }
                 if (intersection[0] != 0) {
                     player.velocity[0] = 0;
-                } else {
+                }
+                if (intersection[1] != 0){
                     player.velocity[1] = 0;
                     if (intersection[1] < 0) player.onGround = true;
                 }
@@ -79,5 +106,11 @@ export function update(delta) {
 				}
             }
         }
+    }
+
+    let exitDir = vec2.sub(vec2.create(), level.exit, player.position);
+    if (Math.abs(exitDir[0]) < player.halfSize[0] && Math.abs(exitDir[1]) < player.halfSize[1]) {
+        inventory.opened = true;
+        inventory.level_end = true;
     }
 }

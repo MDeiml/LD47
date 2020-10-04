@@ -17,15 +17,9 @@ let framePos = 0
 function main() {
     initGraphics(document.getElementById('glCanvas'));
     initInput();
-	
-    initResource(function() {
-        loadLevel(0, gl)
 
-        // TODO: Change this
-        setPlayer(new GameObject("./assets/walk_circle.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), true);
-        player.velocity = vec2.fromValues(0, 0);
-        player.onGround = false;
-        player.sprite.texture.frames = 5;
+    initResource(function() {
+        loadLevel(2)
 
         window.running = true;
         requestAnimationFrame(update);
@@ -35,7 +29,7 @@ function main() {
 function playerFrameStepCnt(ticks) {
 	const SPEED_DIFFERENCE = 0.25
 	const PERIOD_INTERVAL = 15
-	
+
 	return SPEED_DIFFERENCE * Math.cos(Math.PI / PERIOD_INTERVAL * ticks) + 1 - SPEED_DIFFERENCE
 }
 
@@ -75,7 +69,7 @@ function update(now) {
         unprocessed -= FRAME_TIME;
         shouldRender = true;
         updateInput();
-        if (toggleInventory()) {
+        if (!inventory.level_end && toggleInventory()) {
             inventory.opened = !inventory.opened;
             inventory.cursorPosition = 0;
         }
@@ -124,8 +118,16 @@ function updateInventory() {
     }
     inventory.cursorPosition = (inventory.cursorPosition + inventory.objects.length) % inventory.objects.length;
     if (pickingUp()) {
-        menu.sprite = new Sprite(inventory.objects[inventory.cursorPosition].texture.name, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
-        menu.cooldown = -1;
+        if (inventory.level_end) {
+            // TODO: remove items
+            // TODO: load NEXT level
+            // loadLevel(level.id + 1);
+            loadLevel(level.id);
+            inventory.opened = false;
+        } else {
+            menu.sprite = new Sprite(inventory.objects[inventory.cursorPosition].texture.name, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
+            menu.cooldown = -1;
+        }
     }
 }
 
