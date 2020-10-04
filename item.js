@@ -28,7 +28,7 @@ export function getItemSprite(id, transformation, parent) {
 export function pickUp(item) {
 	let index = level.objects.indexOf(item);
 	if (index > -1) {
-		level.objects.splice(index, 1);
+        item.type = "deco";
         let transform = inventoryItemTransform(inventory.objects.length);
         inventory.objects.push(getItemSprite(item.pickup, transform));
         let m = mat4.create();
