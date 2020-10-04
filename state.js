@@ -45,6 +45,19 @@ export let inventory = {
 	objects: [],
     postits: []
 };
+export let updateRegistry = {
+	updateList : {},
+	registerUpdate : function(name, callback) {
+		this.updateList[name] = callback;
+	},
+	unregisterUpdate : function(name) {
+		delete this.updateList[name];
+	},
+	update : function(delta) {
+		for (let updateName in this.updateList)
+			this.updateList[updateName](delta);
+	},
+}
 
 
 const INVENTORY_SIZE = 6;

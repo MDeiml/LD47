@@ -2,7 +2,7 @@ import { init as initGraphics, update as updateGraphics, projection, updateView 
 import {mat4, vec3, vec2} from "./gl-matrix-min.js"
 import {update as updatePhysics} from "./physics.js"
 import { init as initInput, update as updateInput, toggleInventory, menuUp, menuDown, menuLeft, menuRight, pickingUp} from "./input.js"
-import {gl, player, level, menu, setPlayer, inventory, INVENTORY_HEIGHT, INVENTORY_WIDTH, inventoryItemTransform} from "./state.js"
+import {gl, player, level, menu, setPlayer, inventory, INVENTORY_HEIGHT, INVENTORY_WIDTH, inventoryItemTransform, updateRegistry} from "./state.js"
 import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 import {init as initResource} from "./resource.js"
@@ -69,6 +69,7 @@ function update(now) {
         unprocessed -= FRAME_TIME;
         shouldRender = true;
         updateInput();
+		updateRegistry.update();
         if (!inventory.level_end && toggleInventory()) {
             inventory.opened = !inventory.opened;
             inventory.cursorPosition = 0;
