@@ -6,6 +6,22 @@
     },
 	
 	"objects" : [
+        {
+            "type": "collidable",
+            "spriteName": "Floor_Texture",
+            "pos": {
+                "x": 0,
+                "y": -3
+            },
+            "size": {
+                "width": 25,
+                "height": 1
+            },
+            "offset": {
+                "x": 0,
+                "y": 0.4
+            }
+        },
 		{
 			"type" : "collidable",
 			"spriteName" : "bed0",

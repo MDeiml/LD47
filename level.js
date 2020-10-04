@@ -69,6 +69,12 @@ export function initLevel(id, gl, rawData) {
 		let size = vec2.fromValues(entry["size"]["width"] * X_SCALE, entry["size"]["height"] * Y_SCALE)
         let offset = vec2.fromValues(0, 0);
         let scale = vec2.fromValues(1, 1);
+        if (entry["scale"]) {
+            scale = vec2.fromValues(entry["scale"]["x"], entry["scale"]["y"]);
+        }
+        if (entry["offset"]) {
+            offset = vec2.fromValues(entry["offset"]["x"], entry["offset"]["y"]);
+        }
         let orientation = entry["orientation"];
 
 		let obj = null;
@@ -97,9 +103,6 @@ export function initLevel(id, gl, rawData) {
 			break;
 		}
 	}
-
-    level.objects.push(new GameObject(null, vec2.fromValues(0, -5), vec2.fromValues(10000, 5), "collidable"));
-
 
 	level.isInitialized = false
 }
