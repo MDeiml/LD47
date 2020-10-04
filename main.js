@@ -16,7 +16,7 @@ let frameCntr = 0
 function main() {
     initGraphics(document.getElementById('glCanvas'));
     initInput();
-
+	
     initResource(function() {
         loadLevel(0, gl)
 
@@ -29,6 +29,13 @@ function main() {
         window.running = true;
         requestAnimationFrame(update);
     });
+}
+
+function playerFrameStepCnt(ticks) {
+	const SPEED_DIFFERENCE = 0.25
+	const PERIOD_INTERVAL = 15
+	
+	return SPEED_DIFFERENCE * Math.cos(Math.PI / PERIOD_INTERVAL * ticks) + 1 - SPEED_DIFFERENCE
 }
 
 function updatePlayerAnimation() {

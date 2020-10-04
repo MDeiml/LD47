@@ -1,0 +1,173 @@
+{
+	"id" : 2,
+    "intro": {
+        "spriteName": "find_yourself",
+        "duration": 1
+    },
+	
+	"objects" : [
+		{
+			"type" : "collidable",
+			"spriteName" : "bed0",
+			"pos" : {
+				"x": -12.5,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 0,
+				"height" : 5
+			}
+		},
+		{
+			"type" : "background",
+			"spriteName" : "proto_background",
+			"pos" : {
+				"x" : 0,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 5
+			}
+		},
+		{
+			"type" : "background",
+			"spriteName" : "proto_background",
+			"pos" : {
+				"x" : 25,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 5
+			}
+		},
+		{
+			"type" : "background",
+			"spriteName" : "proto_background",
+			"pos" : {
+				"x" : 50,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 5
+			}
+		},
+		{
+			"type" : "background",
+			"spriteName" : "proto_background",
+			"pos" : {
+				"x" : 75,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 5
+			}
+		},
+		{
+			"type" : "background",
+			"spriteName" : "proto_background",
+			"pos" : {
+				"x" : 100,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 5
+			}
+		},
+		{
+			"type" : "background",
+			"spriteName" : "proto_background",
+			"pos" : {
+				"x" : 125,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 5
+			}
+		},
+		{
+			"type" : "interactable",
+			"pickup" : 0,
+			"spriteName" : "Schrank",
+			"pos" : {
+				"x" : 10,
+				"y" : -0.52
+			},
+			"size" : {
+				"width" : 5,
+				"height" : 4
+			}
+		},
+		{
+			"type" : "interactable",
+			"spriteName" : "Schrank",
+			"pickup" : 1,
+			"pos" : {
+				"x" : 23,
+				"y" : -0.52
+			},
+			"size" : {
+				"width" : 5,
+				"height" : 4
+			}
+		},
+		{
+			"type" : "interactable",
+			"spriteName" : "Schrank",
+			"pickup" : 2,
+			"pos" : {
+				"x" : 35,
+				"y" : -0.52
+			},
+			"size" : {
+				"width" : 5,
+				"height" : 4
+			}
+		},
+		{
+			"type" : "interactable",
+			"spriteName" : "Schrank",
+			"pickup" : 3,
+			"pos" : {
+				"x" : 48,
+				"y" : -0.52
+			},
+			"size" : {
+				"width" : 5,
+				"height" : 4
+			}
+		},
+		{
+			"type" : "interactable",
+			"spriteName" : "Schrank",
+			"pickup" : 4,
+			"pos" : {
+				"x" : 52,
+				"y" : -0.52
+			},
+			"size" : {
+				"width" : 5,
+				"height" : 4
+			}
+		},
+		{
+			"type" : "collidable",
+			"spriteName" : "bed0",
+			"pos" : {
+				"x": 137.5,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 0,
+				"height" : 5
+			}
+		}
+	],
+	
+	"hiddenRooms" : []
+}

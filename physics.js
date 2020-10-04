@@ -1,4 +1,5 @@
-import {level, player, pickUp, menu, itemSprites} from "./state.js"
+import {level, player, menu} from "./state.js"
+import {getItemSprite, pickUp} from "./item.js"
 import {walkingLeft, walkingRight, jumping, pickingUp, holdingJump} from "./input.js"
 import {vec2, mat4, vec3} from "./gl-matrix-min.js"
 import {GameObject, Sprite, Orientation} from "./obj/Sprite.js"
@@ -72,7 +73,7 @@ export function update(delta) {
                 }
             } else if (obj.type === "interactable") {
 				if (pickingUp()) {
-                    menu.sprite = new Sprite(itemSprites[obj.pickup], mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
+                    menu.sprite = getItemSprite(obj.pickup, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
                     menu.cooldown = -1;
 					pickUp(obj);
 				}

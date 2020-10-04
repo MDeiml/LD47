@@ -1,8 +1,7 @@
 import {Texture2D} from "./obj/Sprite.js"
 
-// ls -1 assets/* | xargs printf '"%s",\n'
+// ls -1 assets/* | xargs printf "%s",\n
 let preload_textures = [
-"assets/Diary_entry.png",
 "assets/Frame1.png",
 "assets/Frame2.png",
 "assets/Frame3.png",
@@ -12,8 +11,6 @@ let preload_textures = [
 "assets/Inventar_Board.png",
 "assets/Inventory_sticker.png",
 "assets/Pause_Tonspur_Level2.png",
-"assets/Photos_von_freunden.png",
-"assets/Ring_poliert_Blickdicht.png",
 "assets/Schrank.png",
 "assets/Stand_Character.png",
 "assets/Start_Tonspur_level2.png",
@@ -23,8 +20,14 @@ let preload_textures = [
 "assets/proto_background.png",
 "assets/red.png",
 "assets/ring_poliert.png",
-"assets/sticky_note.png",
+"assets/single_chair.png",
+"assets/three_chairs.png",
 "assets/walk_circle.png",
+"assets/lv2/Diary_entry.png",
+"assets/lv2/Photos_von_freunden.png",
+"assets/lv2/Ring_poliert_Blickdicht.png",
+"assets/lv2/mailbox_lv2.png",
+"assets/lv2/sticky_note.png",
 ];
 
 export function init(callback) {
