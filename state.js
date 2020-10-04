@@ -9,19 +9,19 @@ export let level = {
 	updateLight: function(lightID, color, pos, dir, cutoff, intensity) {
 		let startPos = lightID * 9;
 		
-		lightArray[startPos] = color[0]
-		lightArray[startPos + 1] = color[1]
-		lightArray[startPos + 2] = color[2]
+		this.lights[startPos] = color[0]
+		this.lights[startPos + 1] = color[1]
+		this.lights[startPos + 2] = color[2]
 		
-		lightArray[startPos + 3] = pos[0]
-		lightArray[startPos + 4] = pos[1]
+		this.lights[startPos + 3] = pos[0]
+		this.lights[startPos + 4] = pos[1]
 		
-		lightArray[startPos + 5] = dir[0]
-		lightArray[startPos + 6] = dir[1]
+		this.lights[startPos + 5] = dir[0]
+		this.lights[startPos + 6] = dir[1]
 		
-		lightArray[startPos + 7] = cutoff
+		this.lights[startPos + 7] = cutoff
 		
-		lightArray[startPos + 8] = intensity
+		this.lights[startPos + 8] = intensity
 	}
 
 };

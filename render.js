@@ -17,8 +17,6 @@ let h = 0;
 
 let lastSwitch = 0
 
-let lightArray = new Array(180);
-
 export function init(c) {
 	let canvas = c;
 	w = canvas.clientWidth;
@@ -115,7 +113,8 @@ export function update() {
 			lastSwitch = 0
 	}
 	if (lastSwitch < 2)
-		drawBaseShader();
+		drawLightShader();
+		//drawBaseShader();
 	if (lastSwitch === 1) {
 		lastSwitch = 2;
 		menu.backgroundContainer.texture.unbindFramebuffer()
@@ -172,6 +171,7 @@ function drawBaseShader() {
 function drawLightShader() {
 	shaders["lightShader"].bind();
 	
+	gl.uniform1f(shaders["lightShader"].getUniform('lightCount'), level.lightCnt)
 	gl.uniform1fv(shaders["lightShader"].getUniform('lights'), level.lights)
 	gl.uniformMatrix4fv(shaders["lightShader"].getUniform('VP'), false, pvMatrix);
 
