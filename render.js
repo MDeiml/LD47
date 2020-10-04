@@ -185,7 +185,6 @@ function drawLightShader() {
 		sprite.draw(shaders["lightShader"]);
         if (sprite.type == "door" && sprite.state) {
             let t = (sprite.state == "opening" ? 0.3 - sprite.timer : (sprite.state == "closing" ? sprite.timer : 0.3)) / 0.3;
-            if (sprite.state == "opening")
             mat4.fromRotationTranslationScale(sprite.door.transform, quat.create(), vec3.fromValues(sprite.position[0] + t * DOOR_WIDTH, sprite.position[1], 0), vec3.fromValues(-t * DOOR_WIDTH, sprite.halfSize[1], 1));
             sprite.door.draw(shaders["lightShader"]);
         }
