@@ -92,8 +92,7 @@ GradientTexture2D.prototype.bindTo = function(shader, position) {
 }
 
 export let DynamicTexture2D = function() {
-	if (typeof(DynamicTexture2D.framebuffer) === "undefined")
-		DynamicTexture2D.framebuffer = gl.createFramebuffer();
+	this.framebuffer = gl.createFramebuffer();
 
 	this.tex = gl.createTexture();
 	gl.bindTexture(gl.TEXTURE_2D, this.tex);
@@ -106,13 +105,12 @@ export let DynamicTexture2D = function() {
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
-	gl.bindFramebuffer(gl.FRAMEBUFFER, DynamicTexture2D.framebuffer);
+	gl.bindFramebuffer(gl.FRAMEBUFFER, this.framebuffer);
 	gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.tex, 0);
 	gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 }
 DynamicTexture2D.prototype.bindFramebuffer = function() {
-	gl.bindFramebuffer(gl.FRAMEBUFFER, DynamicTexture2D.framebuffer);
-
+	gl.bindFramebuffer(gl.FRAMEBUFFER, this.framebuffer);
 	gl.clear(gl.COLOR_BUFFER_BIT);
 }
 DynamicTexture2D.prototype.unbindFramebuffer = function() {
@@ -171,7 +169,6 @@ let Sprite = function(spritePath, transformation, parent) {
 	this.transform = typeof(transformation) === "undefined" ? mat4.create() : mat4.clone(transformation);
 	this.m = mat4.create();
 	this.parent = typeof(parent) === "undefined" ? null : parent;
-	this.visibility = true;
 }
 Sprite.prototype.getTransformation = function() {
 	if (this.parent !== null)
@@ -183,11 +180,8 @@ Sprite.prototype.getTransformation = function() {
 Sprite.prototype.setTransformation = function(transformation) {
 	mat4.copy(this.transform, transformation);
 }
-Sprite.prototype.setVisibility = function(isVisible) {
-	this.visibility = isVisible;
-}
 Sprite.prototype.draw = function(shader) {
-	if (!this.visibility || this.texture === null) //should this also be inheriting?
+	if (this.texture === null) //should this also be inheriting?
 		return;
 
 	this.texture.bindTo(shader, gl.TEXTURE0);

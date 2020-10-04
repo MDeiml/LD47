@@ -34,6 +34,54 @@
 				gl_FragColor = texture2D(texture, vTexCoord);
 			}
 		</script>
+		<script id="light-fs" type="x-shader/x-fragment">
+			precision mediump float;
+			
+			varying mediump vec2 vTexCoord;
+			varying mediump vec3 worldPos;
+
+			uniform sampler2D texture;
+			
+			uniform struct LightType {
+				vec3 color;
+				vec2 pos;
+				vec2 dir;
+				float cutoff;
+				float intensity;
+			} lights[20]; //8 floats
+			uniform int lightCount;
+			
+			void main(void) {
+				
+				vec4 texCol = texture2D(texture, vTexCoord);
+				vec3 resCol = vec3(0.0, 0.0, 0.0);
+				
+				vec3 gamma = vec3(1.0/2.2);
+				
+				for (int i = 0; i < 20; i++)
+				{
+					if (i >= lightCount)
+						break;
+					
+					vec2 ray = lights[i].pos - worldPos.xy;
+					float distanceToLight = length(ray);
+					ray = normalize(ray);
+					
+					if (dot(ray, lights[i].dir) < lights[i].cutoff)
+						continue;
+					
+					float attenuation = 1.0 / (1.0 + pow(distanceToLight, 2.0));
+					
+					//linear color (color before gamma correction)
+					vec3 linearColor = texCol.xyz * lights[i].color * (attenuation*lights[i].intensity + 0.1);
+					
+					//final color (after gamma correction)
+					resCol += clamp(pow(linearColor, gamma), 0.0, 1.0);
+				}
+				
+				gl_FragColor = vec4(resCol, texCol.w);
+			}
+		</script>
 		<script id="blur-fs" type="x-shader/x-fragment">
 			precision mediump float;
 			
