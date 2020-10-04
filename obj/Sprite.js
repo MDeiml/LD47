@@ -27,6 +27,9 @@ export let Texture2D = function(path, frames, callback) {
 		//gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]));
 
 		this.image = new Image();
+        this.image.onerror = function() {
+            console.log("Could not load " + path);
+        }
 		this.image.onload = function () {
 			gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
 
