@@ -2,7 +2,7 @@ import { init as initGraphics, update as updateGraphics, projection, updateView 
 import {mat4, vec3, vec2} from "./gl-matrix-min.js"
 import {update as updatePhysics} from "./physics.js"
 import { init as initInput, update as updateInput, toggleInventory, menuUp, menuDown, menuLeft, menuRight, pickingUp} from "./input.js"
-import {gl, player, level, menu, setPlayer, inventory, INVENTORY_HEIGHT, INVENTORY_WIDTH} from "./state.js"
+import {gl, player, level, menu, setPlayer, inventory, INVENTORY_HEIGHT, INVENTORY_WIDTH, inventoryItemTransform} from "./state.js"
 import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 import {init as initResource} from "./resource.js"
@@ -19,7 +19,7 @@ function main() {
     initInput();
 
     initResource(function() {
-        loadLevel(2)
+        loadLevel(1)
 
         window.running = true;
         requestAnimationFrame(update);
@@ -117,12 +117,18 @@ function updateInventory() {
         inventory.cursorPosition -= INVENTORY_WIDTH;
     }
     inventory.cursorPosition = (inventory.cursorPosition + inventory.objects.length) % inventory.objects.length;
+    if (inventory.level_end) inventory.cursorPosition = Math.max(inventory.cursorPosition, level.id - 1);
     if (pickingUp()) {
         if (inventory.level_end) {
-            // TODO: remove items
-            // TODO: load NEXT level
-            // loadLevel(level.id + 1);
-            loadLevel(level.id);
+
+            let item = inventory.objects[inventory.cursorPosition];
+            inventory.objects.splice(level.id - 1, inventory.objects.length - (level.id - 1));
+            inventory.postits.splice(level.id, inventory.objects.length - (level.id));
+            item.setTransformation(inventoryItemTransform(inventory.objects.length));
+            inventory.objects.push(item);
+
+            loadLevel(level.id + 1);
+            inventory.level_end = false;
             inventory.opened = false;
         } else {
             menu.sprite = new Sprite(inventory.objects[inventory.cursorPosition].texture.name, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));

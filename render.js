@@ -144,6 +144,9 @@ function drawGUI() {
     } else if (inventory.opened) {
         inventory.board.draw(shaders["defaultShader"]);
         for (let i = 0; i < inventory.objects.length; i++) {
+            if (inventory.level_end && i < level.id - 1) {
+                continue;
+            }
             if (inventory.cursorPosition == i) {
                 inventory.postits[i].texture = inventory.glowingPostit;
             } else {
