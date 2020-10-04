@@ -95,16 +95,28 @@
             "type": "collidable",
             "spriteName": "Floor_Texture",
             "pos": {
-                "x": 25.5,
+                "x": 25.75,
                 "y": -3
             },
             "size": {
-                "width": 25,
+                "width": 26,
                 "height": 1
             },
             "offset": {
                 "x": 0,
                 "y": 0.4
+            }
+        },
+        {
+            "type": "door",
+            "spriteName": "red",
+            "pos": {
+                "x": 38.25,
+                "y": -0.85
+            },
+            "size": {
+                "width": 0.5,
+                "height": 3.3
             }
         },
 		{
@@ -162,7 +174,35 @@
                 "width": 3.9,
                 "height": 1.8
             }
-        }
+        },
+        {
+            "type": "collidable",
+            "spriteName": "Floor_Texture",
+            "pos": {
+                "x": 51,
+                "y": -3
+            },
+            "size": {
+                "width": 25,
+                "height": 1
+            },
+            "offset": {
+                "x": 0,
+                "y": 0.4
+            }
+        },
+		{
+			"type" : "background",
+			"spriteName" : "Lvl1_Teil3",
+			"pos" : {
+				"x" : 51,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 5
+			}
+		}
 	],
 
     "exit": {
