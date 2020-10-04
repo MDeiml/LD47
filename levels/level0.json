@@ -91,13 +91,14 @@
 			}
 		},
 		{
-			"type" : "interactable",
+			"type" : "collidable",
 			"pickup" : 0,
 			"spriteName" : "bed0",
 			"pos" : {
 				"x" : 10,
 				"y" : 0
 			},
+            "orientation": 2,
 			"size" : {
 				"width" : 5,
 				"height" : 5

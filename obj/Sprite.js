@@ -198,30 +198,42 @@ Sprite.prototype.draw = function(shader) {
 	Sprite.MESH.draw();
 }
 
-let GameObject = function(spritePath, position, size, type, scale = vec2.fromValues(1, 1), offset = vec2.fromValues(0, 0), facingRight = true) {
+export let Orientation = {
+    DEFAULT: 0,
+    MIRRORED: 1,
+    ROTATED_45: 2
+}
+
+let GameObject = function(spritePath, position, size, type, scale = vec2.fromValues(1, 1), offset = vec2.fromValues(0, 0), orientation = Orientation.DEFAULT) {
     this.position = position;
     this.halfSize = vec2.create();
     this.type = type;
 	this.scale = scale;
 	this.offset = offset;
-	this.facingRight = facingRight;
+	this.orientation = orientation;
     vec2.scale(this.halfSize, size, 0.5);
 
 	if (spritePath === null) {
 		this.sprite = null;
 	} else {
-		let transform = mat4.create();
-		mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(this.position[0] + this.offset[0], this.position[1] + this.offset[1], 0), vec3.fromValues(this.halfSize[0] * (this.facingRight ? 1 : -1) * this.scale[0], this.halfSize[1] * this.scale[1], 1));
-
-		this.sprite = new Sprite(spritePath, transform, null);
+		this.sprite = new Sprite(spritePath, this.calculateTransform(), null);
 	}
 }
+
+GameObject.prototype.calculateTransform = function() {
+    let transform = mat4.create();
+    mat4.fromRotationTranslationScale(
+        transform,
+        this.orientation == Orientation.ROTATED_45 ? quat.fromEuler(quat.create(), 0, 0, 45) : quat.create(),
+        vec3.fromValues(this.position[0] + this.offset[0], this.position[1] + this.offset[1], 0),
+        vec3.fromValues(this.halfSize[0] * (this.orientation == Orientation.MIRRORED ? -1 : 1) * this.scale[0], this.halfSize[1] * this.scale[1], 1));
+    return transform;
+}
+
 GameObject.prototype.setPosition = function(position) {
     this.position = position;
-    let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(this.position[0] + this.offset[0], this.position[1] + this.offset[1], 0), vec3.fromValues(this.halfSize[0] * (this.facingRight ? 1 : -1) * this.scale[0], this.halfSize[1] * this.scale[1], 1));
 	if (this.sprite !== null)
-		this.sprite.setTransformation(transform);
+		this.sprite.setTransformation(this.calculateTransform());
 }
 GameObject.prototype.draw = function(shader) {
     if (this.sprite !== null)
