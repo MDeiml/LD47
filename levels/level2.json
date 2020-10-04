@@ -1,10 +1,5 @@
 {
 	"id" : 2,
-    "intro": {
-        "spriteName": "find_yourself",
-        "duration": 1
-    },
-	
 	"objects" : [
         {
             "type": "collidable",
