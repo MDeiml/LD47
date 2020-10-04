@@ -147,8 +147,8 @@
             "type": "deco",
 			"spriteName" : "Lvl1/drawing_behing_clock",
 			"pos" : {
-				"x" : 28.8,
-				"y" : 1.4
+				"x" : 28.46,
+				"y" : 1.28
 			},
 			"size" : {
 				"width" : 0.5,
