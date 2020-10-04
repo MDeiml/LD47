@@ -191,7 +191,7 @@
 				"x" : 1,
 				"y" : 0
 			},
-			"cutoff": 0.8,
+			"cutoff": 0.5,
 			"intensity": 2
 		}
 	],
