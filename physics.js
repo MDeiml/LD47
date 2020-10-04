@@ -109,7 +109,7 @@ export function update(delta) {
                     obj.state = "opening";
                 } else if (obj.state == "open") {
                     obj.timer = 1;
-                } else if (obj.state = "closing") {
+                } else if (obj.state == "closing") {
                     obj.timer = 0.3 - obj.timer;
                     obj.state = "opening";
                 }

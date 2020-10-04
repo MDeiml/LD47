@@ -1,10 +1,12 @@
 import * as Shader from "./obj/Shader.js"
 import * as Sprite from "./obj/Sprite.js"
 import {Projection, View} from "./obj/Transform.js"
-import {mat4, vec2, vec3} from "./gl-matrix-min.js"
+import {mat4, vec2, vec3, quat} from "./gl-matrix-min.js"
 import {level, player, gl, setGl, menu, inventory} from "./state.js"
 
 let shaders = {};
+
+const DOOR_WIDTH = 1;
 
 export let projection = null;
 let camera = null;
@@ -118,12 +120,12 @@ export function update() {
 	if (lastSwitch === 1) {
 		lastSwitch = 2;
 		menu.backgroundContainer.texture.unbindFramebuffer()
-		
+
 		menu.blurredBackgroundContainer.texture.bindFramebuffer()
 		shaders["blurShader"].bind();
 		gl.uniformMatrix4fv(shaders["blurShader"].getUniform('VP'), false, mat4.create());
 		gl.uniform1fv(shaders["blurShader"].getUniform('gaussian'), [0.000533, 0.000799, 0.001124, 0.001487, 0.001849, 0.00216, 0.002371, 0.002445, 0.002371, 0.00216, 0.001849, 0.001487, 0.001124, 0.000799, 0.000533, 0.000799, 0.001196, 0.001684, 0.002228, 0.002769, 0.003235, 0.003551, 0.003663, 0.003551, 0.003235, 0.002769, 0.002228, 0.001684, 0.001196, 0.000799, 0.001124, 0.001684, 0.002371, 0.003136, 0.003898, 0.004554, 0.004999, 0.005157, 0.004999, 0.004554, 0.003898, 0.003136, 0.002371, 0.001684, 0.001124, 0.001487, 0.002228, 0.003136, 0.004148, 0.005157, 0.006024, 0.006613, 0.006822, 0.006613, 0.006024, 0.005157, 0.004148, 0.003136, 0.002228, 0.001487, 0.001849, 0.002769, 0.003898, 0.005157, 0.006411, 0.007489, 0.008221, 0.00848, 0.008221, 0.007489, 0.006411, 0.005157, 0.003898, 0.002769, 0.001849, 0.00216, 0.003235, 0.004554, 0.006024, 0.007489, 0.008748, 0.009603, 0.009906, 0.009603, 0.008748, 0.007489, 0.006024, 0.004554, 0.003235, 0.00216, 0.002371, 0.003551, 0.004999, 0.006613, 0.008221, 0.009603, 0.010542, 0.010875, 0.010542, 0.009603, 0.008221, 0.006613, 0.004999, 0.003551, 0.002371, 0.002445, 0.003663, 0.005157, 0.006822, 0.00848, 0.009906, 0.010875, 0.011218, 0.010875, 0.009906, 0.00848, 0.006822, 0.005157, 0.003663, 0.002445, 0.002371, 0.003551, 0.004999, 0.006613, 0.008221, 0.009603, 0.010542, 0.010875, 0.010542, 0.009603, 0.008221, 0.006613, 0.004999, 0.003551, 0.002371, 0.00216, 0.003235, 0.004554, 0.006024, 0.007489, 0.008748, 0.009603, 0.009906, 0.009603, 0.008748, 0.007489, 0.006024, 0.004554, 0.003235, 0.00216, 0.001849, 0.002769, 0.003898, 0.005157, 0.006411, 0.007489, 0.008221, 0.00848, 0.008221, 0.007489, 0.006411, 0.005157, 0.003898, 0.002769, 0.001849, 0.001487, 0.002228, 0.003136, 0.004148, 0.005157, 0.006024, 0.006613, 0.006822, 0.006613, 0.006024, 0.005157, 0.004148, 0.003136, 0.002228, 0.001487, 0.001124, 0.001684, 0.002371, 0.003136, 0.003898, 0.004554, 0.004999, 0.005157, 0.004999, 0.004554, 0.003898, 0.003136, 0.002371, 0.001684, 0.001124, 0.000799, 0.001196, 0.001684, 0.002228, 0.002769, 0.003235, 0.003551, 0.003663, 0.003551, 0.003235, 0.002769, 0.002228, 0.001684, 0.001196, 0.000799, 0.000533, 0.000799, 0.001124, 0.001487, 0.001849, 0.00216, 0.002371, 0.002445, 0.002371, 0.00216, 0.001849, 0.001487, 0.001124, 0.000799, 0.000533]);
-		
+
 		menu.backgroundContainer.draw(shaders["blurShader"]);
 		menu.blurredBackgroundContainer.texture.unbindFramebuffer()
 	}
@@ -138,7 +140,7 @@ function drawGUI() {
 	gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('VP'), false, mat4.create());
 	menu.blurredBackgroundContainer.draw(shaders["defaultShader"]);
 	gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('VP'), false, projection.get());
-	
+
     if (menu.sprite !== null) {
         menu.sprite.draw(shaders["defaultShader"]);
     } else if (inventory.opened) {
@@ -173,7 +175,7 @@ function drawBaseShader() {
 
 function drawLightShader() {
 	shaders["lightShader"].bind();
-	
+
 	gl.uniform1f(shaders["lightShader"].getUniform('lightCount'), level.lightCnt)
 	gl.uniform1fv(shaders["lightShader"].getUniform('lights'), level.lights)
 	gl.uniformMatrix4fv(shaders["lightShader"].getUniform('VP'), false, pvMatrix);
@@ -181,6 +183,13 @@ function drawLightShader() {
 	for (let sprite of level.objects)
 	{
 		sprite.draw(shaders["lightShader"]);
+        if (sprite.type == "door" && sprite.state) {
+            let t = (sprite.state == "opening" ? 0.3 - sprite.timer : (sprite.state == "closing" ? sprite.timer : 0.3)) / 0.3;
+            if (sprite.state == "opening")
+            console.log(sprite.timer);
+            mat4.fromRotationTranslationScale(sprite.door.transform, quat.create(), vec3.fromValues(sprite.position[0] + t * DOOR_WIDTH, sprite.position[1], 0), vec3.fromValues(-t * DOOR_WIDTH, sprite.halfSize[1], 1));
+            sprite.door.draw(shaders["lightShader"]);
+        }
 	}
 
     player.draw(shaders["lightShader"]);

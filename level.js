@@ -94,10 +94,14 @@ export function initLevel(id, rawData) {
 			mat4.fromRotationTranslationScale(transformation, quat.create(), pos, scale)
 			level.objects.push(new Sprite(spriteName, transformation))
 			break;
-		case "door":
 		case "collidable":
 		case "xcollidable":
 			level.objects.push(new GameObject(spriteName, pos1, size, entry["type"], scale, offset, orientation))
+			break;
+		case "door":
+            obj = new GameObject(spriteName, pos1, size, "door", scale, offset, orientation);
+            obj.door = new Sprite("assets/Door.png", mat4.create());
+			level.objects.push(obj)
 			break;
 		case "interactable":
             obj = new GameObject(spriteName, pos1, size, "interactable", scale, offset, orientation);
