@@ -131,6 +131,18 @@
 				"height" : 5
 			}
 		},
+		{
+			"type" : "collision_mask",
+			"spriteName" : "Level_1_Teil2_Collipng",
+			"pos" : {
+				"x" : 25.5,
+				"y" : 0
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 5
+			}
+		},
         {
             "type": "collidable",
             "pos": {

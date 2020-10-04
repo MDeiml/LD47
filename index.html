@@ -29,6 +29,7 @@
 			varying mediump vec3 worldPos;
 
 			uniform sampler2D texture;
+			uniform vec2 texRes;
 
 			void main(void) {
 				gl_FragColor = texture2D(texture, vTexCoord);
@@ -41,6 +42,7 @@
 			varying mediump vec3 worldPos;
 
 			uniform sampler2D texture;
+			uniform vec2 texRes;
 			
 			uniform float lights[180];
 			uniform float lightCount;
@@ -123,7 +125,42 @@
 				gl_FragColor = color;
 			}
 		</script>
-		
+		<script id="bg-fs" type="x-shader/x-fragment">
+			precision mediump float;
+			
+			varying mediump vec2 vTexCoord;
+			varying mediump vec3 worldPos;
+
+			uniform sampler2D texture;
+			uniform vec2 texRes;
+			
+			vec4 getTexFromOffset(float x, float y) {
+				return texture2D(texture, vec2( vTexCoord.x + x/texRes.x, vTexCoord.y + y/texRes.y));
+			}
+			
+			void main(void) {
+				vec4 color = vec4(0.0, 0.0, 0.0, 0.0);
+				
+				//color += getTexFromOffset(-3.0, 3.0) + getTexFromOffset(3.0, 3.0) + getTexFromOffset(3.0, -3.0) + getTexFromOffset(-3.0, -3.0);
+				//color += 6.0 * (getTexFromOffset(-2.0, 3.0) + getTexFromOffset(2.0, 3.0) + getTexFromOffset(2.0, -3.0) + getTexFromOffset(-2.0, -3.0) + getTexFromOffset(-3.0, 2.0) + getTexFromOffset(3.0, 2.0) + getTexFromOffset(3.0, -2.0) + getTexFromOffset(-3.0, -2.0));
+				//color += 15.0 * (getTexFromOffset(-1.0, 3.0) + getTexFromOffset(1.0, 3.0) + getTexFromOffset(1.0, -3.0) + getTexFromOffset(-1.0, -3.0) + getTexFromOffset(-3.0, 1.0) + getTexFromOffset(3.0, 1.0) + getTexFromOffset(3.0, -1.0) + getTexFromOffset(-3.0, -1.0));
+				//color += 20.0 * (getTexFromOffset(-3.0, 0.0) + getTexFromOffset(3.0, 0.0) + getTexFromOffset(0.0, -3.0) + getTexFromOffset(0.0, 3.0));
+				//4096
+				
+				//color += 1.0 * (getTexFromOffset(-2.0, 2.0) + getTexFromOffset(2.0, 2.0) + getTexFromOffset(2.0, -2.0) + getTexFromOffset(-2.0, -2.0));
+				//color += 4.0 * (getTexFromOffset(-1.0, 2.0) + getTexFromOffset(1.0, 2.0) + getTexFromOffset(1.0, -2.0) + getTexFromOffset(-1.0, -2.0) + getTexFromOffset(-2.0, 1.0) + getTexFromOffset(2.0, 1.0) + getTexFromOffset(2.0, -1.0) + getTexFromOffset(-2.0, -1.0));
+				//color += 7.0 * (getTexFromOffset(-2.0, 0.0) + getTexFromOffset(2.0, 0.0) + getTexFromOffset(0.0, -2.0) + getTexFromOffset(0.0, 2.0));
+				//273
+				
+				color += 1.0 * (getTexFromOffset(-1.0, 0.0) + getTexFromOffset(1.0, 0.0) + getTexFromOffset(0.0, -1.0) + getTexFromOffset(0.0, 1.0));
+				color += 1.0 * (getTexFromOffset(-1.0, 1.0) + getTexFromOffset(1.0, 1.0) + getTexFromOffset(1.0, -1.0) + getTexFromOffset(-1.0, -1.0));
+				color += 8.0 * getTexFromOffset(0.0, 0.0);
+
+				
+				color /= 16.0;
+				gl_FragColor = vec4(color.xyz, 1.0);
+			}
+		</script>
 		<style>
 			* {
 				margin: 0;

@@ -57,6 +57,7 @@ function initShaders(name) {
 	shaders["defaultShader"] = new Shader.Shader("shader", "shader")
 	shaders["lightShader"] = new Shader.Shader("shader", "light")
 	shaders["blurShader"] = new Shader.Shader("shader", "blur")
+	shaders["bgShader"] = new Shader.Shader("shader", "bg")
 
 	shaders["defaultShader"].bind();
     let defaultPositionAttribute = gl.getAttribLocation(shaders["defaultShader"].get(), 'position');
@@ -167,10 +168,22 @@ function drawBaseShader() {
 
 	for (let sprite of level.objects)
 	{
-		sprite.draw(shaders["defaultShader"]);
+		console.log(sprite.type)
+		if (sprite.type === "background")
+		{
+			shaders["bgShader"].bind();
+			gl.uniformMatrix4fv(shaders["bgShader"].getUniform('VP'), false, pvMatrix);
+			
+			sprite.draw(shaders["bgShader"]);
+			
+			shaders["defaultShader"].bind();
+			gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('VP'), false, pvMatrix);
+		}
+		else
+			sprite.draw(shaders["defaultShader"]);
 	}
-
-    player.draw(shaders["defaultShader"]);
+	
+	player.draw(shaders["defaultShader"]);
 }
 
 function drawLightShader() {
@@ -182,7 +195,22 @@ function drawLightShader() {
 
 	for (let sprite of level.objects)
 	{
-		sprite.draw(shaders["lightShader"]);
+		if (sprite.type === "background")
+		{
+			shaders["blurShader"].bind();
+			gl.uniform1fv(shaders["blurShader"].getUniform('gaussian'), [0.000533, 0.000799, 0.001124, 0.001487, 0.001849, 0.00216, 0.002371, 0.002445, 0.002371, 0.00216, 0.001849, 0.001487, 0.001124, 0.000799, 0.000533, 0.000799, 0.001196, 0.001684, 0.002228, 0.002769, 0.003235, 0.003551, 0.003663, 0.003551, 0.003235, 0.002769, 0.002228, 0.001684, 0.001196, 0.000799, 0.001124, 0.001684, 0.002371, 0.003136, 0.003898, 0.004554, 0.004999, 0.005157, 0.004999, 0.004554, 0.003898, 0.003136, 0.002371, 0.001684, 0.001124, 0.001487, 0.002228, 0.003136, 0.004148, 0.005157, 0.006024, 0.006613, 0.006822, 0.006613, 0.006024, 0.005157, 0.004148, 0.003136, 0.002228, 0.001487, 0.001849, 0.002769, 0.003898, 0.005157, 0.006411, 0.007489, 0.008221, 0.00848, 0.008221, 0.007489, 0.006411, 0.005157, 0.003898, 0.002769, 0.001849, 0.00216, 0.003235, 0.004554, 0.006024, 0.007489, 0.008748, 0.009603, 0.009906, 0.009603, 0.008748, 0.007489, 0.006024, 0.004554, 0.003235, 0.00216, 0.002371, 0.003551, 0.004999, 0.006613, 0.008221, 0.009603, 0.010542, 0.010875, 0.010542, 0.009603, 0.008221, 0.006613, 0.004999, 0.003551, 0.002371, 0.002445, 0.003663, 0.005157, 0.006822, 0.00848, 0.009906, 0.010875, 0.011218, 0.010875, 0.009906, 0.00848, 0.006822, 0.005157, 0.003663, 0.002445, 0.002371, 0.003551, 0.004999, 0.006613, 0.008221, 0.009603, 0.010542, 0.010875, 0.010542, 0.009603, 0.008221, 0.006613, 0.004999, 0.003551, 0.002371, 0.00216, 0.003235, 0.004554, 0.006024, 0.007489, 0.008748, 0.009603, 0.009906, 0.009603, 0.008748, 0.007489, 0.006024, 0.004554, 0.003235, 0.00216, 0.001849, 0.002769, 0.003898, 0.005157, 0.006411, 0.007489, 0.008221, 0.00848, 0.008221, 0.007489, 0.006411, 0.005157, 0.003898, 0.002769, 0.001849, 0.001487, 0.002228, 0.003136, 0.004148, 0.005157, 0.006024, 0.006613, 0.006822, 0.006613, 0.006024, 0.005157, 0.004148, 0.003136, 0.002228, 0.001487, 0.001124, 0.001684, 0.002371, 0.003136, 0.003898, 0.004554, 0.004999, 0.005157, 0.004999, 0.004554, 0.003898, 0.003136, 0.002371, 0.001684, 0.001124, 0.000799, 0.001196, 0.001684, 0.002228, 0.002769, 0.003235, 0.003551, 0.003663, 0.003551, 0.003235, 0.002769, 0.002228, 0.001684, 0.001196, 0.000799, 0.000533, 0.000799, 0.001124, 0.001487, 0.001849, 0.00216, 0.002371, 0.002445, 0.002371, 0.00216, 0.001849, 0.001487, 0.001124, 0.000799, 0.000533]);
+
+			gl.uniformMatrix4fv(shaders["blurShader"].getUniform('VP'), false, pvMatrix);
+			
+			sprite.draw(shaders["blurShader"]);
+			
+			
+			shaders["lightShader"].bind();
+			gl.uniformMatrix4fv(shaders["lightShader"].getUniform('VP'), false, pvMatrix);
+		}
+		else
+			sprite.draw(shaders["lightShader"]);
+		
         if (sprite.type == "door" && sprite.state) {
             let t = (sprite.state == "opening" ? 0.3 - sprite.timer : (sprite.state == "closing" ? sprite.timer : 0.3)) / 0.3;
             if (sprite.state == "opening")
