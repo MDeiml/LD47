@@ -41,6 +41,7 @@ export function update(delta) {
         player.velocity[1] = JUMP_SPEED;
     }
 
+    if (player.velocity[1] >= 0) player.maxY = player.position[1] - player.halfSize[1];
     player.velocity[0] = velx;
     player.velocity[1] -= JUMP_HEIGHT * delta;
     let positionDelta = vec2.scale(vec2.create(), player.velocity, delta);
@@ -61,10 +62,10 @@ export function update(delta) {
                 }
 			}
             if (obj.type === "xcollidable") {
-                if (intersection[0] == 0) {
+                if (intersection[0] == 0 && intersection[1] < 0 && player.velocity[1] < 0 && player.maxY >= obj.position[1] + obj.halfSize[1] - 0.0001) {
 					player.setPosition(vec2.sub(player.position, player.position, intersection));
                     player.velocity[1] = 0;
-                    if (intersection[1] < 0) player.onGround = true;
+                    player.onGround = true;
                 }
             } else if (obj.type === "interactable") {
 				if (pickingUp()) {
