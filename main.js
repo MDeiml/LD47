@@ -12,6 +12,7 @@ var lastTick = null;
 var unprocessed = 0;
 const FRAME_TIME = 1000/60;
 let frameCntr = 0
+let framePos = 0
 
 function main() {
     initGraphics(document.getElementById('glCanvas'));
@@ -24,7 +25,7 @@ function main() {
         setPlayer(new GameObject("./assets/walk_circle.png", vec2.fromValues(0, 0), vec2.fromValues(1, 1), "player", vec2.fromValues(3.5, 3.5), vec2.fromValues(0, 0.9)), true);
         player.velocity = vec2.fromValues(0, 0);
         player.onGround = false;
-        player.sprite.texture.frames = 4;
+        player.sprite.texture.frames = 5;
 
         window.running = true;
         requestAnimationFrame(update);
@@ -44,9 +45,14 @@ function updatePlayerAnimation() {
 	if ((frameCntr % 15) === 0) {
 		frameCntr = 0;
 		if (vec2.length(player.velocity) > 0)
-			player.sprite.texture.nextFrame();
+		{
+			framePos += 1;
+			if ((framePos % 4) === 0)
+				framePos = 0;
+			player.sprite.texture.setFrame(framePos);
+		}
 		else
-			player.sprite.texture.setFrame(3)
+			player.sprite.texture.setFrame(4)
 	}
 }
 
