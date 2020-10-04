@@ -34,20 +34,21 @@ function playerFrameStepCnt(ticks) {
 }
 
 function updatePlayerAnimation() {
-	if (player.onGround)
+	if (player.onGround) {
 		frameCntr += 1;
-	if ((frameCntr % 15) === 0) {
-		frameCntr = 0;
-		if (vec2.length(player.velocity) > 0)
-		{
-			framePos += 1;
-			if ((framePos % 4) === 0)
-				framePos = 0;
-			player.sprite.texture.setFrame(framePos);
-		}
-		else
-			player.sprite.texture.setFrame(4)
-	}
+        if ((frameCntr % 15) === 0) {
+            frameCntr = 0;
+            if (vec2.length(player.velocity) > 0)
+            {
+                framePos += 1;
+                if ((framePos % 4) === 0)
+                    framePos = 0;
+                player.sprite.texture.setFrame(framePos);
+            }
+            else
+                player.sprite.texture.setFrame(4)
+        }
+    }
 }
 
 function update(now) {
