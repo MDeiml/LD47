@@ -110,7 +110,11 @@ export function update(delta) {
 
     let exitDir = vec2.sub(vec2.create(), level.exit, player.position);
     if (Math.abs(exitDir[0]) < player.halfSize[0] && Math.abs(exitDir[1]) < player.halfSize[1]) {
-        inventory.opened = true;
-        inventory.level_end = true;
+        if (inventory.objects.length >= level.id) {
+            inventory.opened = true;
+            inventory.level_end = true;
+        } else {
+            // TODO: Tell player they have to collect at least 1 item
+        }
     }
 }

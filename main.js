@@ -123,6 +123,7 @@ function updateInventory() {
 
             let item = inventory.objects[inventory.cursorPosition];
             inventory.objects.splice(level.id - 1, inventory.objects.length - (level.id - 1));
+            inventory.postits.splice(level.id, inventory.objects.length - (level.id));
             item.setTransformation(inventoryItemTransform(inventory.objects.length));
             inventory.objects.push(item);
 
