@@ -7,11 +7,12 @@ const Y_SCALE = 1
 
 const TYPE_ID_MAP = {
 	background : 0,
-	deco : 1,
-	collidable : 2,
-	xcollidable : 3,
-	interactable : 4,
-	foreground : 5
+	door : 1,
+	deco : 2,
+	collidable : 3,
+	xcollidable : 4,
+	interactable : 5,
+	foreground : 6
 }
 
 //move to util
@@ -93,11 +94,10 @@ export function initLevel(id, rawData) {
 			mat4.fromRotationTranslationScale(transformation, quat.create(), pos, scale)
 			level.objects.push(new Sprite(spriteName, transformation))
 			break;
+		case "door":
 		case "collidable":
-			level.objects.push(new GameObject(spriteName, pos1, size, "collidable", scale, offset, orientation))
-			break;
 		case "xcollidable":
-			level.objects.push(new GameObject(spriteName, pos1, size, "xcollidable", scale, offset, orientation))
+			level.objects.push(new GameObject(spriteName, pos1, size, entry["type"], scale, offset, orientation))
 			break;
 		case "interactable":
             obj = new GameObject(spriteName, pos1, size, "interactable", scale, offset, orientation);
