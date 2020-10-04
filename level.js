@@ -48,7 +48,7 @@ export function initLevel(id, rawData) {
 
     // intro
     if (levelData["intro"]) {
-        menu.sprite = new Sprite("assets/" + levelData["intro"]["spriteName"] + ".png", mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
+        menu.setSprite(new Sprite("assets/" + levelData["intro"]["spriteName"] + ".png", mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5))));
         menu.cooldown = levelData["intro"]["duration"];
     }
 

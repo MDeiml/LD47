@@ -27,6 +27,32 @@ export let level = {
 };
 export let menu = {
     sprite: null,
+	setSprite: function(sprite, disableAnimation = false) {
+		if (sprite !== null)
+		{
+			mat4.fromRotationTranslationScale(sprite.transform, quat.create(), vec3.fromValues(10, -10, 0), vec3.fromValues(0, 0, 0));
+	
+			let updateInFunc = itemFadeInAnim.bind(new Object(), sprite, "fade_in_anim_"+sprite.texture.name, vec3.fromValues(0, 0, 0), vec3.fromValues(5, 5, 5), 40)
+			updateInFunc()
+			if(!disableAnimation) {
+				updateRegistry.registerUpdate("fade_in_anim_"+sprite.texture.name, updateInFunc);
+			}
+		}
+		
+		if (this.sprite !== null)
+		{
+			let updateOutFunc = itemFadeOutAnim.bind(new Object(), this.sprite, sprite, "fade_out_anim_"+this.sprite.texture.name, vec3.fromValues(10, -10, 0), vec3.fromValues(0, 0, 0), 40)
+			updateOutFunc()
+	
+			if(!disableAnimation) {
+				updateRegistry.registerUpdate("fade_out_anim_"+this.sprite.texture.name, updateOutFunc);
+			}
+		}
+		else{
+			this.sprite = sprite
+		}
+		
+	},
 	backgroundContainer: null,
     cooldown: 0
 };
@@ -74,4 +100,66 @@ export function inventoryItemTransform(index) {
     let transform = mat4.create();
     mat4.fromRotationTranslationScale(transform, quat.create(), pos, scale);
     return transform;
+}
+
+
+function itemFadeInAnim(sprite, name, tgtPos, tgtScale, frames) {
+	if (typeof this.cnt === "undefined")
+		this.cnt = 0;
+	else
+		this.cnt += 1;
+	
+	if (typeof this.strtPos === "undefined")
+	{
+		this.strtPos = vec3.create();
+		mat4.getTranslation(this.strtPos, sprite.transform);
+	}
+	if (typeof this.strtScale === "undefined")
+	{
+		this.strtScale = vec3.create();
+		mat4.getScaling(this.strtScale, sprite.transform);
+	}
+	
+	let pos = vec3.create()
+	vec3.lerp(pos, this.strtPos, tgtPos, this.cnt/frames)
+	let scale = vec3.create()
+	vec3.lerp(scale, this.strtScale, tgtScale, this.cnt/frames)
+	
+	mat4.fromRotationTranslationScale(sprite.transform, quat.create(), pos, scale);
+	
+	if (this.cnt >= frames) {
+		updateRegistry.unregisterUpdate(name);
+		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), tgtPos, tgtScale);
+	}
+}
+
+function itemFadeOutAnim(sprite, newSprite, name, tgtPos, tgtScale, frames) {
+	if (typeof this.cnt === "undefined")
+		this.cnt = 0;
+	else
+		this.cnt += 1;
+	
+	if (typeof this.strtPos === "undefined")
+	{
+		this.strtPos = vec3.create();
+		mat4.getTranslation(this.strtPos, sprite.transform);
+	}
+	if (typeof this.strtScale === "undefined")
+	{
+		this.strtScale = vec3.create();
+		mat4.getScaling(this.strtScale, sprite.transform);
+	}
+	
+	let pos = vec3.create()
+	vec3.lerp(pos, this.strtPos, tgtPos, this.cnt/frames)
+	let scale = vec3.create()
+	vec3.lerp(scale, this.strtScale, tgtScale, this.cnt/frames)
+	
+	mat4.fromRotationTranslationScale(sprite.transform, quat.create(), pos, scale);
+	
+	if (this.cnt >= frames) {
+		updateRegistry.unregisterUpdate(name);
+		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), this.strtPos, this.strtScale);
+		menu.sprite = newSprite;
+	}
 }

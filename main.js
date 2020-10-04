@@ -78,12 +78,12 @@ function update(now) {
         if (menu.sprite !== null) {
             if (menu.cooldown == -1) {
                 if (pickingUp()) {
-                    menu.sprite = null;
+                    menu.setSprite(null);
                 }
             } else {
                 menu.cooldown -= FRAME_TIME / 1000;
                 if (menu.cooldown < 0) {
-                    menu.sprite = null;
+                    menu.setSprite(null);
                 }
             }
         } else if (inventory.opened) {
