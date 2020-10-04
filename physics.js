@@ -91,8 +91,7 @@ export function update(delta) {
                     player.velocity[1] = 0;
                     if (intersection[1] < 0) player.onGround = true;
                 }
-			}
-            if (obj.type === "xcollidable") {
+			} else if (obj.type === "xcollidable") {
                 if (intersection[0] == 0 && intersection[1] < 0 && player.velocity[1] < 0 && player.maxY >= obj.position[1] + obj.halfSize[1] - 0.0001) {
 					player.setPosition(vec2.sub(player.position, player.position, intersection));
                     player.velocity[1] = 0;
@@ -104,6 +103,30 @@ export function update(delta) {
                     menu.cooldown = -1;
 					pickUp(obj);
 				}
+            } else if (obj.type == "door") {
+                if (!obj.state) {
+                    obj.timer = 0.3;
+                    obj.state = "opening";
+                } else if (obj.state == "open") {
+                    obj.timer = 1;
+                } else if (obj.state == "closing") {
+                    obj.timer = 0.3 - obj.timer;
+                    obj.state = "opening";
+                }
+            }
+        }
+        if (obj.type == "door" && obj.timer > 0) {
+            obj.timer -= delta;
+            if (obj.timer <= 0) {
+                if (obj.state == "opening") {
+                    obj.state = "open";
+                    obj.timer = 1;
+                } else if (obj.state == "open") {
+                    obj.state = "closing";
+                    obj.timer = 0.3;
+                } else if (obj.state == "closing") {
+                    obj.state = null;
+                }
             }
         }
     }

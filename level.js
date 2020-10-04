@@ -7,11 +7,12 @@ const Y_SCALE = 1
 
 const TYPE_ID_MAP = {
 	background : 0,
-	deco : 1,
-	collidable : 2,
-	xcollidable : 3,
-	interactable : 4,
-	foreground : 5
+	door : 1,
+	deco : 2,
+	collidable : 3,
+	xcollidable : 4,
+	interactable : 5,
+	foreground : 6
 }
 
 //move to util
@@ -80,6 +81,7 @@ export function initLevel(id, rawData) {
         let orientation = entry["orientation"];
 
 		let obj = null;
+        let spriteName = entry["spriteName"] ? "assets/" + entry["spriteName"] + ".png" : null;
 
 		switch(entry["type"])
 		{
@@ -90,16 +92,19 @@ export function initLevel(id, rawData) {
 			let pos = vec3.fromValues(entry["pos"]["x"] * X_SCALE, entry["pos"]["y"] * Y_SCALE, 0)
 			scale = vec3.fromValues(entry["size"]["width"] * X_SCALE * 0.5, entry["size"]["height"] * Y_SCALE * 0.5, 0)
 			mat4.fromRotationTranslationScale(transformation, quat.create(), pos, scale)
-			level.objects.push(new Sprite("assets/" + entry["spriteName"] + ".png", transformation))
+			level.objects.push(new Sprite(spriteName, transformation))
 			break;
 		case "collidable":
-			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "collidable", scale, offset, orientation))
-			break;
 		case "xcollidable":
-			level.objects.push(new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "xcollidable", scale, offset, orientation))
+			level.objects.push(new GameObject(spriteName, pos1, size, entry["type"], scale, offset, orientation))
+			break;
+		case "door":
+            obj = new GameObject(spriteName, pos1, size, "door", scale, offset, orientation);
+            obj.door = new Sprite("assets/Door.png", mat4.create());
+			level.objects.push(obj)
 			break;
 		case "interactable":
-            obj = new GameObject("assets/" + entry["spriteName"] + ".png", pos1, size, "interactable", scale, offset, orientation);
+            obj = new GameObject(spriteName, pos1, size, "interactable", scale, offset, orientation);
             obj.pickup = entry["pickup"];
 			level.objects.push(obj)
 			break;
@@ -107,48 +112,49 @@ export function initLevel(id, rawData) {
         level.exit = vec2.fromValues(levelData["exit"]["x"], levelData["exit"]["y"]);
 	}
 
-	
+
 	level.objects.push(new GameObject(null, vec2.fromValues(0, -5), vec2.fromValues(10000, 5), "collidable")); //the fuck
 
 	let cntr = 0
 	if (typeof levelData["lights"] !== "undefined")
-		for (let entry of levelData["lights"]) 
+		for (let entry of levelData["lights"])
 		{
 			let color = [0, 0, 0]
 			let pos = [0, 0]
 			let dir = [0, 0]
 			let cutoff = 0
 			let intensity = 0
-			
+
 			color[0] = entry["color"]["r"]
 			color[1] = entry["color"]["g"]
 			color[2] = entry["color"]["b"]
-			
+
 			pos[0] = entry["pos"]["x"]
 			pos[1] = entry["pos"]["y"]
-			
+
 			//currently expected to be normalized
 			dir[0] = entry["dir"]["x"]
 			dir[1] = entry["dir"]["y"]
-			
+
 			cutoff = entry["cutoff"]
 			intensity = entry["intensity"]
-			
+
 			level.updateLight(cntr, color, pos, dir, cutoff, intensity)
 			cntr += 1;
 		}
-	
+
 	for (let i = cntr; i < 20; i++)
 	{
 		level.updateLight(i, [0, 0, 0], [0, 0], [0, 0], 0, 0)
 	}
-	
+
 	level.lightCnt = cntr;
-	
+
 	level.isInitialized = false
 
     // TODO: Change this
-    setPlayer(new GameObject("./assets/walk_circle_halved.png", vec2.fromValues(0, 0), vec2.fromValues(1, 2.5), "player", vec2.fromValues(3.5, 3.5 / 2.5), vec2.fromValues(0, 0.2)), 0);
+    let start = vec2.fromValues(levelData["start"]["x"], levelData["start"]["y"]);
+    setPlayer(new GameObject("./assets/walk_circle_halved.png", start, vec2.fromValues(1, 2.5), "player", vec2.fromValues(3.5, 3.5 / 2.5), vec2.fromValues(0, 0.2)), 0);
     player.velocity = vec2.fromValues(0, 0);
     player.onGround = false;
     player.sprite.texture.frames = 5;
