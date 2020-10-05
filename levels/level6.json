@@ -138,18 +138,6 @@
             }
         },
 		{
-			"type" : "interactable",
-			"pickup" : 13,
-			"pos": {
-				"x" : 6.45,
-				"y" : -0.65
-			},
-            "size": {
-                "width": 0.6,
-                "height": 3.7
-            }
-		},
-		{
             "type": "collidable",
             "pos": {
                 "x": 10.2,
@@ -236,19 +224,6 @@
 				"height" : 5
 			}
 		},
-        {
-            "type": "interactable",
-			"spriteName" : "lvl1/drawing_behing_clock",
-            "pickup": 10,
-			"pos" : {
-				"x" : 28.4,
-				"y" : 1.35
-			},
-			"size" : {
-				"width" : 0.75,
-				"height" : 0.75
-			}
-        },
         {
             "type": "collidable",
             "orientation": 2,
@@ -446,30 +421,6 @@
             "size": {
                 "width": 0.5,
                 "height": 1.7
-            }
-        },
-        {
-            "type": "interactable",
-			"pickup" : 14,
-            "pos": {
-                "x": 43.57,
-                "y": -2
-            },
-            "size": {
-                "width": 0.9,
-                "height": 1
-            }
-        },
-        {
-            "type": "interactable",
-			"pickup" : 11,
-            "pos": {
-                "x": 61.7,
-                "y": -0.8
-            },
-            "size": {
-                "width": 3.5,
-                "height": 3.5
             }
         },
 		{
@@ -833,6 +784,56 @@
                 "width": 1.3,
                 "height": 0.8
             }
+		},
+		{
+			"type":"interactable",
+			"pickup":60,
+            
+            "pos": {
+                "x": 5.5,
+                "y": 6
+            },
+            "size": {
+                "width": 1,
+                "height": 1
+            }
+		},
+		{
+			"type":"interactable",
+			"pickup":61,
+            
+            "pos": {
+                "x": 22.7,
+                "y": 8.5
+            },
+            "size": {
+                "width": 1,
+                "height": 1
+            }
+		},
+		{
+			"type":"interactable",
+			"pickup":62,
+            
+            "pos": {
+                "x": 55.7,
+                "y": 7
+            },
+            "size": {
+                "width": 1,
+                "height": 1
+            }
+		},
+		{
+			"type":"deco"
+            "pos": {
+                "x": 60,
+                "y": 9
+            },
+            "size": {
+                "width": 1,
+                "height": 1
+            }
 		}
 	],
 	
@@ -1134,6 +1135,23 @@
 			},
 			"cutoff": -0.9,
 			"intensity": 2
+		},
+		{
+			"color" : {
+				"r" : 1.0,
+				"g" : 1.0,
+				"b" : 1.0
+			},
+			"pos": {
+                "x": 60,
+                "y": 11
+			},
+			"dir" : {
+				"x" : 0,
+				"y" : 1
+			},
+			"cutoff": -1,
+			"intensity": 4
 		}
 	],
 
@@ -1144,10 +1162,14 @@
 	},
 	
     "exit": {
-        "x": 63.75, 
-        "y": -2
+        "x": 60,  
+        "y": 9
     },
     "start": {
+        "x": 60,
+        "y": 10
+    },
+	"other" : {
         "x": -10,
         "y": -1.25
     },
