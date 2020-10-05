@@ -30,9 +30,7 @@ export let menu = {
 	setSprite: function(sprite, disableAnimation = false) {
 		if (sprite !== null)
 		{
-			mat4.fromRotationTranslationScale(sprite.transform, quat.create(), vec3.fromValues(10, -10, 0), vec3.fromValues(0, 0, 0));
-	
-			let updateInFunc = itemFadeInAnim.bind(new Object(), sprite, "fade_in_anim_"+sprite.texture.name, vec3.fromValues(0, 0, 0), vec3.fromValues(5, 5, 5), 40)
+			let updateInFunc = itemFadeInAnim.bind(new Object(), sprite, "fade_in_anim_"+sprite.texture.name, vec3.fromValues(10, -10, 0), vec3.fromValues(0, 0, 0), 40)
 			updateInFunc()
 			if(!disableAnimation) {
 				updateRegistry.registerUpdate("fade_in_anim_"+sprite.texture.name, updateInFunc);
@@ -104,33 +102,33 @@ export function inventoryItemTransform(index) {
 }
 
 
-function itemFadeInAnim(sprite, name, tgtPos, tgtScale, frames) {
+function itemFadeInAnim(sprite, name, strtPos, strtScale, frames) {
 	if (typeof this.cnt === "undefined")
 		this.cnt = 0;
 	else
 		this.cnt += 1;
 	
-	if (typeof this.strtPos === "undefined")
+	if (typeof this.tgtPos === "undefined")
 	{
-		this.strtPos = vec3.create();
-		mat4.getTranslation(this.strtPos, sprite.transform);
+		this.tgtPos = vec3.create();
+		mat4.getTranslation(this.tgtPos, sprite.transform);
 	}
-	if (typeof this.strtScale === "undefined")
+	if (typeof this.tgtScale === "undefined")
 	{
-		this.strtScale = vec3.create();
-		mat4.getScaling(this.strtScale, sprite.transform);
+		this.tgtScale = vec3.create();
+		mat4.getScaling(this.tgtScale, sprite.transform);
 	}
 	
 	let pos = vec3.create()
-	vec3.lerp(pos, this.strtPos, tgtPos, this.cnt/frames)
+	vec3.lerp(pos, strtPos, this.tgtPos, this.cnt/frames)
 	let scale = vec3.create()
-	vec3.lerp(scale, this.strtScale, tgtScale, this.cnt/frames)
+	vec3.lerp(scale, strtScale, this.tgtScale, this.cnt/frames)
 	
 	mat4.fromRotationTranslationScale(sprite.transform, quat.create(), pos, scale);
 	
 	if (this.cnt >= frames) {
 		updateRegistry.unregisterUpdate(name);
-		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), tgtPos, tgtScale);
+		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), this.tgtPos, this.tgtScale);
 	}
 }
 
@@ -160,7 +158,7 @@ function itemFadeOutAnim(sprite, newSprite, name, tgtPos, tgtScale, frames) {
 	
 	if (this.cnt >= frames) {
 		updateRegistry.unregisterUpdate(name);
-		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), this.strtPos, this.strtScale);
+		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), tgtPos, tgtScale);
 		menu.sprite = newSprite;
 	}
 }

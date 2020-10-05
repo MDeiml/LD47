@@ -412,6 +412,37 @@
                 "width": 3.5,
                 "height": 3.5
             }
+        },
+		{
+			"type" : "teleporter",
+			"to" : {
+                "x": 50.44,
+                "y": 6
+			},
+			"pos": {
+				"x": 50.44,
+				"y": -0.65
+			},
+			"size": {
+				"width": 3.2,
+				"height": 3.78
+			}
+		},
+        {
+            "type": "collidable",
+            "spriteName": "Floor_Texture",
+            "pos": {
+                "x": 51.25,
+                "y": 4.5
+            },
+            "size": {
+                "width": 25.5,
+                "height": 1
+            },
+            "offset": {
+                "x": 0,
+                "y": 0.4
+            }
         }
 	],
 

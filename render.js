@@ -77,7 +77,7 @@ export function updateView() {
 			updateViewIntern(0, 0);
 		}
 	} else {
-		updateViewIntern(vec2.fromValues(player.position[0], 0));
+		updateViewIntern(vec2.fromValues(player.position[0], player.position[1]))//Math.floor((player.position[1] / 2) + 1) * 2));
 	}
 }
 
