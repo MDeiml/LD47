@@ -27,11 +27,11 @@
 			"spriteName" : "Level_1_Teil1_Background",
 			"pos" : {
 				"x" : 0,
-				"y" : 0
+				"y" : 1
 			},
 			"size" : {
 				"width" : 25,
-				"height" : 5
+				"height" : 7
 			}
 		},
 		{
@@ -159,11 +159,11 @@
 			"spriteName" : "Level_1_Teil2_Background",
 			"pos" : {
 				"x" : 25.5,
-				"y" : 0
+				"y" : 1
 			},
 			"size" : {
 				"width" : 25,
-				"height" : 5
+				"height" : 7
 			}
 		},
 		{
@@ -180,15 +180,15 @@
 		},
         {
             "type": "interactable",
-            "pickup": 10,
 			"spriteName" : "lvl1/drawing_behing_clock",
+            "pickup": 10,
 			"pos" : {
-				"x" : 28.46,
-				"y" : 1.28
+				"x" : 28.4,
+				"y" : 1.35
 			},
 			"size" : {
-				"width" : 0.5,
-				"height" : 0.5
+				"width" : 0.75,
+				"height" : 0.75
 			}
         },
         {
@@ -292,11 +292,11 @@
 			"spriteName" : "Level_1_Teil3_Background",
 			"pos" : {
 				"x" : 51,
-				"y" : 0
+				"y" : 1
 			},
 			"size" : {
 				"width" : 25,
-				"height" : 5
+				"height" : 7
 			}
 		},
 		{
