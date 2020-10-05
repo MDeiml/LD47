@@ -59,7 +59,6 @@
         },
         { 
             "type": "collidable",
-            "spriteName": null,
             "pos": {
                 "x": -1.7,
                 "y": -0.75
@@ -217,16 +216,16 @@
         {
             "type": "collidable",
             "pos": {
-                "x": 28.5,
+                "x": 28.33,
                 "y": -1.6
             },
             "size": {
-                "width": 3.9,
+                "width": 3.5,
                 "height": 1.8
             }
         },
         {
-            "type": "collidable",
+            "type": "xcollidable",
             "pos": {
                 "x": 36,
                 "y": -1.6
@@ -312,24 +311,24 @@
 			}
 		},
         {
-            "type": "collidable",
+            "type": "xcollidable",
             "pos": {
                 "x": 40.9,
                 "y": -1.6
             },
             "size": {
-                "width": 3.9,
+                "width": 3.5,
                 "height": 1.8
             }
         },
         {
             "type": "collidable",
             "pos": {
-                "x": 46.4,
+                "x": 46.3,
                 "y": -1.6
             },
             "size": {
-                "width": 3.9,
+                "width": 3.5,
                 "height": 1.8
             }
         },
@@ -581,7 +580,7 @@
         "y": -2
     },
     "start": {
-        "x": 53,
+        "x": 50,
         "y": -1.25
     },
 	
