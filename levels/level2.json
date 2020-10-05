@@ -161,6 +161,18 @@
 				"height" : 5
 			}
 		},
+        { 
+            "type": "interactable",
+            "pickup": 21,
+            "pos": {
+                "x": 18,
+                "y": -2
+            },
+            "size": {
+                "width": 1,
+                "height": 1
+            }
+        },
         {
             "type": "collidable",
             "orientation": 2,
@@ -193,6 +205,19 @@
             "size": {
                 "width": 3.5,
                 "height": 1.8
+            }
+        },
+        { 
+            "type": "interactable",
+            "spriteName": "red",
+            "pickup": 22,
+            "pos": {
+                "x": 32.8,
+                "y": -2
+            },
+            "size": {
+                "width": 1,
+                "height": 1
             }
         },
         {
@@ -323,6 +348,18 @@
             "size": {
                 "width": 2.2,
                 "height": 3.5
+            }
+        },
+        { 
+            "type": "interactable",
+            "pickup": 20,
+            "pos": {
+                "x": 58.2,
+                "y": -2
+            },
+            "size": {
+                "width": 1,
+                "height": 1
             }
         },
         {
@@ -620,7 +657,7 @@
         "y": -2
     },
     "start": {
-        "x": -10,
+        "x": 50,
         "y": -1.25
     },
 	
