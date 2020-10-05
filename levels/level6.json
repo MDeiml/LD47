@@ -162,7 +162,7 @@
 		},
 		{
             "type": "collidable",
-			"spriteName":"red",
+			"spriteName":"vent",
             "pos": {
                 "x": 12,
                 "y": 2.5
@@ -170,7 +170,15 @@
             "size": {
                 "width": 1,
                 "height": 1
-            }
+            },
+			"scale" : {
+                "x": 2,
+                "y": 3
+			},
+			"offset" : {
+                "x": 0.4,
+                "y": 0
+			}
 		},
         {
             "type": "collidable",
