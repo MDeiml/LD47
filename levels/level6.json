@@ -823,17 +823,6 @@
                 "width": 1,
                 "height": 1
             }
-		},
-		{
-			"type":"deco",
-            "pos": {
-                "x": 60,
-                "y": 9
-            },
-            "size": {
-                "width": 1,
-                "height": 1
-            }
 		}
 	],
 	
