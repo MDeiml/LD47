@@ -6,7 +6,7 @@ import {gl, player, level, menu, setPlayer, inventory, INVENTORY_HEIGHT, INVENTO
 import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 import {init as initResource} from "./resource.js"
-import {updateAudio} from "./audio.js"
+import {updateAudio, initAudio} from "./audio.js"
 
 //timekeeper
 var lastTick = null;
@@ -20,6 +20,7 @@ let eyeFramePos = 0
 function main() {
     initGraphics(document.getElementById('glCanvas'));
     initInput();
+    initAudio();
 
     initResource(function() {
         loadLevel(1)

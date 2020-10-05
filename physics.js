@@ -4,7 +4,7 @@ import {walkingLeft, walkingRight, jumping, pickingUp, holdingJump} from "./inpu
 import {vec2, mat4, vec3} from "./gl-matrix-min.js"
 import {GameObject, Sprite, Orientation} from "./obj/Sprite.js"
 import {loadLevel} from "./level.js"
-import {PositionalAudio} from "./audio.js"
+import {PositionalAudio, walk_wood} from "./audio.js"
 
 const PLAYER_SPEED = 2.5;
 const JUMP_SPEED = 13; // 6.75
@@ -153,6 +153,15 @@ export function update(delta) {
                 }
             }
         }
+    }
+
+    let walking = player.onGround && player.velocity[0] != 0;
+
+    if (walking && walk_wood.sound.paused) {
+        walk_wood.play();
+    }
+    if (!walking && !walk_wood.sound.paused) {
+        walk_wood.pause();
     }
 
     let exitDir = vec2.sub(vec2.create(), level.exit, player.position);
