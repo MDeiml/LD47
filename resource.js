@@ -31,6 +31,7 @@ let preload_textures = [
 "assets/ring_poliert.png",
 "assets/single_chair.png",
 "assets/three_chairs.png",
+"assets/eye.png",
 //"assets/walk_circle.png",
 "assets/walk_circle_halved.png",
 "assets/lvl1/Pocket_Watch.png",
