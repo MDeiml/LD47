@@ -7,7 +7,7 @@ import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 import {init as initResource} from "./resource.js"
 import {getItemSprite} from "./item.js"
-import {updateAudio, initAudio} from "./audio.js"
+import {updateAudio, initAudio, music} from "./audio.js"
 
 //timekeeper
 var lastTick = null;
@@ -17,6 +17,12 @@ let frameCntr = 0
 let framePos = 0
 let eyeFrameCntr = 0
 let eyeFramePos = 0
+
+let MIN_FIRE_SCALE = 1.0
+let MAX_FIRE_SCALE = 3.0
+let fireCntr = 0
+let firePos = 0
+let dir = true
 
 function main() {
     initGraphics(document.getElementById('glCanvas'));
@@ -68,6 +74,28 @@ function updatePlayerAnimation() {
 		eyeFrameCntr = 0;
 	}
 }
+function updateFires() {
+	fireCntr += 1;
+	if ((fireCntr % 120) === 0) {
+		fireCntr = 0;
+		if (firePos === 0)
+			firePos = 1
+		else if (firePos === 1)
+			if (dir)
+				firePos = 2
+			else 
+				firePos = 0
+		else
+			firePos = 0
+	}
+	for (let sprite of level.objects) {
+		if (sprite.type !== "fire")
+			continue
+		
+		sprite.setSize(vec2.fromValues(1, firePos + 1))
+		sprite.sprite.texture.setFrame(firePos)
+	}
+}
 
 function update(now) {
     if (!lastTick) {
@@ -96,6 +124,9 @@ function update(now) {
         if (menu.sprite !== null) {
             if (menu.cooldown == -1) {
                 if (pickingUp()) {
+                    if (music.paused) {
+                        music.play();
+                    }
                     menu.setSprite(null);
                 }
             } else {
@@ -110,6 +141,8 @@ function update(now) {
             updatePhysics(FRAME_TIME / 1000);
 			updateView();
 			updatePlayerAnimation();
+			
+			updateFires();
         }
         updateAudio(player.position);
     }

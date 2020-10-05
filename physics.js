@@ -127,6 +127,12 @@ export function update(delta) {
 					player.position[0] = obj.to["x"]
 					player.position[1] = obj.to["y"]
 				}
+            } else if (obj.type === "fire") {
+				player.velocity[0] = 0;
+				player.velocity[1] = 0;
+				player.onGround = true;
+				player.position[0] = obj.to["x"]
+				player.position[1] = obj.to["y"]
             } else if (obj.type == "door") {
                 if (!obj.state) {
                     obj.timer = 0.3;
