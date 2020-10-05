@@ -3,6 +3,7 @@ import { vec2 } from './gl-matrix-min.js'
 let sounds = {}
 
 export let walk_wood = null;
+export let music;
 
 export let PositionalAudio = function(pos, name, loop) {
 	this.name = name;
@@ -34,6 +35,8 @@ PositionalAudio.prototype.move = function(trans) {
 
 export function initAudio() {
     walk_wood = new PositionalAudio(vec2.create(), "assets/walk_wood.ogg", true);
+    music = new Audio("assets/music1.ogg");
+    music.loop = true;
 }
 
 export function updateAudio(listener) {

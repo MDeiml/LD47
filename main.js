@@ -7,7 +7,7 @@ import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 import {init as initResource} from "./resource.js"
 import {getItemSprite} from "./item.js"
-import {updateAudio, initAudio} from "./audio.js"
+import {updateAudio, initAudio, music} from "./audio.js"
 
 //timekeeper
 var lastTick = null;
@@ -124,6 +124,9 @@ function update(now) {
         if (menu.sprite !== null) {
             if (menu.cooldown == -1) {
                 if (pickingUp()) {
+                    if (music.paused) {
+                        music.play();
+                    }
                     menu.setSprite(null);
                 }
             } else {
