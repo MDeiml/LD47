@@ -27,7 +27,12 @@ let ITEM_SPRITES = {
     41: "assets/lvl4/Burned_ring.png",
     42: "assets/lvl4/divorce_papers.png",
     43: "assets/lvl4/Flask.png",
-    44: "assets/lvl4/Meds.png"
+    44: "assets/lvl4/Meds.png",
+
+    50: "assets/lvl5/empty-bottles.png",
+    51: "assets/lvl5/torn-family-photo.png",
+    52: "assets/lvl5/zippo.png",
+	53 : "assets/lvl2/mailbox.png"
 };
 
 export let ITEM_SOUNDS = {
@@ -54,7 +59,8 @@ let ITEM_TRIGGER = {
 };
 
 let ITEM_SPRITE_FRAMES = {
-	22 : 2
+	22 : 2,
+    53 : 2
 }
 
 export function getItemSprite(id, transformation, parent, animate) {

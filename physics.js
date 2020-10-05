@@ -65,11 +65,17 @@ export function update(delta) {
     let velx = 0;
     if (walkingLeft()) {
 		velx -= PLAYER_SPEED;
-		player.orientation = Orientation.MIRRORED;
     }
     if (walkingRight()) {
         velx += PLAYER_SPEED;
+    }
+    if (level.upsideDown) {
+        velx = -velx;
+    }
+    if (velx > 0) {
 		player.orientation = Orientation.DEFAULT;
+    } else if (velx < 0) {
+		player.orientation = Orientation.MIRRORED;
     }
     if (player.onGround && jumping()) {
         player.velocity[1] = JUMP_SPEED;

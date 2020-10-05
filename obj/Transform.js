@@ -23,12 +23,26 @@ Projection.prototype.get = function() {
 export let View = function(pos) {
     this.pos = vec3.clone(pos);
     this.mat = mat4.create();
+    this.upsideDown = false;
     mat4.fromTranslation(this.mat, vec3.fromValues(-pos[0], -pos[1], 0));
+}
+
+View.prototype.setUpsideDown = function(upsideDown) {
+    this.upsideDown = upsideDown;
+    mat4.fromTranslation(this.mat, vec3.fromValues(-this.pos[0], -this.pos[1], 0));
+    if (this.upsideDown) {
+        let m = mat4.fromScaling(mat4.create(), vec3.fromValues(-1, -1, 1));
+        mat4.mul(this.mat, m, this.mat);
+    }
 }
 
 View.prototype.setPos = function(newPos) {
 	vec3.copy(this.pos, newPos);
-    mat4.fromTranslation(this.mat, vec3.fromValues(-newPos[0], -newPos[1], 0));
+    mat4.fromTranslation(this.mat, vec3.fromValues(-this.pos[0], -this.pos[1], 0));
+    if (this.upsideDown) {
+        let m = mat4.fromScaling(mat4.create(), vec3.fromValues(-1, -1, 1));
+        mat4.mul(this.mat, m, this.mat);
+    }
 }
 
 View.prototype.get = function() {
