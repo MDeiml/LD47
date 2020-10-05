@@ -155,7 +155,8 @@
 			}
 		},
         {
-            "type": "deco",
+            "type": "interactable",
+			"pickup":10,
 			"spriteName" : "Lvl1/drawing_behing_clock",
 			"pos" : {
 				"x" : 28.46,
