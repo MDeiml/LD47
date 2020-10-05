@@ -31,6 +31,7 @@ export function init(c) {
 	gl.enable(gl.BLEND);
 	gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 	initShaders();
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
 	camera = new View(vec2.fromValues(0, 0));
 	projection = new Projection(w/h);
@@ -49,6 +50,7 @@ export function init(c) {
     inventory.board = new Sprite.Sprite("assets/Inventar_Board.png", mat4.fromScaling(mat4.create(), vec3.fromValues(8, 8, 8)));
     inventory.glowingPostit = new Sprite.Texture2D("assets/Glowing_sticky_Bitch.png");
     inventory.postit = new Sprite.Texture2D("assets/dull_sticky_bitch.png");
+
 
 }
 
