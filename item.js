@@ -41,6 +41,29 @@ export let ITEM_SOUNDS = {
     12: "assets/sounds/paper/paper-45.wav",
     // 13:
     14: "assets/sounds/paper/paper-45.wav",
+
+    // 20:
+    21: "assets/sounds/paper/paper-45.wav",
+    22: "assets/lvl2/voicemail.ogg",
+    23: "assets/sounds/paper/paper-45.wav",
+    24: "assets/sounds/paper/paper-45.wav",
+
+    30: "assets/sounds/paper/paper-45.wav",
+    31: "assets/sounds/paper/paper-45.wav",
+    32: "assets/sounds/paper/paper-45.wav",
+    33: "assets/sounds/paper/paper-45.wav",
+    34: "assets/sounds/paper/paper-45.wav",
+
+    40: "assets/lvl4/amber_alert.ogg",
+    // 41:
+    42: "assets/sounds/paper/paper-45.wav",
+    // 43:
+    // 44:
+
+    // 50:
+    51: "assets/sounds/paper/paper-45.wav",
+    // 52:
+    53: "assets/lvl5/voicemail.ogg"
 };
 
 let ITEM_TRIGGER = {
