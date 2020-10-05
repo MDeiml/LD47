@@ -63,7 +63,9 @@ export function holdingJump() {
 }
 
 export function pickingUp() {
-	return keyDown("KeyE");
+	let ret = keyDown("KeyE");
+    lastKeys["KeyE"] = true;
+    return ret;
 }
 
 export function toggleInventory() {

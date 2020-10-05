@@ -83,7 +83,7 @@ function updateFires() {
 		else if (firePos === 1)
 			if (dir)
 				firePos = 2
-			else 
+			else
 				firePos = 0
 		else
 			firePos = 0
@@ -91,7 +91,7 @@ function updateFires() {
 	for (let sprite of level.objects) {
 		if (sprite.type !== "fire")
 			continue
-		
+
 		sprite.setSize(vec2.fromValues(1, firePos + 1))
 		sprite.sprite.texture.setFrame(firePos)
 	}
@@ -141,7 +141,7 @@ function update(now) {
             updatePhysics(FRAME_TIME / 1000);
 			updateView();
 			updatePlayerAnimation();
-			
+
 			updateFires();
         }
         updateAudio(player.position);
