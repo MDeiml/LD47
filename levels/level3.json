@@ -161,6 +161,18 @@
 				"height" : 5
 			}
 		},
+        { 
+            "type": "interactable",
+            "pickup": 33,
+            "pos": {
+                "x": 18,
+                "y": -2
+            },
+            "size": {
+                "width": 1,
+                "height": 1
+            }
+        },
         {
             "type": "collidable",
             "orientation": 2,
@@ -193,6 +205,19 @@
             "size": {
                 "width": 3.5,
                 "height": 1.8
+            }
+        },
+        {
+            "type": "interactable",
+            "spriteName": "lvl3/nebenwirkungen",
+            "pickup": 32,
+            "pos": {
+                "x": 32.8,
+                "y": 0
+            },
+            "size": {
+                "width": 0.5,
+                "height": 0.5
             }
         },
         {
@@ -293,6 +318,18 @@
             }
         },
         {
+            "type": "interactable",
+			"pickup" : 34,
+            "pos": {
+                "x": 43.57,
+                "y": -2
+            },
+            "size": {
+                "width": 0.9,
+                "height": 1
+            }
+        },
+        {
             "type": "collidable",
             "pos": {
                 "x": 46.3,
@@ -322,6 +359,18 @@
             },
             "size": {
                 "width": 2.2,
+                "height": 3.5
+            }
+        },
+        {
+            "type": "interactable",
+			"pickup" : 31,
+            "pos": {
+                "x": 61.7,
+                "y": -0.8
+            },
+            "size": {
+                "width": 3.5,
                 "height": 3.5
             }
         },
@@ -430,6 +479,18 @@
 				"height": 3.78
 			}
 		},
+        {
+            "type": "interactable",
+			"pickup" : 30,
+            "pos": {
+                "x": 54.3,
+                "y": 6.75
+            },
+            "size": {
+                "width": 1.2,
+                "height": 3.5
+            }
+        },
 		{
             "type": "collidable",
             "pos": {
@@ -642,7 +703,7 @@
         "y": -2
     },
     "start": {
-        "x": -10,
+        "x": 25,
         "y": -1.25
     },
 	
