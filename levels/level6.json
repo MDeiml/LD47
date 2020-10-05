@@ -689,7 +689,7 @@
 		
 		{
             "type": "fire",
-			"spriteName": "fire",
+			"spriteName": "fire_halved",
 			"to" : {
 				"x": -10,
 				"y": -1.25
@@ -705,7 +705,7 @@
 		},
 		{
             "type": "fire",
-			"spriteName": "fire",
+			"spriteName": "fire_halved",
 			"to" : {
 				"x": -10,
 				"y": -1.25
@@ -721,7 +721,7 @@
 		},
 		{
             "type": "fire",
-			"spriteName": "fire",
+			"spriteName": "fire_halved",
 			"to" : {
 				"x": -10,
 				"y": -1.25
@@ -737,7 +737,7 @@
 		},
 		{
             "type": "fire",
-			"spriteName": "fire",
+			"spriteName": "fire_halved",
 			"to" : {
 				"x": -10,
 				"y": -1.25
@@ -753,7 +753,7 @@
 		},
 		{
             "type": "fire",
-			"spriteName": "fire",
+			"spriteName": "fire_halved",
 			"to" : {
 				"x": -10,
 				"y": -1.25
@@ -770,7 +770,7 @@
 		},
 		{
             "type": "fire",
-			"spriteName": "fire",
+			"spriteName": "fire_halved",
 			"to" : {
 				"x": -10,
 				"y": -1.25
