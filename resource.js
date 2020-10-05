@@ -43,7 +43,7 @@ let preload_textures = [
 "assets/lvl2/Diary_entry.png",
 "assets/lvl2/Photos_von_freunden.png",
 "assets/lvl2/Ring_poliert_Blickdicht.png",
-"assets/lvl2/mailbox_lv2.png",
+"assets/lvl2/mailbox.png",
 "assets/lvl2/sticky_note.png",
 "assets/lvl3/Medical_Record.png",
 "assets/lvl4/Flask.png",

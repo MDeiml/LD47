@@ -13,7 +13,7 @@ let ITEM_SPRITES = {
 	//level 2 items
 	20 : "assets/lvl2/Ring_poliert_Blickdicht.png",
 	21 : "assets/lvl2/Diary_entry.png",
-	22 : "assets/lvl2/mailbox_lv2.png",
+	22 : "assets/lvl2/mailbox.png",
 	23 : "assets/lvl2/Photos_von_freunden.png",
 	24 : "assets/lvl2/sticky_note.png",
 
@@ -27,10 +27,14 @@ export let ITEM_SOUNDS = {
 let ITEM_TRIGGER = {
 	22 : {
 		open: function() {
-			console.log("open " + this.texture.name)
+			 if (typeof sprite.sound !== "undefined")
+				 sprite.sound.play()
+			 sprite.texture.setFrame(1)
 		},
 		close : function() {
-			console.log("close " + this.texture.name)
+			if (typeof sprite.sound !== "undefined")
+				sprite.sound.pause()
+			 sprite.texture.setFrame(0)
 		}
 	}
 };
