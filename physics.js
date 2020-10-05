@@ -185,6 +185,10 @@ export function update(delta) {
             inventory.opened = true;
             inventory.level_end = true;
         } else {
+            if (level.id == 7) {
+                inventory.opened = true;
+                inventory.end_end = true;
+            }
             // TODO: Tell player they have to collect at least 1 item
             player.position[0] -= 3;
         }
