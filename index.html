@@ -89,7 +89,7 @@
 					vec3 linearColor = texCol.xyz * color * lightIntensity;
 					
 					//final color (after gamma correction)
-					resCol += clamp(pow(linearColor, gamma), 0.0, 1.0);
+					resCol += clamp(linearColor, 0.0, 1.0);
 					//resCol += texCol.xyz * (attenuation*color.x + 0.1);
 					//resCol += vec3(1.0, 0.0, 0.0);
 				}
@@ -188,7 +188,7 @@
 					vec3 linearColor = texCol.xyz * color * lightIntensity;
 					
 					//final color (after gamma correction)
-					resCol += clamp(pow(linearColor, gamma), 0.0, 1.0);
+					resCol += clamp(linearColor, 0.0, 1.0);
 				}
                 resCol += texCol.xyz * 0.1;
 				

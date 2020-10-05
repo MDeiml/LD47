@@ -1,7 +1,7 @@
 {
 	"id" : 1,
     "intro": {
-        "spriteName": "find_yourself",
+        "spriteName": "lvl7/titelscreen",
         "duration": -1
     },
 	

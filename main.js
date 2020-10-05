@@ -7,7 +7,7 @@ import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 import {init as initResource} from "./resource.js"
 import {getItemSprite} from "./item.js"
-import {updateAudio, initAudio, music} from "./audio.js"
+import {updateAudio, initAudio, music, walk_wood} from "./audio.js"
 
 //timekeeper
 var lastTick = null;
@@ -76,23 +76,17 @@ function updatePlayerAnimation() {
 }
 function updateFires() {
 	fireCntr += 1;
-	if ((fireCntr % 120) === 0) {
+	if ((fireCntr % 60) === 0) {
 		fireCntr = 0;
-		if (firePos === 0)
-			firePos = 1
-		else if (firePos === 1)
-			if (dir)
-				firePos = 2
-			else
-				firePos = 0
-		else
+		firePos += 1
+		if (firePos > 5)
 			firePos = 0
 	}
 	for (let sprite of level.objects) {
 		if (sprite.type !== "fire")
 			continue
 
-		sprite.setSize(vec2.fromValues(1, firePos + 1))
+		sprite.setSize(vec2.fromValues(1, (firePos + 1) / 2))
 		sprite.sprite.texture.setFrame(firePos)
 	}
 }
@@ -122,6 +116,7 @@ function update(now) {
             inventory.cursorPosition = 0;
         }
         if (menu.sprite !== null) {
+            walk_wood.pause();
             if (menu.cooldown == -1) {
                 if (pickingUp()) {
                     if (music.paused) {
@@ -136,7 +131,9 @@ function update(now) {
                 }
             }
         } else if (inventory.opened) {
+            walk_wood.pause();
             updateInventory();
+        } else if (inventory.end_end) {
         } else {
             updatePhysics(FRAME_TIME / 1000);
 			updateView();
@@ -187,10 +184,10 @@ function updateInventory() {
             inventory.opened = false;
 
             if (level.id < 7) {
+                if (level.id == 6) {
+                    music.pause();
+                }
                 loadLevel(level.id + 1);
-            } else {
-                // TODO: proper ending
-                loadLevel(1);
             }
         } else {
 			if (typeof inventory.objects[inventory.cursorPosition] !== "undefined")
