@@ -114,6 +114,11 @@ export function initLevel(id, rawData) {
 			level.objects.push(obj)
 			break;
 		case "fire":
+            obj = new GameObject(spriteName, pos1, size, entry["type"], scale, offset, orientation);
+			obj.sprite.texture.frames = 6
+            obj.to = entry["to"];
+			level.objects.push(obj)
+			break;
 		case "teleporter":
             obj = new GameObject(spriteName, pos1, size, entry["type"], scale, offset, orientation);
             obj.to = entry["to"];
