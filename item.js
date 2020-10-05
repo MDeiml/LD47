@@ -7,16 +7,16 @@ let ITEM_SPRITES = {
 	10 : "assets/lvl1/kids-drawing.png",
 	11 : "assets/lvl1/love-letter.png",
 	12 : "assets/lvl1/love-you.png",
-	13 : "assets/lvl1/Pocket-Watch.png",
+	13 : "assets/lvl1/Pocket_Watch.png",
 	14 : "assets/lvl1/home-sweet-home.png",
-	
+
 	//level 2 items
 	20 : "assets/lvl2/Ring_poliert_Blickdicht.png",
 	21 : "assets/lvl2/Diary_entry.png",
 	22 : "assets/lvl2/mailbox_lv2.png",
 	23 : "assets/lvl2/Photos_von_freunden.png",
 	24 : "assets/lvl2/sticky_note.png",
-	
+
 	30 : "assets/lvl3/Medical_Record.png"
 };
 
@@ -41,7 +41,7 @@ function itemFadeAnim(sprite, name, tgtPos, tgtScale, frames) {
 		this.cnt = 0;
 	else
 		this.cnt += 1;
-	
+
 	if (typeof this.strtPos === "undefined")
 	{
 		this.strtPos = vec3.create();
@@ -52,14 +52,14 @@ function itemFadeAnim(sprite, name, tgtPos, tgtScale, frames) {
 		this.strtScale = vec3.create();
 		mat4.getScaling(this.strtScale, sprite.transform);
 	}
-	
+
 	let pos = vec3.create()
 	vec3.lerp(pos, this.strtPos, tgtPos, this.cnt/frames)
 	let scale = vec3.create()
 	vec3.lerp(scale, this.strtScale, tgtScale, this.cnt/frames)
-	
+
 	mat4.fromRotationTranslationScale(sprite.transform, quat.create(), pos, scale);
-	
+
 	if (this.cnt > frames) {
 		updateRegistry.unregisterUpdate(name);
 		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), this.strtPos, this.strtScale);
@@ -75,7 +75,7 @@ export function getItemSprite(id, transformation, parent, animate) {
 export function pickUp(item) {
 	let index = level.objects.indexOf(item);
 	if (index > -1) {
-        item.type = "deco";
+        level.objects.splice(index, 1);
         let transform = inventoryItemTransform(inventory.objects.length);
 		let sprite = getItemSprite(item.pickup, transform, null, false);
         inventory.objects.push(sprite);
