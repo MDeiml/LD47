@@ -30,7 +30,7 @@ function main() {
     initAudio();
 
     initResource(function() {
-        loadLevel(2)
+        loadLevel(6)
 
         window.running = true;
         requestAnimationFrame(update);

@@ -466,6 +466,30 @@
 				"width": 3.2,
 				"height": 3.78
 			}
+		},
+		{
+			"type" : "background",
+			"spriteName" : "lvl6/background_lvl6_top_teil1",
+			"pos" : {
+				"x" : 0,
+				"y" : 8
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 7
+			}
+		},
+		{
+			"type" : "collision_mask",
+			"spriteName" : "lvl6/background_lvl6_top_teil1_Colli",
+			"pos" : {
+				"x" : 0,
+				"y" : 8
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 7
+			}
 		}
 	],
 
@@ -646,6 +670,12 @@
 		}
 	],
 
+	"bgFilter": {
+		"r" : 0.26,
+		"g" : 0.165,
+		"b" : 0.1
+	},
+	
     "exit": {
         "x": 63.75, 
         "y": -2
