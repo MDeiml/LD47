@@ -43,7 +43,7 @@ export let ITEM_SOUNDS = {
 
 	20 : "assets/sounds/ring/silent_ring.wav",
 	21 : "assets/sounds/paper/paper-34.wav",
-    22: "assets/lvl2/voicemail.ogg",
+    22 : "assets/lvl2/voicemail.ogg",				// Voice
 	23 : "assets/sounds/paper/paper-43.wav",
 	24 : "assets/sounds/paper/paper-01.wav",
 
@@ -53,17 +53,16 @@ export let ITEM_SOUNDS = {
     33 : "assets/sounds/paper/paper-30.wav",
     34 : "assets/sounds/paper/paper-37.wav",
 
-    40: "assets/lvl4/amber_alert.ogg",
+    40 : "assets/lvl4/amber_alert.ogg",				// Voice
     41 : "assets/sounds/ring/dark_ring.wav",
     42 : "assets/sounds/paper/paper-38.wav",
     43 : "assets/sounds/bottle/zisch-further-embiggened.wav",
-    // 44 : meds?
+    44 : "assets/sounds/pills/pills.wav",
 
-    // 50 : empty bottles?
+    50 : "assets/sounds/bottle/empty_bottles.wav",
     51 : "assets/sounds/paper/paper-33.wav",
-    // 52 : zippo?
-    53: "assets/lvl5/voicemail.ogg"
-    // 54:
+    52 : "assets/sounds/lighter/lighter.wav",
+    53 : "assets/lvl5/voicemail.ogg"				// Voice
 };
 
 let ITEM_TRIGGER = {
