@@ -30,7 +30,7 @@ function main() {
     initAudio();
 
     initResource(function() {
-        loadLevel(6)
+        loadLevel(1)
 
         window.running = true;
         requestAnimationFrame(update);
@@ -133,6 +133,7 @@ function update(now) {
         } else if (inventory.opened) {
             walk_wood.pause();
             updateInventory();
+        } else if (inventory.end_end) {
         } else {
             updatePhysics(FRAME_TIME / 1000);
 			updateView();
@@ -183,10 +184,10 @@ function updateInventory() {
             inventory.opened = false;
 
             if (level.id < 7) {
+                if (level.id == 6) {
+                    music.pause();
+                }
                 loadLevel(level.id + 1);
-            } else {
-                // TODO: proper ending
-                loadLevel(1);
             }
         } else {
 			if (typeof inventory.objects[inventory.cursorPosition] !== "undefined")
