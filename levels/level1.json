@@ -469,6 +469,18 @@
             }
 		},
 		{
+            "type": "collision_mask",
+            "spriteName": "Top_room_Colli",
+            "pos": {
+                "x": 53.5,
+                "y": 8.5
+            },
+            "size": {
+                "width": 10.2,
+                "height": 7
+            }
+		},
+		{
 			"type" : "teleporter",
 			"to" : {
 				"x": 50,
