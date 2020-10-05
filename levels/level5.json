@@ -212,7 +212,6 @@
         },
         { 
             "type": "interactable",
-            "spriteName": "red",
             "pickup": 53,
             "pos": {
                 "x": 32.8,

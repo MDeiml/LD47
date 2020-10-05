@@ -36,7 +36,7 @@ let ITEM_SPRITES = {
 
 export let ITEM_SOUNDS = {
     10 : "assets/sounds/paper/paper-10.wav",
-    11 : "assets/sounds/paper/paper-7.wav",
+    11 : "assets/sounds/paper/paper-07.wav",
     12 : "assets/sounds/paper/paper-45.wav",
     13 : "assets/sounds/clock/smallclock.wav",
 	14 : "assets/sounds/paper/paper-24.wav",
@@ -45,7 +45,7 @@ export let ITEM_SOUNDS = {
 	21 : "assets/sounds/paper/paper-34.wav",
     22: "assets/lvl2/voicemail.ogg",
 	23 : "assets/sounds/paper/paper-43.wav",
-	24 : "assets/sounds/paper/paper-1.wav",
+	24 : "assets/sounds/paper/paper-01.wav",
 
 	30 : "assets/sounds/paper/paper-22.wav",
     31 : "assets/sounds/paper/paper-41.wav",
@@ -69,13 +69,9 @@ export let ITEM_SOUNDS = {
 let ITEM_TRIGGER = {
 	22 : {
 		open: function() {
-			 if (typeof this.sound !== "undefined")
-				 this.sound.play()
 			 this.texture.setFrame(1)
 		},
 		close : function() {
-			if (typeof this.sound !== "undefined")
-				this.sound.pause()
 			 this.texture.setFrame(0)
 		}
 	}
