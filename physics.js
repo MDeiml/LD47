@@ -121,9 +121,6 @@ export function update(delta) {
             } else if (obj.type === "interactable") {
 				player.canInteract = true
 				if (pickingUp()) {
-                    if (ITEM_SOUNDS[obj.pickup]) {
-                        new PositionalAudio(player.position, ITEM_SOUNDS[obj.pickup], false).play();
-                    }
                     menu.setSprite(getItemSprite(obj.pickup, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)), null, true));
                     menu.cooldown = -1;
 					pickUp(obj);
