@@ -64,6 +64,19 @@
                 "height": 3.5
             }
         },
+        { 
+            "type": "interactable",
+            "spriteName": "lvl2/Photos_hinter_Bild",
+            "pickup": 23,
+            "pos": {
+                "x": -0.4,
+                "y": 2.45
+            },
+            "size": {
+                "width": 0.7,
+                "height": 0.7
+            }
+        },
         {
             "type": "collidable",
             "pos": {
@@ -209,7 +222,6 @@
         },
         { 
             "type": "interactable",
-            "spriteName": "red",
             "pickup": 22,
             "pos": {
                 "x": 32.8,
@@ -466,6 +478,41 @@
 				"width": 3.2,
 				"height": 3.78
 			}
+		},
+		{
+            "type": "collidable",
+            "pos": {
+                "x": 55.7,
+                "y": 5.8
+            },
+            "size": {
+                "width": 1.3,
+                "height": 1.8
+            }
+		},
+		{
+            "type": "collidable",
+            "pos": {
+                "x": 57.5,
+                "y": 6.8
+            },
+            "size": {
+                "width": 2.2,
+                "height": 3.5
+            }
+		},
+		{
+            "type": "interactable",
+            "spriteName": "lvl2/sticky_note",
+            "pickup": 24,
+            "pos": {
+                "x": 57.5,
+                "y": 9.5
+            },
+            "size": {
+                "width": 0.5,
+                "height": 0.5
+            }
 		}
 	],
 
