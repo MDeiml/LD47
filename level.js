@@ -45,7 +45,7 @@ export function initLevel(id, rawData) {
 
 	//verify ID
 	if (levelData["id"] !== id)
-		console.warning("Failed to verify level ID with internal ID. Some level designer must have fallen asleep.")
+		console.warn("Failed to verify level ID with internal ID. Some level designer must have fallen asleep.")
 
     // intro
     if (levelData["intro"]) {

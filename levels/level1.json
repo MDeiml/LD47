@@ -412,7 +412,23 @@
                 "width": 3.5,
                 "height": 3.5
             }
-        }
+        },
+		{
+			"type" : "teleporter",
+			"spriteName" : "red",
+			"to" : {
+				"x" : 10,
+				"y" : 10
+			},
+			"pos": {
+				"x": 50.44,
+				"y": -0.65
+			},
+			"size": {
+				"width": 3.2,
+				"height": 3.78
+			}
+		}
 	],
 
 	"lights" : [	
