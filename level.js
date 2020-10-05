@@ -120,8 +120,6 @@ export function initLevel(id, rawData) {
         level.exit = vec2.fromValues(levelData["exit"]["x"], levelData["exit"]["y"]);
 	}
 
-	level.objects.push(new GameObject(null, vec2.fromValues(0, -5), vec2.fromValues(10000, 5), "collidable")); //the fuck
-
 	let cntr = 0
 	if (typeof levelData["lights"] !== "undefined")
 		for (let entry of levelData["lights"])
@@ -167,7 +165,7 @@ export function initLevel(id, rawData) {
     player.sprite.texture.frames = 5;
 	let transMat = mat4.create()
 	mat4.fromRotationTranslationScale(transMat, quat.create(), vec3.fromValues(0, 1, 0), vec3.fromValues(3/4, 3/4, 1))
-	player.eyeSprite = new Sprite("./assets/eye.png", transMat, "animation", player.sprite)
+	player.eyeSprite = new Sprite("./assets/eye_halved.png", transMat, "animation", player.sprite)
 	player.eyeSprite.texture.frames = 5;
 	player.canInteract = false
 }
