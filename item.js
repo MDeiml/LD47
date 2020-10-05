@@ -10,7 +10,7 @@ let ITEM_SPRITES = {
 	13 : "assets/lvl1/Pocket_Watch.png",
 	14 : "assets/lvl1/home-sweet-home.png",
 
-	//level 2 items
+	// level 2 items
 	20 : "assets/lvl2/Ring_poliert_Blickdicht.png",
 	21 : "assets/lvl2/Diary_entry.png",
 	22 : "assets/lvl2/mailbox.png",
@@ -27,15 +27,27 @@ let ITEM_SPRITES = {
     41: "assets/lvl4/Burned_ring.png",
     42: "assets/lvl4/divorce_papers.png",
     43: "assets/lvl4/Flask.png",
-    44: "assets/lvl4/Meds.png"
+    44: "assets/lvl4/Meds.png",
+
+    50: "assets/lvl5/empty-bottles.png",
+    51: "assets/lvl5/torn-family-photo.png",
+    52: "assets/lvl5/zippo.png",
+	53 : "assets/lvl2/mailbox.png"
 };
 
 export let ITEM_SOUNDS = {
-    10: "assets/sounds/paper/paper-45.wav",
-    11: "assets/sounds/paper/paper-45.wav",
-    12: "assets/sounds/paper/paper-45.wav",
-    // 13:
-    14: "assets/sounds/paper/paper-45.wav",
+    10 : "assets/sounds/paper/paper-10.wav",
+    11 : "assets/sounds/paper/paper-6.wav",
+    12 : "assets/sounds/paper/paper-45.wav",
+    13 : "assets/sounds/clock/smallclock.wav",
+	14 : "assets/sounds/paper/paper-24.wav",
+	
+	// level 2 items
+	20 : "assets/sounds/ring/silent_ring.wav",
+	21 : "assets/sounds/paper/paper-34.wav",
+	// 22 : mailbox?
+	23 : "assets/sounds/paper/paper-43.wav",
+    24 : "assets/sounds/paper/paper-1.wav",
 };
 
 let ITEM_TRIGGER = {
@@ -54,7 +66,8 @@ let ITEM_TRIGGER = {
 };
 
 let ITEM_SPRITE_FRAMES = {
-	22 : 2
+	22 : 2,
+    53 : 2
 }
 
 export function getItemSprite(id, transformation, parent, animate) {
