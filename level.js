@@ -14,7 +14,8 @@ const TYPE_ID_MAP = {
 	xcollidable : 5,
 	interactable : 6,
 	teleporter : 7,
-	foreground : 8
+	foreground : 8,
+	fire : 9
 }
 
 //move to util
@@ -111,14 +112,15 @@ export function initLevel(id, rawData) {
             obj.pickup = entry["pickup"];
 			level.objects.push(obj)
 			break;
+		case "fire":
 		case "teleporter":
-            obj = new GameObject(spriteName, pos1, size, "teleporter", scale, offset, orientation);
+            obj = new GameObject(spriteName, pos1, size, entry["type"], scale, offset, orientation);
             obj.to = entry["to"];
 			level.objects.push(obj)
 			break;
 		}
-        level.exit = vec2.fromValues(levelData["exit"]["x"], levelData["exit"]["y"]);
 	}
+	level.exit = vec2.fromValues(levelData["exit"]["x"], levelData["exit"]["y"]);
 
 	let cntr = 0
 	if (typeof levelData["lights"] !== "undefined")
@@ -157,8 +159,8 @@ export function initLevel(id, rawData) {
 
 	level.isInitialized = false
 
-    let start = vec2.fromValues(levelData["start"]["x"], levelData["start"]["y"]);
-    setPlayer(new GameObject("./assets/walk_circle_halved.png", start, vec2.fromValues(1, 3), "player", vec2.fromValues(3.5, 3.5 / 3), vec2.fromValues(0, -0.1)));
+    level.start = vec2.fromValues(levelData["start"]["x"], levelData["start"]["y"]);
+    setPlayer(new GameObject("./assets/walk_circle_halved.png", level.start, vec2.fromValues(1, 3), "player", vec2.fromValues(3.5, 3.5 / 3), vec2.fromValues(0, -0.1)));
     player.velocity = vec2.fromValues(0, 0);
     player.onGround = false;
     player.sprite.texture.frames = 5;

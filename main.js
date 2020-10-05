@@ -18,6 +18,12 @@ let framePos = 0
 let eyeFrameCntr = 0
 let eyeFramePos = 0
 
+let MIN_FIRE_SCALE = 1.0
+let MAX_FIRE_SCALE = 3.0
+let fireCntr = 0
+let firePos = 0
+let dir = true
+
 function main() {
     initGraphics(document.getElementById('glCanvas'));
     initInput();
@@ -68,6 +74,28 @@ function updatePlayerAnimation() {
 		eyeFrameCntr = 0;
 	}
 }
+function updateFires() {
+	fireCntr += 1;
+	if ((fireCntr % 120) === 0) {
+		fireCntr = 0;
+		if (firePos === 0)
+			firePos = 1
+		else if (firePos === 1)
+			if (dir)
+				firePos = 2
+			else 
+				firePos = 0
+		else
+			firePos = 0
+	}
+	for (let sprite of level.objects) {
+		if (sprite.type !== "fire")
+			continue
+		
+		sprite.setSize(vec2.fromValues(1, firePos + 1))
+		sprite.sprite.texture.setFrame(firePos)
+	}
+}
 
 function update(now) {
     if (!lastTick) {
@@ -110,6 +138,8 @@ function update(now) {
             updatePhysics(FRAME_TIME / 1000);
 			updateView();
 			updatePlayerAnimation();
+			
+			updateFires();
         }
         updateAudio(player.position);
     }
