@@ -174,6 +174,7 @@ function drawBaseShader() {
 		if (sprite.type === "background")
 		{
 			shaders["bgShader"].bind();
+			gl.uniform3fv(shaders["bgShader"].getUniform('backgroundFilter'), level.bgFilter);
 			gl.uniformMatrix4fv(shaders["bgShader"].getUniform('VP'), false, pvMatrix);
 			
 			sprite.draw(shaders["bgShader"]);
@@ -205,6 +206,7 @@ function drawLightShader() {
 			gl.uniformMatrix4fv(shaders["bgShader"].getUniform('VP'), false, pvMatrix);
 			gl.uniform1f(shaders["bgShader"].getUniform('lightCount'), level.lightCnt)
 			gl.uniform1fv(shaders["bgShader"].getUniform('lights'), level.lights)
+			gl.uniform3fv(shaders["bgShader"].getUniform('backgroundFilter'), level.bgFilter);
 			sprite.draw(shaders["bgShader"]);
 			
 			shaders["lightShader"].bind();

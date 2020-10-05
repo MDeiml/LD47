@@ -157,6 +157,8 @@ export function initLevel(id, rawData) {
 
 	level.lightCnt = cntr;
 
+	level.bgFilter = vec3.fromValues(levelData["bgFilter"]["r"], levelData["bgFilter"]["g"], levelData["bgFilter"]["b"])
+	
 	level.isInitialized = false
 
     level.start = vec2.fromValues(levelData["start"]["x"], levelData["start"]["y"]);

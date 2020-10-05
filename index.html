@@ -142,6 +142,8 @@
 			uniform float lights[180];
 			uniform float lightCount;
 			
+			uniform vec3 backgroundFilter;
+			
 			vec4 getTexFromOffset(float x, float y) {
 				return texture2D(texture, vec2( vTexCoord.x + x/texRes.x, vTexCoord.y + y/texRes.y));
 			}
@@ -190,7 +192,7 @@
 				}
                 resCol += texCol.xyz * 0.1;
 				
-				vec3 color = 0.2 * vec3(51.0 / 255.0, 63.0 / 255.0, 80.0 / 255.0) + 0.8 * resCol;
+				vec3 color = 0.2 * backgroundFilter + 0.8 * resCol;
 				gl_FragColor = vec4(color, 1.0);
 			}
 		</script>
