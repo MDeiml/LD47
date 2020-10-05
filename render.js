@@ -163,6 +163,9 @@ function drawGUI() {
             inventory.postits[i].draw(shaders["defaultShader"]);
             inventory.objects[i].draw(shaders["defaultShader"]);
         }
+        if (inventory.level_end && level.id == 1) {
+            new Sprite.Sprite("assets/endLvTut.png", mat4.fromRotationTranslationScale(mat4.create(), quat.create(), vec3.fromValues(0, 4, 0), vec3.fromValues(5, 1, 1))).draw(shaders["defaultShader"]);
+        }
     }
 }
 
