@@ -7,7 +7,7 @@ import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 import {init as initResource} from "./resource.js"
 import {getItemSprite} from "./item.js"
-import {updateAudio, initAudio, music} from "./audio.js"
+import {updateAudio, initAudio, music, walk_wood} from "./audio.js"
 
 //timekeeper
 var lastTick = null;
@@ -122,6 +122,7 @@ function update(now) {
             inventory.cursorPosition = 0;
         }
         if (menu.sprite !== null) {
+            walk_wood.pause();
             if (menu.cooldown == -1) {
                 if (pickingUp()) {
                     if (music.paused) {
@@ -136,6 +137,7 @@ function update(now) {
                 }
             }
         } else if (inventory.opened) {
+            walk_wood.pause();
             updateInventory();
         } else {
             updatePhysics(FRAME_TIME / 1000);
