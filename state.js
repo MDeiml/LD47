@@ -8,19 +8,19 @@ export let level = {
 	lights: new Array(180),
 	updateLight: function(lightID, color, pos, dir, cutoff, intensity) {
 		let startPos = lightID * 9;
-		
+
 		this.lights[startPos] = color[0]
 		this.lights[startPos + 1] = color[1]
 		this.lights[startPos + 2] = color[2]
-		
+
 		this.lights[startPos + 3] = pos[0]
 		this.lights[startPos + 4] = pos[1]
-		
+
 		this.lights[startPos + 5] = dir[0]
 		this.lights[startPos + 6] = dir[1]
-		
+
 		this.lights[startPos + 7] = cutoff
-		
+
 		this.lights[startPos + 8] = intensity
 	}
 
@@ -36,7 +36,7 @@ export let menu = {
 				updateRegistry.registerUpdate("fade_in_anim_"+sprite.texture.name, updateInFunc);
 			}
 		}
-		
+
 		if (this.sprite !== null)
 		{
 			let updateOutFunc = itemFadeOutAnim.bind(new Object(), this.sprite, sprite, "fade_out_anim_"+this.sprite.texture.name, vec3.fromValues(10, -10, 0), vec3.fromValues(0, 0, 0), 40)
@@ -50,7 +50,7 @@ export let menu = {
 		else{
 			this.sprite = sprite
 		}
-		
+
 	},
 	backgroundContainer: null,
     cooldown: 0
@@ -87,8 +87,8 @@ export let updateRegistry = {
 
 
 const INVENTORY_SIZE = 6;
-export const INVENTORY_HEIGHT = 5;
-export const INVENTORY_WIDTH = 9;
+export const INVENTORY_HEIGHT = 2;
+export const INVENTORY_WIDTH = 4;
 const INVENTORY_SCALE = INVENTORY_SIZE / INVENTORY_HEIGHT;
 
 export function inventoryItemTransform(index) {
@@ -108,7 +108,7 @@ function itemFadeInAnim(sprite, name, strtPos, strtScale, frames) {
 		this.cnt = 0;
 	else
 		this.cnt += 1;
-	
+
 	if (typeof this.tgtPos === "undefined")
 	{
 		this.tgtPos = vec3.create();
@@ -119,14 +119,14 @@ function itemFadeInAnim(sprite, name, strtPos, strtScale, frames) {
 		this.tgtScale = vec3.create();
 		mat4.getScaling(this.tgtScale, sprite.transform);
 	}
-	
+
 	let pos = vec3.create()
 	vec3.lerp(pos, strtPos, this.tgtPos, this.cnt/frames)
 	let scale = vec3.create()
 	vec3.lerp(scale, strtScale, this.tgtScale, this.cnt/frames)
-	
+
 	mat4.fromRotationTranslationScale(sprite.transform, quat.create(), pos, scale);
-	
+
 	if (this.cnt >= frames) {
 		updateRegistry.unregisterUpdate(name);
 		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), this.tgtPos, this.tgtScale);
@@ -140,7 +140,7 @@ function itemFadeOutAnim(sprite, newSprite, name, tgtPos, tgtScale, frames) {
 		this.cnt = 0;
 	else
 		this.cnt += 1;
-	
+
 	if (typeof this.strtPos === "undefined")
 	{
 		this.strtPos = vec3.create();
@@ -151,14 +151,14 @@ function itemFadeOutAnim(sprite, newSprite, name, tgtPos, tgtScale, frames) {
 		this.strtScale = vec3.create();
 		mat4.getScaling(this.strtScale, sprite.transform);
 	}
-	
+
 	let pos = vec3.create()
 	vec3.lerp(pos, this.strtPos, tgtPos, this.cnt/frames)
 	let scale = vec3.create()
 	vec3.lerp(scale, this.strtScale, tgtScale, this.cnt/frames)
-	
+
 	mat4.fromRotationTranslationScale(sprite.transform, quat.create(), pos, scale);
-	
+
 	if (this.cnt >= frames) {
 		updateRegistry.unregisterUpdate(name);
 		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), tgtPos, tgtScale);

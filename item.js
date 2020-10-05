@@ -73,10 +73,14 @@ export function pickUp(item) {
 	if (index > -1) {
         level.objects.splice(index, 1);
         let transform = inventoryItemTransform(inventory.objects.length);
-		let sprite = getItemSprite(item.pickup, transform, null, false);
-        inventory.objects.push(sprite);
 		let m = mat4.create();
+        mat4.fromScaling(m, vec3.fromValues(0.25, 0.25, 1));
+        mat4.mul(m, transform, m);
+		let sprite = getItemSprite(item.pickup, m, null, false);
+        inventory.objects.push(sprite);
+		m = mat4.create();
         mat4.fromScaling(m, vec3.fromValues(0.5, 0.5, 1));
-        inventory.postits.push(new Sprite("assets/dull_sticky_bitch.png", mat4.mul(m, transform, m)));
+        mat4.mul(m, transform, m);
+        inventory.postits.push(new Sprite("assets/dull_sticky_bitch.png", m));
 	}
 }
