@@ -191,8 +191,11 @@ function updateInventory() {
                 loadLevel(1);
             }
         } else {
-            menu.setSprite(getItemSprite(inventory.objects[inventory.cursorPosition].item_id, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5))));
-            menu.cooldown = -1;
+			if (typeof inventory.objects[inventory.cursorPosition] !== "undefined")
+			{
+				menu.setSprite(getItemSprite(inventory.objects[inventory.cursorPosition].item_id, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5))));
+				menu.cooldown = -1;
+			}
         }
     }
 }
