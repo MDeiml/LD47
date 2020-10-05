@@ -7,6 +7,7 @@ import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 import {init as initResource} from "./resource.js"
 import {updateAudio} from "./audio.js"
+import {getItemSprite} from "./item.js"
 
 //timekeeper
 var lastTick = null;
@@ -156,7 +157,7 @@ function updateInventory() {
                 loadLevel(1);
             }
         } else {
-            menu.sprite = new Sprite(inventory.objects[inventory.cursorPosition].texture.name, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
+            menu.setSprite(getItemSprite(inventory.objects[inventory.cursorPosition].item_id, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5))));
             menu.cooldown = -1;
         }
     }

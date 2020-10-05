@@ -41,7 +41,8 @@ export let menu = {
 		{
 			let updateOutFunc = itemFadeOutAnim.bind(new Object(), this.sprite, sprite, "fade_out_anim_"+this.sprite.texture.name, vec3.fromValues(10, -10, 0), vec3.fromValues(0, 0, 0), 40)
 			updateOutFunc()
-	
+			if (typeof this.sprite.onClose !== "undefined")
+				this.sprite.onClose()
 			if(!disableAnimation) {
 				updateRegistry.registerUpdate("fade_out_anim_"+this.sprite.texture.name, updateOutFunc);
 			}
@@ -129,6 +130,8 @@ function itemFadeInAnim(sprite, name, strtPos, strtScale, frames) {
 	if (this.cnt >= frames) {
 		updateRegistry.unregisterUpdate(name);
 		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), this.tgtPos, this.tgtScale);
+		if (typeof sprite.onOpen !== "undefined")
+			sprite.onOpen()
 	}
 }
 

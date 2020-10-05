@@ -24,55 +24,39 @@ export let ITEM_SOUNDS = {
 	14 : "assets/voicemail_test.ogg"
 };
 
+let ITEM_TRIGGER = {
+	22 : {
+		open: function() {
+			console.log("open " + this.texture.name)
+		},
+		close : function() {
+			console.log("close " + this.texture.name)
+		}
+	}
+};
+
 let ITEM_SPRITE_FRAMES = {
-	10 : 1,
-	11 : 1,
-	12 : 1,
-	13 : 1,
-	14 : 1,
-	10 : 1,
-	21 : 1,
-	22 : 2,
-	23 : 1,
-	23 : 1,
-	30 : 1
-}
-
-
-
-function itemFadeAnim(sprite, name, tgtPos, tgtScale, frames) {
-	if (typeof this.cnt === "undefined")
-		this.cnt = 0;
-	else
-		this.cnt += 1;
-
-	if (typeof this.strtPos === "undefined")
-	{
-		this.strtPos = vec3.create();
-		mat4.getTranslation(this.strtPos, sprite.transform);
-	}
-	if (typeof this.strtScale === "undefined")
-	{
-		this.strtScale = vec3.create();
-		mat4.getScaling(this.strtScale, sprite.transform);
-	}
-
-	let pos = vec3.create()
-	vec3.lerp(pos, this.strtPos, tgtPos, this.cnt/frames)
-	let scale = vec3.create()
-	vec3.lerp(scale, this.strtScale, tgtScale, this.cnt/frames)
-
-	mat4.fromRotationTranslationScale(sprite.transform, quat.create(), pos, scale);
-
-	if (this.cnt > frames) {
-		updateRegistry.unregisterUpdate(name);
-		mat4.fromRotationTranslationScale(sprite.transform, quat.create(), this.strtPos, this.strtScale);
-	}
+	22 : 2
 }
 
 export function getItemSprite(id, transformation, parent, animate) {
 	let sprite = new Sprite(ITEM_SPRITES[id], transformation, parent)
-	sprite.texture.frames = ITEM_SPRITE_FRAMES[id]
+	sprite.item_id = id
+	if (typeof ITEM_SPRITE_FRAMES[id] !== "undefined")
+		sprite.texture.frames = ITEM_SPRITE_FRAMES[id]
+	
+	if (typeof ITEM_SOUNDS[id] !== "undefined")
+		sprite.sound = new Audio(ITEM_SOUNDS[id])
+	
+	if (typeof ITEM_TRIGGER[id] !== "undefined") {
+		sprite.onOpen = ITEM_TRIGGER[id].open.bind(sprite)
+		sprite.onClose = ITEM_TRIGGER[id].close.bind(sprite)
+	}
+	else {
+		sprite.onOpen = function() { if (typeof sprite.sound !== "undefined") sprite.sound.play()}
+		sprite.onClose = function() { if (typeof sprite.sound !== "undefined") sprite.sound.pause()}
+	}
+	
 	return sprite
 }
 
