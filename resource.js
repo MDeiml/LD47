@@ -4,6 +4,9 @@ import {Texture2D} from "./obj/Sprite.js"
 let preload_textures = [
 "assets/Door.png",
 "assets/Floor_Texture.png",
+"assets/tutorial1.png",
+"assets/tutorial2.png",
+"assets/tutorial3.png",
 //"assets/Frame1.png",
 //"assets/Frame2.png",
 //"assets/Frame3.png",
