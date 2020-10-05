@@ -64,6 +64,19 @@
                 "height": 3.5
             }
         },
+        { 
+            "type": "interactable",
+            "spriteName": "lvl2/Photos_hinter_Bild",
+            "pickup": 23,
+            "pos": {
+                "x": -0.4,
+                "y": 2.45
+            },
+            "size": {
+                "width": 0.7,
+                "height": 0.7
+            }
+        },
         {
             "type": "collidable",
             "pos": {
@@ -209,7 +222,6 @@
         },
         { 
             "type": "interactable",
-            "spriteName": "red",
             "pickup": 22,
             "pos": {
                 "x": 32.8,
@@ -657,7 +669,7 @@
         "y": -2
     },
     "start": {
-        "x": 50,
+        "x": -10,
         "y": -1.25
     },
 	
