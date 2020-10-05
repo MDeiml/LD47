@@ -413,6 +413,18 @@
                 "height": 3.5
             }
         },
+        {
+            "type": "interactable",
+			"pickup" : 12,
+            "pos": {
+                "x": 54.3,
+                "y": 6.75
+            },
+            "size": {
+                "width": 1.2,
+                "height": 3.5
+            }
+        },
 		{
 			"type" : "teleporter",
 			"to" : {
