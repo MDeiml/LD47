@@ -134,6 +134,7 @@ export function update(delta) {
 					stageTeleportation = vec2.fromValues(obj.to["x"], obj.to["y"])
             } else if (obj.type == "door") {
                 if (!obj.state) {
+                    new PositionalAudio(obj.position, "assets/sounds/door/door_open.wav", false).play();
                     obj.timer = 0.3;
                     obj.state = "opening";
                 } else if (obj.state == "open") {
@@ -151,6 +152,7 @@ export function update(delta) {
                     obj.state = "open";
                     obj.timer = 1;
                 } else if (obj.state == "open") {
+                    new PositionalAudio(obj.position, "assets/sounds/door/door_close.wav", false).play();
                     obj.state = "closing";
                     obj.timer = 0.3;
                 } else if (obj.state == "closing") {
