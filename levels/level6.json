@@ -20,7 +20,7 @@
         },
 		{
 			"type" : "background",
-			"spriteName" : "Level_1_Teil1_Background",
+			"spriteName" : "lvl6/background_lvl6_teil1_bottom",
 			"pos" : {
 				"x" : 0,
 				"y" : 1
@@ -32,7 +32,7 @@
 		},
 		{
 			"type" : "collision_mask",
-			"spriteName" : "Level_1_Teil1_Colli",
+			"spriteName" : "lvl6/background_lvl6_teil1_bottom_colli",
 			"pos" : {
 				"x" : 0,
 				"y" : 0
@@ -149,6 +149,61 @@
                 "height": 3.7
             }
 		},
+		{
+            "type": "collidable",
+            "pos": {
+                "x": 10.2,
+                "y": -0.75
+            },
+            "size": {
+                "width": 2.2,
+                "height": 3.5
+            }
+		},
+		{
+            "type": "collidable",
+			"spriteName":"red",
+            "pos": {
+                "x": 12,
+                "y": 2.5
+            },
+            "size": {
+                "width": 1,
+                "height": 1
+            }
+		},
+        {
+            "type": "collidable",
+            "spriteName": "Floor_Texture",
+            "pos": {
+                "x": -10,
+                "y": 4.25
+            },
+            "size": {
+                "width": 3,
+                "height": 1
+            },
+            "offset": {
+                "x": 0,
+                "y": 0.4
+            }
+        },
+        {
+            "type": "xcollidable",
+            "spriteName": "Floor_Texture",
+            "pos": {
+                "x": 0,
+                "y": 4.25
+            },
+            "size": {
+                "width": 25.5,
+                "height": 1
+            },
+            "offset": {
+                "x": 0,
+                "y": 0.4
+            }
+        },
 		{
 			"type" : "background",
 			"spriteName" : "Level_1_Teil2_Background",
@@ -428,8 +483,8 @@
             "type": "collidable",
             "spriteName": "Floor_Texture",
             "pos": {
-                "x": 51.25,
-                "y": 4.5
+                "x": 51,
+                "y": 4.25
             },
             "size": {
                 "width": 25.5,
@@ -445,7 +500,7 @@
             "spriteName": "Top_room",
             "pos": {
                 "x": 53.5,
-                "y": 8.5
+                "y": 8
             },
             "size": {
                 "width": 10.2,
@@ -490,15 +545,175 @@
 				"width" : 25,
 				"height" : 7
 			}
-		}
-	],
+		},
+        {
+            "type": "collidable",
+            "pos": {
+                "x": -5.8,
+                "y": 5.45
+            },
+            "size": {
+                "width": 3.5,
+                "height": 1.8
+            }
+        },
+        {
+            "type": "collidable",
+            "pos": {
+                "x": -0.2,
+                "y": 5.45
+            },
+            "size": {
+                "width": 3.5,
+                "height": 1.8
+            }
+        },
+		{ 
+            "type": "collidable",
+			"orientation":2,
+            "pos": {
+                "x": -11.4,
+                "y": 5.4
+            },
+            "size": {
+                "width": 2.2,
+                "height": 5
+            }
+        },
+		{
+			"type" : "background",
+			"spriteName" : "lvl6/background_lvl6_top_teil2",
+			"pos" : {
+				"x" : 25.5,
+				"y" : 8
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 7
+			}
+		},
+		{
+			"type" : "collision_mask",
+			"spriteName" : "lvl6/background_lvl6_top_teil2_colli",
+			"pos" : {
+				"x" : 25.5,
+				"y" : 8
+			},
+			"size" : {
+				"width" : 25,
+				"height" : 7
+			}
+		},
+        {
+            "type": "collidable",
+            "spriteName": "Floor_Texture",
+            "pos": {
+                "x": 25.5,
+                "y": 4.25
+            },
+            "size": {
+                "width": 25.5,
+                "height": 1
+            },
+            "offset": {
+                "x": 0,
+                "y": 0.4
+            }
+        },
+        {
+            "type": "collidable",
+            "pos": {
+                "x": 15.5,
+                "y": 5.5
+            },
+            "size": {
+                "width": 1.3,
+                "height": 1.8
+			}
+		},
+        
+        {
+            "type": "collidable",
+            "pos": {
+                "x": 20,
+                "y": 5.5
+            },
+            "size": {
+                "width": 3.5,
+                "height": 1.8
+            }
+        },
+		
+        { 
+            "type": "collidable",
+            "pos": {
+                "x": 23.1,
+                "y": 6.5
+            },
+            "size": {
+                "width": 2.2,
+                "height": 3.5
+            }
+        },
+		
+		{
+            "type": "collidable",
+            "pos": {
+                "x": 26,
+                "y": 5.5
+            },
+            "size": {
+                "width": 1.3,
+                "height": 1.8
+			}
+		},
 
+        { 
+            "type": "collidable",
+			"orientation":2,
+            "pos": {
+                "x": 29,
+                "y": 6.7
+            },
+            "size": {
+                "height": 2.2,
+                "width": 3.5
+            }
+        },
+		
+        {
+            "type": "collidable",
+            "pos": {
+                "x": 31.5,
+                "y": 5.5
+            },
+            "size": {
+                "width": 1.3,
+                "height": 1.8
+			}
+		},
+		
+		{
+			"type" : "background",
+			"spriteName" : "lvl6/Background_lvl6_top_teil3",
+			"pos" : {
+				"x" : 43,
+				"y" : 8
+			},
+			"size" : {
+				"width" : 9,
+				"height" : 7
+			}
+		}
+		
+	],
+	
 	"lights" : [	
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 1.0,
+				"g" : 0.09,
+				"b" : 0.0
 			},
 			"pos": {
 				"x" : 0,
@@ -509,13 +724,13 @@
 				"y" : 1
 			},
 			"cutoff": 0.5,
-			"intensity": 0.7
+			"intensity": 1
 		},
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 1.0,
+				"g" : 0.09,
+				"b" : 0.0
 			},
 			"pos": {
 				"x" : -6.6,
@@ -526,13 +741,13 @@
 				"y" : 1
 			},
 			"cutoff": 0.5,
-			"intensity": 0.7
+			"intensity": 1
 		},
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 1.0,
+				"g" : 0.09,
+				"b" : 0.0
 			},
 			"pos": {
 				"x" : 6.65,
@@ -543,15 +758,67 @@
 				"y" : 1
 			},
 			"cutoff": 0.5,
-			"intensity": 0.7
+			"intensity": 1
+		},
+		
+		{
+			"color" : {
+				"r" : 0.8,
+				"g" : 0.09,
+				"b" : 0.0
+			},
+			"pos": {
+				"x" : 0,
+				"y" : 11.45
+			},
+			"dir" : {
+				"x" : 0,
+				"y" : 1
+			},
+			"cutoff": 0.5,
+			"intensity": 1
+		},
+		{
+			"color" : {
+				"r" : 0.8,
+				"g" : 0.09,
+				"b" : 0.0
+			},
+			"pos": {
+				"x" : -6.6,
+				"y" : 11.45
+			},
+			"dir" : {
+				"x" : 0,
+				"y" : 1
+			},
+			"cutoff": 0.5,
+			"intensity": 1
+		},
+		{
+			"color" : {
+				"r" : 0.8,
+				"g" : 0.09,
+				"b" : 0.0
+			},
+			"pos": {
+				"x" : 6.65,
+				"y" : 11.45
+			},
+			"dir" : {
+				"x" : 0,
+				"y" : 1
+			},
+			"cutoff": 0.5,
+			"intensity": 1
 		},
 		
 		
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 1.0,
+				"g" : 0.09,
+				"b" : 0.0
 			},
 			"pos": {
 				"x" : 25.5,
@@ -562,13 +829,13 @@
 				"y" : 1
 			},
 			"cutoff": 0.5,
-			"intensity": 0.7
+			"intensity": 1
 		},
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 1.0,
+				"g" : 0.09,
+				"b" : 0.0
 			},
 			"pos": {
 				"x" : 18.9,
@@ -579,13 +846,13 @@
 				"y" : 1
 			},
 			"cutoff": 0.5,
-			"intensity": 0.7
+			"intensity": 1
 		},
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 1.0,
+				"g" : 0.09,
+				"b" : 0.0
 			},
 			"pos": {
 				"x" : 32.15,
@@ -596,15 +863,68 @@
 				"y" : 1
 			},
 			"cutoff": 0.5,
-			"intensity": 0.7
+			"intensity": 1
 		},
 		
 		
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 0.8,
+				"g" : 0.09,
+				"b" : 0.0
+			},
+			"pos": {
+				"x" : 25.5,
+				"y" : 11.45
+			},
+			"dir" : {
+				"x" : 0,
+				"y" : 1
+			},
+			"cutoff": 0.5,
+			"intensity": 1
+		},
+		{
+			"color" : {
+				"r" : 0.8,
+				"g" : 0.09,
+				"b" : 0.0
+			},
+			"pos": {
+				"x" : 18.9,
+				"y" : 11.45
+			},
+			"dir" : {
+				"x" : 0,
+				"y" : 1
+			},
+			"cutoff": 0.5,
+			"intensity": 1
+		},
+		{
+			"color" : {
+				"r" : 0.8,
+				"g" : 0.09,
+				"b" : 0.0
+			},
+			"pos": {
+				"x" : 32.15,
+				"y" : 11.45
+			},
+			"dir" : {
+				"x" : 0,
+				"y" : 1
+			},
+			"cutoff": 0.5,
+			"intensity": 1
+		},
+		
+		
+		{
+			"color" : {
+				"r" : 1.0,
+				"g" : 0.09,
+				"b" : 0.0
 			},
 			"pos": {
 				"x" : 51,
@@ -615,13 +935,13 @@
 				"y" : 1
 			},
 			"cutoff": 0.5,
-			"intensity": 0.7
+			"intensity": 1
 		},
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 1.0,
+				"g" : 0.09,
+				"b" : 0.0
 			},
 			"pos": {
 				"x" : 44.4,
@@ -632,13 +952,13 @@
 				"y" : 1
 			},
 			"cutoff": 0.5,
-			"intensity": 0.7
+			"intensity": 1
 		},
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 1.0,
+				"g" : 0.09,
+				"b" : 0.0
 			},
 			"pos": {
 				"x" : 57.65,
@@ -649,31 +969,50 @@
 				"y" : 1
 			},
 			"cutoff": 0.5,
-			"intensity": 0.7
+			"intensity": 1
 		},
+		
+		
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 0.82,
+				"g" : 0.8,
+				"b" : 0.6
 			},
 			"pos": {
                 "x": 53.5,
-                "y": 10.5
+                "y": 10
 			},
 			"dir" : {
 				"x" : 0,
 				"y" : 1
 			},
 			"cutoff": -0.9,
-			"intensity": 0.7
+			"intensity": 4
+		},
+		{
+			"color" : {
+				"r" : 1.0,
+				"g" : 0.2,
+				"b" : 0.0
+			},
+			"pos": {
+                "x": 43,
+                "y": 10.2
+			},
+			"dir" : {
+				"x" : 0,
+				"y" : 1
+			},
+			"cutoff": -0.9,
+			"intensity": 2
 		}
 	],
 
 	"bgFilter": {
 		"r" : 0.26,
-		"g" : 0.165,
-		"b" : 0.1
+		"g" : 0.07,
+		"b" : 0.05
 	},
 	
     "exit": {
