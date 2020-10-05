@@ -41,14 +41,14 @@ export let ITEM_SOUNDS = {
 let ITEM_TRIGGER = {
 	22 : {
 		open: function() {
-			 if (typeof sprite.sound !== "undefined")
-				 sprite.sound.play()
-			 sprite.texture.setFrame(1)
+			 if (typeof this.sound !== "undefined")
+				 this.sound.play()
+			 this.texture.setFrame(1)
 		},
 		close : function() {
-			if (typeof sprite.sound !== "undefined")
-				sprite.sound.pause()
-			 sprite.texture.setFrame(0)
+			if (typeof this.sound !== "undefined")
+				this.sound.pause()
+			 this.texture.setFrame(0)
 		}
 	}
 };
