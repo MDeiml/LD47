@@ -495,7 +495,7 @@
 		},
 		{
 			"type" : "collision_mask",
-			"spriteName" : "lvl6/background_lvl6_top_teil1_Colli",
+			"spriteName" : "lvl6/background_lvl6_top_teil1_colli",
 			"pos" : {
 				"x" : 0,
 				"y" : 8
@@ -553,7 +553,7 @@
 		},
 		{
 			"type" : "collision_mask",
-			"spriteName" : "lvl6/background_lvl6_top_teil2_colli",
+			"spriteName" : "lvl6/background_lvl6_top_teil2_Colli",
 			"pos" : {
 				"x" : 25.5,
 				"y" : 8
@@ -825,7 +825,7 @@
             }
 		},
 		{
-			"type":"deco"
+			"type":"deco",
             "pos": {
                 "x": 60,
                 "y": 9
@@ -1166,8 +1166,8 @@
         "y": 9
     },
     "start": {
-        "x": 60,
-        "y": 10
+        "x": -10,
+        "y": -1.25
     },
 	"other" : {
         "x": -10,
