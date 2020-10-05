@@ -181,6 +181,7 @@ export function update(delta) {
             inventory.level_end = true;
         } else {
             // TODO: Tell player they have to collect at least 1 item
+            player.position[0] -= 3;
         }
     }
 }
