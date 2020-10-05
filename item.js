@@ -17,7 +17,17 @@ let ITEM_SPRITES = {
 	23 : "assets/lvl2/Photos_von_freunden.png",
 	24 : "assets/lvl2/sticky_note.png",
 
-	30 : "assets/lvl3/Medical_Record.png"
+	30 : "assets/lvl3/Medical_Record.png",
+    31 : "assets/lvl3/hospital-letter.png",
+    32 : "assets/lvl3/nebenwirkungen.png",
+    33 : "assets/lvl3/newspaper-accident.png",
+    34 : "assets/lvl3/photo-stack.png",
+
+    40: "assets/lvl4/Amber_Alert.png",
+    41: "assets/lvl4/Burned_ring.png",
+    42: "assets/lvl4/divorce_papers.png",
+    43: "assets/lvl4/Flask.png",
+    44: "assets/lvl4/Meds.png"
 };
 
 export let ITEM_SOUNDS = {
