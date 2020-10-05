@@ -221,17 +221,6 @@
             }
         },
         {
-            "type": "xcollidable",
-            "pos": {
-                "x": 36,
-                "y": -1.6
-            },
-            "size": {
-                "width": 3.9,
-                "height": 1.8
-            }
-        },
-        {
             "type": "background",
             "spriteName": "green",
             "pos": {
@@ -531,7 +520,7 @@
 				"y" : 1
 			},
 			"cutoff": 0.3,
-			"intensity": 1 //NOTE
+			"intensity": 1
 		},
 		{
 			"color" : {
