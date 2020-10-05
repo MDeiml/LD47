@@ -151,7 +151,7 @@
 		},
 		{
 			"type" : "collision_mask",
-			"spriteName" : "Level_1_Teil2_Colli",
+			"spriteName" : "Level_1_teil2_Colli_new",
 			"pos" : {
 				"x" : 25.5,
 				"y" : 0
@@ -518,9 +518,9 @@
 	"lights" : [	
 		{
 			"color" : {
-				"r" : 0.80,
-				"g" : 0.84,
-				"b" : 0.54
+				"r" : 0.60,
+				"g" : 0.74,
+				"b" : 0.94
 			},
 			"pos": {
 				"x" : 0,
@@ -530,8 +530,8 @@
 				"x" : 0,
 				"y" : 1
 			},
-			"cutoff": 0.5,
-			"intensity": 0.7
+			"cutoff": 0.3,
+			"intensity": 1 //NOTE
 		},
 		{
 			"color" : {
@@ -695,7 +695,7 @@
 	"bgFilter": {
 		"r" : 0.2,
 		"g" : 0.247,
-		"b" : 0.31
+		"b" : 0.5
 	},
 
     "exit": {

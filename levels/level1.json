@@ -203,7 +203,7 @@
 		},
 		{
 			"type" : "collision_mask",
-			"spriteName" : "Level_1_Teil2_Colli",
+			"spriteName" : "Level_1_teil2_Colli_new",
 			"pos" : {
 				"x" : 25.5,
 				"y" : 0
