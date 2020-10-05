@@ -20,6 +20,10 @@ let ITEM_SPRITES = {
 	30 : "assets/lvl3/Medical_Record.png"
 };
 
+export let ITEM_SOUNDS = {
+	14 : "assets/voicemail_test.ogg"
+};
+
 let ITEM_SPRITE_FRAMES = {
 	10 : 1,
 	11 : 1,

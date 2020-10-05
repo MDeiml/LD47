@@ -151,7 +151,6 @@ export function initLevel(id, rawData) {
 
 	level.isInitialized = false
 
-    // TODO: Change this
     let start = vec2.fromValues(levelData["start"]["x"], levelData["start"]["y"]);
     setPlayer(new GameObject("./assets/walk_circle_halved.png", start, vec2.fromValues(1, 3), "player", vec2.fromValues(3.5, 3.5 / 3), vec2.fromValues(0, -0.1)));
     player.velocity = vec2.fromValues(0, 0);

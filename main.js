@@ -6,6 +6,7 @@ import {gl, player, level, menu, setPlayer, inventory, INVENTORY_HEIGHT, INVENTO
 import {GameObject, Sprite} from "./obj/Sprite.js";
 import {loadLevel} from "./level.js"
 import {init as initResource} from "./resource.js"
+import {updateAudio} from "./audio.js"
 
 //timekeeper
 var lastTick = null;
@@ -51,7 +52,7 @@ function updatePlayerAnimation() {
                 player.sprite.texture.setFrame(4)
         }
     }
-	
+
 	if (player.canInteract) {
 		eyeFrameCntr += 1;
 		if ((eyeFrameCntr % 8) === 0 && eyeFramePos < 4) {
@@ -108,6 +109,7 @@ function update(now) {
 			updateView();
 			updatePlayerAnimation();
         }
+        updateAudio(player.position);
     }
 
     // don't render if there was no update
@@ -144,9 +146,15 @@ function updateInventory() {
             item.setTransformation(inventoryItemTransform(inventory.objects.length));
             inventory.objects.push(item);
 
-            loadLevel(level.id + 1);
             inventory.level_end = false;
             inventory.opened = false;
+
+            if (level.id < 7) {
+                loadLevel(level.id + 1);
+            } else {
+                // TODO: proper ending
+                loadLevel(1);
+            }
         } else {
             menu.sprite = new Sprite(inventory.objects[inventory.cursorPosition].texture.name, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)));
             menu.cooldown = -1;

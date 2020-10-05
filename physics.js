@@ -1,9 +1,10 @@
 import {level, player, menu, inventory} from "./state.js"
-import {getItemSprite, pickUp} from "./item.js"
+import {getItemSprite, pickUp, ITEM_SOUNDS} from "./item.js"
 import {walkingLeft, walkingRight, jumping, pickingUp, holdingJump} from "./input.js"
 import {vec2, mat4, vec3} from "./gl-matrix-min.js"
 import {GameObject, Sprite, Orientation} from "./obj/Sprite.js"
 import {loadLevel} from "./level.js"
+import {PositionalAudio} from "./audio.js"
 
 const PLAYER_SPEED = 2.5;
 const JUMP_SPEED = 13; // 6.75
@@ -110,6 +111,9 @@ export function update(delta) {
             } else if (obj.type === "interactable") {
 				player.canInteract = true
 				if (pickingUp()) {
+                    if (ITEM_SOUNDS[obj.pickup]) {
+                        new PositionalAudio(player.position, ITEM_SOUNDS[obj.pickup], false).play();
+                    }
                     menu.setSprite(getItemSprite(obj.pickup, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)), null, true));
                     menu.cooldown = -1;
 					pickUp(obj);
