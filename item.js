@@ -70,14 +70,6 @@ export let ITEM_SOUNDS = {
 };
 
 let ITEM_TRIGGER = {
-	22 : {
-		open: function() {
-			 this.texture.setFrame(1)
-		},
-		close : function() {
-			 this.texture.setFrame(0)
-		}
-	}
 };
 
 let ITEM_SPRITE_FRAMES = {
