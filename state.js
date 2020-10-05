@@ -57,6 +57,7 @@ export let menu = {
     cooldown: 0
 };
 
+
 export function setGl(context) {
     gl = context;
 }

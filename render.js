@@ -184,6 +184,8 @@ function drawBaseShader() {
 	}
 	
 	player.draw(shaders["defaultShader"]);
+	if (player.canInteract)
+		player.eyeSprite.draw(shaders["defaultShader"]);
 }
 
 function drawLightShader() {
@@ -217,4 +219,9 @@ function drawLightShader() {
 	}
 
     player.draw(shaders["lightShader"]);
+	if (player.canInteract) {
+		shaders["defaultShader"].bind();
+		gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('VP'), false, pvMatrix);
+		player.eyeSprite.draw(shaders["defaultShader"]);
+	}
 }

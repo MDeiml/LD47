@@ -13,6 +13,8 @@ var unprocessed = 0;
 const FRAME_TIME = 1000/60;
 let frameCntr = 0
 let framePos = 0
+let eyeFrameCntr = 0
+let eyeFramePos = 0
 
 function main() {
     initGraphics(document.getElementById('glCanvas'));
@@ -49,6 +51,19 @@ function updatePlayerAnimation() {
                 player.sprite.texture.setFrame(4)
         }
     }
+	
+	if (player.canInteract) {
+		eyeFrameCntr += 1;
+		if ((eyeFrameCntr % 8) === 0 && eyeFramePos < 4) {
+			eyeFrameCntr = 0;
+			eyeFramePos += 1;
+			player.eyeSprite.texture.setFrame(eyeFramePos);
+		}
+	}
+	else {
+		eyeFramePos = 0;
+		eyeFrameCntr = 0;
+	}
 }
 
 function update(now) {

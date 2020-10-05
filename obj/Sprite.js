@@ -177,7 +177,7 @@ let Sprite = function(spritePath, transformation, type, parent) {
 }
 Sprite.prototype.getTransformation = function() {
 	if (this.parent !== null)
-		mat4.mult(this.m, this.transform, this.parent.getTransformation());
+		mat4.mul(this.m, this.parent.getTransformation(), this.transform);
 	else
 		mat4.copy(this.m, this.transform);
 	return this.m;

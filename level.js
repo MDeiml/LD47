@@ -159,4 +159,9 @@ export function initLevel(id, rawData) {
     player.velocity = vec2.fromValues(0, 0);
     player.onGround = false;
     player.sprite.texture.frames = 5;
+	let transMat = mat4.create()
+	mat4.fromRotationTranslationScale(transMat, quat.create(), vec3.fromValues(0, 1, 0), vec3.fromValues(3/4, 3/4, 1))
+	player.eyeSprite = new Sprite("./assets/eye.png", transMat, "animation", player.sprite)
+	player.eyeSprite.texture.frames = 5;
+	player.canInteract = false
 }

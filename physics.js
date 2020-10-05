@@ -83,6 +83,7 @@ export function update(delta) {
     let positionDelta = vec2.scale(vec2.create(), player.velocity, delta);
     player.setPosition(vec2.add(player.position, player.position, positionDelta));
     player.onGround = false;
+	player.canInteract = false
 
     for (let obj of level.objects) {
         if (!(obj instanceof GameObject)) continue;
@@ -107,6 +108,7 @@ export function update(delta) {
                     player.onGround = true;
                 }
             } else if (obj.type === "interactable") {
+				player.canInteract = true
 				if (pickingUp()) {
                     menu.setSprite(getItemSprite(obj.pickup, mat4.fromScaling(mat4.create(), vec3.fromValues(5, 5, 5)), null, true));
                     menu.cooldown = -1;
