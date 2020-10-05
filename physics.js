@@ -81,10 +81,14 @@ export function update(delta) {
     if (player.velocity[1] >= 0) player.maxY = player.position[1] - player.halfSize[1];
     player.velocity[0] = velx;
     player.velocity[1] -= GRAVITATION * delta;
+	
+
     let positionDelta = vec2.scale(vec2.create(), player.velocity, delta);
     player.setPosition(vec2.add(player.position, player.position, positionDelta));
     player.onGround = false;
 	player.canInteract = false
+	
+	let stageTeleportation = false
 
     for (let obj of level.objects) {
         if (!(obj instanceof GameObject)) continue;
@@ -121,18 +125,10 @@ export function update(delta) {
 			} else if (obj.type === "teleporter") {
 				player.canInteract = true
 				if (pickingUp()) {
-                    player.velocity[0] = 0;
-                    player.velocity[1] = 0;
-					player.onGround = true;
-					player.position[0] = obj.to["x"]
-					player.position[1] = obj.to["y"]
+					stageTeleportation = vec2.fromValues(obj.to["x"], obj.to["y"])
 				}
             } else if (obj.type === "fire") {
-				player.velocity[0] = 0;
-				player.velocity[1] = 0;
-				player.onGround = true;
-				player.position[0] = obj.to["x"]
-				player.position[1] = obj.to["y"]
+					stageTeleportation = vec2.fromValues(obj.to["x"], obj.to["y"])
             } else if (obj.type == "door") {
                 if (!obj.state) {
                     obj.timer = 0.3;
@@ -161,8 +157,16 @@ export function update(delta) {
         }
     }
 
+	if (stageTeleportation !== false) {
+		player.velocity[0] = 0;
+		player.velocity[1] = 0;
+		//player.onGround = false;
+		player.setPosition(stageTeleportation)
+	}
+
     let walking = player.onGround && player.velocity[0] != 0;
 
+	//TODO add walk circle here
     if (walking && walk_wood.sound.paused) {
         walk_wood.play();
     }
