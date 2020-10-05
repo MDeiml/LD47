@@ -177,8 +177,10 @@ function updateInventory() {
 
             let item = inventory.objects[inventory.cursorPosition];
             inventory.objects.splice(level.id - 1, inventory.objects.length - (level.id - 1));
-            inventory.postits.splice(level.id, inventory.objects.length - (level.id));
-            item.setTransformation(inventoryItemTransform(inventory.objects.length));
+            inventory.postits.splice(level.id, inventory.postits.length - level.id);
+            let m = mat4.create();
+            mat4.fromScaling(m, vec3.fromValues(0.25, 0.25, 1));
+            item.setTransformation(mat4.mul(m, inventoryItemTransform(inventory.objects.length), m));
             inventory.objects.push(item);
 
             inventory.level_end = false;

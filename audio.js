@@ -25,7 +25,6 @@ PositionalAudio.prototype.stop = function() {
 }
 PositionalAudio.prototype.update = function(listenPos) {
     this.sound.volume = 1 / Math.max(1, vec2.dist(listenPos, this.pos));
-    console.log(this.sound.volume);
 }
 PositionalAudio.prototype.moveTo = function(newPos) {
 	vec2.copy(this.pos, newPos);
