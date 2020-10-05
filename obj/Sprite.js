@@ -234,10 +234,10 @@ GameObject.prototype.setSize = function(size) {
 	let lastHalfY = this.halfSize[1]
     vec2.scale(this.halfSize, size, 0.5);
 	
-	vec2.div(this.scale, this.baseScale, size)
+	//vec2.div(this.scale, this.baseScale, size)
 	
     this.position[1] -= (lastHalfY - this.halfSize[1]) * this.baseScale[1]
-	this.offset[1] += (lastHalfY - this.halfSize[1]) * this.baseScale[1]
+	//this.offset[1] += (lastHalfY - this.halfSize[1]) * this.baseScale[1]
 	
 	if (this.sprite !== null)
 		this.sprite.setTransformation(this.calculateTransform());

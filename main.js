@@ -30,7 +30,7 @@ function main() {
     initAudio();
 
     initResource(function() {
-        loadLevel(1)
+        loadLevel(6)
 
         window.running = true;
         requestAnimationFrame(update);
@@ -76,23 +76,17 @@ function updatePlayerAnimation() {
 }
 function updateFires() {
 	fireCntr += 1;
-	if ((fireCntr % 120) === 0) {
+	if ((fireCntr % 60) === 0) {
 		fireCntr = 0;
-		if (firePos === 0)
-			firePos = 1
-		else if (firePos === 1)
-			if (dir)
-				firePos = 2
-			else
-				firePos = 0
-		else
+		firePos += 1
+		if (firePos > 5)
 			firePos = 0
 	}
 	for (let sprite of level.objects) {
 		if (sprite.type !== "fire")
 			continue
 
-		sprite.setSize(vec2.fromValues(1, firePos + 1))
+		sprite.setSize(vec2.fromValues(1, (firePos + 1) / 2))
 		sprite.sprite.texture.setFrame(firePos)
 	}
 }
