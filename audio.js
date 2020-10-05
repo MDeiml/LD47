@@ -25,6 +25,7 @@ PositionalAudio.prototype.stop = function() {
 }
 PositionalAudio.prototype.update = function(listenPos) {
     this.sound.volume = 1 / Math.max(1, vec2.dist(listenPos, this.pos));
+    console.log(this.sound.volume);
 }
 PositionalAudio.prototype.moveTo = function(newPos) {
 	vec2.copy(this.pos, newPos);
@@ -34,8 +35,10 @@ PositionalAudio.prototype.move = function(trans) {
 }
 
 export function initAudio() {
-    walk_wood = new PositionalAudio(vec2.create(), "assets/walk_wood.ogg", true);
+    walk_wood = new Audio("assets/walk_wood.ogg");
+    walk_wood.loop = true;
     music = new Audio("assets/music1.ogg");
+    music.volume = 0.2;
     music.loop = true;
 }
 

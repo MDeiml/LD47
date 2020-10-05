@@ -21,7 +21,11 @@ let ITEM_SPRITES = {
 };
 
 export let ITEM_SOUNDS = {
-	14 : "assets/voicemail_test.ogg"
+    10: "assets/sounds/paper/paper-45.wav",
+    11: "assets/sounds/paper/paper-45.wav",
+    12: "assets/sounds/paper/paper-45.wav",
+    // 13:
+    14: "assets/sounds/paper/paper-45.wav",
 };
 
 let ITEM_TRIGGER = {
@@ -48,10 +52,10 @@ export function getItemSprite(id, transformation, parent, animate) {
 	sprite.item_id = id
 	if (typeof ITEM_SPRITE_FRAMES[id] !== "undefined")
 		sprite.texture.frames = ITEM_SPRITE_FRAMES[id]
-	
+
 	if (typeof ITEM_SOUNDS[id] !== "undefined")
 		sprite.sound = new Audio(ITEM_SOUNDS[id])
-	
+
 	if (typeof ITEM_TRIGGER[id] !== "undefined") {
 		sprite.onOpen = ITEM_TRIGGER[id].open.bind(sprite)
 		sprite.onClose = ITEM_TRIGGER[id].close.bind(sprite)
@@ -60,7 +64,7 @@ export function getItemSprite(id, transformation, parent, animate) {
 		sprite.onOpen = function() { if (typeof sprite.sound !== "undefined") sprite.sound.play()}
 		sprite.onClose = function() { if (typeof sprite.sound !== "undefined") sprite.sound.pause()}
 	}
-	
+
 	return sprite
 }
 

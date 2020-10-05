@@ -81,13 +81,13 @@ export function update(delta) {
     if (player.velocity[1] >= 0) player.maxY = player.position[1] - player.halfSize[1];
     player.velocity[0] = velx;
     player.velocity[1] -= GRAVITATION * delta;
-	
+
 
     let positionDelta = vec2.scale(vec2.create(), player.velocity, delta);
     player.setPosition(vec2.add(player.position, player.position, positionDelta));
     player.onGround = false;
 	player.canInteract = false
-	
+
 	let stageTeleportation = false
 
     for (let obj of level.objects) {
@@ -167,10 +167,10 @@ export function update(delta) {
     let walking = player.onGround && player.velocity[0] != 0;
 
 	//TODO add walk circle here
-    if (walking && walk_wood.sound.paused) {
+    if (walking && walk_wood.paused) {
         walk_wood.play();
     }
-    if (!walking && !walk_wood.sound.paused) {
+    if (!walking && !walk_wood.paused) {
         walk_wood.pause();
     }
 

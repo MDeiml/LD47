@@ -71,20 +71,12 @@ function initShaders() {
 }
 
 export function updateView() {
-	if (player.position[0] < 0) {
-		if (!cameraLeftFixed) {
-			cameraLeftFixed = true;
-			updateViewIntern(0, 0);
-		}
-	} else {
-		updateViewIntern(vec2.fromValues(player.position[0], player.position[1]))//Math.floor((player.position[1] / 2) + 1) * 2));
-	}
+    let pos = vec2.clone(player.position);
+    pos[0] = Math.max(0, pos[0]);
+    camera.setPos(pos);
+    updateViewMat = true;
 }
 
-function updateViewIntern(pos) {
-	updateViewMat = true;
-	camera.setPos(pos);
-}
 function updateProjection() {
     let w = gl.canvas.clientWidth;
     let h = gl.canvas.clientHeight;
@@ -176,16 +168,16 @@ function drawBaseShader() {
 			shaders["bgShader"].bind();
 			gl.uniform3fv(shaders["bgShader"].getUniform('backgroundFilter'), level.bgFilter);
 			gl.uniformMatrix4fv(shaders["bgShader"].getUniform('VP'), false, pvMatrix);
-			
+
 			sprite.draw(shaders["bgShader"]);
-			
+
 			shaders["defaultShader"].bind();
 			gl.uniformMatrix4fv(shaders["defaultShader"].getUniform('VP'), false, pvMatrix);
 		}
 		else
 			sprite.draw(shaders["defaultShader"]);
 	}
-	
+
 	player.draw(shaders["defaultShader"]);
 	if (player.canInteract)
 		player.eyeSprite.draw(shaders["defaultShader"]);
@@ -208,7 +200,7 @@ function drawLightShader() {
 			gl.uniform1fv(shaders["bgShader"].getUniform('lights'), level.lights)
 			gl.uniform3fv(shaders["bgShader"].getUniform('backgroundFilter'), level.bgFilter);
 			sprite.draw(shaders["bgShader"]);
-			
+
 			shaders["lightShader"].bind();
 			gl.uniformMatrix4fv(shaders["lightShader"].getUniform('VP'), false, pvMatrix);
 		}
@@ -219,7 +211,7 @@ function drawLightShader() {
 		}
 		else
 			sprite.draw(shaders["lightShader"]);
-		
+
 	}
 
     player.draw(shaders["lightShader"]);
