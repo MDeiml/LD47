@@ -92,8 +92,20 @@
             }
         },
         {
+            "type": "background",
+            "spriteName": "green",
+            "pos": {
+                "x": 12.75,
+                "y": -0.85
+            },
+            "size": {
+                "width": 0.5,
+                "height": 3.3
+            }
+        },
+        {
             "type": "door",
-            "spriteName": "red",
+            "spriteName": "door-sideprofile",
             "pos": {
                 "x": 12.75,
                 "y": -0.85
@@ -213,8 +225,20 @@
             }
         },
         {
+            "type": "background",
+            "spriteName": "green",
+            "pos": {
+                "x": 38.25,
+                "y": -0.85
+            },
+            "size": {
+                "width": 0.5,
+                "height": 3.3
+            }
+        },
+        {
             "type": "door",
-            "spriteName": "red",
+            "spriteName": "door-sideprofile",
             "pos": {
                 "x": 38.25,
                 "y": -0.85
@@ -320,8 +344,20 @@
             }
         },
         {
+            "type": "background",
+            "spriteName": "green",
+            "pos": {
+                "x": 63.75,
+                "y": -0.85
+            },
+            "size": {
+                "width": 0.5,
+                "height": 3.3
+            }
+        },
+        {
             "type": "door",
-            "spriteName": "red",
+            "spriteName": "door-sideprofile",
             "pos": {
                 "x": 63.75,
                 "y": -0.85
