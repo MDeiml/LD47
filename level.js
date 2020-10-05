@@ -13,7 +13,8 @@ const TYPE_ID_MAP = {
 	collidable : 4,
 	xcollidable : 5,
 	interactable : 6,
-	foreground : 7
+	teleporter : 7,
+	foreground : 8
 }
 
 //move to util
@@ -108,6 +109,11 @@ export function initLevel(id, rawData) {
 		case "interactable":
             obj = new GameObject(spriteName, pos1, size, "interactable", scale, offset, orientation);
             obj.pickup = entry["pickup"];
+			level.objects.push(obj)
+			break;
+		case "teleporter":
+            obj = new GameObject(spriteName, pos1, size, "teleporter", scale, offset, orientation);
+            obj.to = entry["to"];
 			level.objects.push(obj)
 			break;
 		}
