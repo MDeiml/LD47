@@ -33,7 +33,7 @@ let ITEM_SPRITES = {
     52: "assets/lvl5/zippo.png",
 	53 : "assets/lvl2/mailbox.png",
 	
-	60 : "assets/lvl6/Newspaper_burnt house.png",
+	60 : "assets/lvl6/Newspaper_burnt_house.png",
 	61 : "assets/lvl6/Burnt_Pics.png",
 	62 : "assets/lvl6/wallet.png"
 };
@@ -66,7 +66,11 @@ export let ITEM_SOUNDS = {
     50 : "assets/sounds/bottle/empty_bottles.wav",
     51 : "assets/sounds/paper/paper-33.wav",
     52 : "assets/sounds/lighter/lighter.wav",
-    53 : "assets/lvl5/voicemail.ogg"				// Voice
+    53 : "assets/lvl5/voicemail.ogg",				// Voice
+	
+	60 : "assets/sounds/paper/paper-30.wav",
+	61 : "assets/sounds/paper/paper-37.wav",
+	62 : "assets/sounds/paper/paper-1.wav"
 };
 
 let ITEM_TRIGGER = {
