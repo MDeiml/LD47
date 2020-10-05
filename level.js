@@ -114,8 +114,6 @@ export function initLevel(id, rawData) {
         level.exit = vec2.fromValues(levelData["exit"]["x"], levelData["exit"]["y"]);
 	}
 
-	level.objects.push(new GameObject(null, vec2.fromValues(0, -5), vec2.fromValues(10000, 5), "collidable")); //the fuck
-
 	let cntr = 0
 	if (typeof levelData["lights"] !== "undefined")
 		for (let entry of levelData["lights"])
