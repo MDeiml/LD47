@@ -163,10 +163,10 @@ export function update(delta) {
 
     let walking = player.onGround && player.velocity[0] != 0;
 
-    if (walking && walk_wood.sound.paused) {
+    if (walking && walk_wood.paused) {
         walk_wood.play();
     }
-    if (!walking && !walk_wood.sound.paused) {
+    if (!walking && !walk_wood.paused) {
         walk_wood.pause();
     }
 
