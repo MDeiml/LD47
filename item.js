@@ -10,7 +10,6 @@ let ITEM_SPRITES = {
 	13 : "assets/lvl1/Pocket_Watch.png",
 	14 : "assets/lvl1/home-sweet-home.png",
 
-	//level 2 items
 	20 : "assets/lvl2/Ring_poliert_Blickdicht.png",
 	21 : "assets/lvl2/Diary_entry.png",
 	22 : "assets/lvl2/mailbox.png",
@@ -36,34 +35,35 @@ let ITEM_SPRITES = {
 };
 
 export let ITEM_SOUNDS = {
-    10: "assets/sounds/paper/paper-45.wav",
-    11: "assets/sounds/paper/paper-45.wav",
-    12: "assets/sounds/paper/paper-45.wav",
-    // 13:
-    14: "assets/sounds/paper/paper-45.wav",
+    10 : "assets/sounds/paper/paper-10.wav",
+    11 : "assets/sounds/paper/paper-7.wav",
+    12 : "assets/sounds/paper/paper-45.wav",
+    13 : "assets/sounds/clock/smallclock.wav",
+	14 : "assets/sounds/paper/paper-24.wav",
 
-    // 20:
-    21: "assets/sounds/paper/paper-45.wav",
+	20 : "assets/sounds/ring/silent_ring.wav",
+	21 : "assets/sounds/paper/paper-34.wav",
     22: "assets/lvl2/voicemail.ogg",
-    23: "assets/sounds/paper/paper-45.wav",
-    24: "assets/sounds/paper/paper-45.wav",
+	23 : "assets/sounds/paper/paper-43.wav",
+	24 : "assets/sounds/paper/paper-1.wav",
 
-    30: "assets/sounds/paper/paper-45.wav",
-    31: "assets/sounds/paper/paper-45.wav",
-    32: "assets/sounds/paper/paper-45.wav",
-    33: "assets/sounds/paper/paper-45.wav",
-    34: "assets/sounds/paper/paper-45.wav",
+	30 : "assets/sounds/paper/paper-22.wav",
+    31 : "assets/sounds/paper/paper-41.wav",
+    32 : "assets/sounds/paper/paper-42.wav",
+    33 : "assets/sounds/paper/paper-30.wav",
+    34 : "assets/sounds/paper/paper-37.wav",
 
     40: "assets/lvl4/amber_alert.ogg",
-    // 41:
-    42: "assets/sounds/paper/paper-45.wav",
-    // 43:
-    // 44:
+    41 : "assets/sounds/ring/dark_ring.wav",
+    42 : "assets/sounds/paper/paper-38.wav",
+    43 : "assets/sounds/bottle/zisch-further-embiggened.wav",
+    // 44 : meds?
 
-    // 50:
-    51: "assets/sounds/paper/paper-45.wav",
-    // 52:
+    // 50 : empty bottles?
+    51 : "assets/sounds/paper/paper-33.wav",
+    // 52 : zippo?
     53: "assets/lvl5/voicemail.ogg"
+    // 54:
 };
 
 let ITEM_TRIGGER = {
