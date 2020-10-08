@@ -33,7 +33,7 @@
         },
 		{
 			"type" : "background",
-			"spriteName" : "Level_1_Teil1_Background",
+			"spriteName" : "lvl5/lvl5_eww_teil1",
 			"pos" : {
 				"x" : 0,
 				"y" : 1
@@ -152,7 +152,7 @@
         },
 		{
 			"type" : "background",
-			"spriteName" : "Level_1_Teil2_Background",
+			"spriteName" : "lvl5/lvl5_eww_teil2",
 			"pos" : {
 				"x" : 25.5,
 				"y" : 1
@@ -286,7 +286,7 @@
         },
 		{
 			"type" : "background",
-			"spriteName" : "Level_1_Teil3_Background",
+			"spriteName" : "lvl5/lvl5_eww_teil3",
 			"pos" : {
 				"x" : 51,
 				"y" : 1
@@ -433,7 +433,7 @@
         },
 		{
             "type": "background",
-            "spriteName": "Top_room",
+            "spriteName": "lvl5/lvl5_eww_teil3_top",
             "pos": {
                 "x": 53.5,
                 "y": 8.5
